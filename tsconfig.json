@@ -1,24 +1,35 @@
 {
-  "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "build/build",
-    "target": "ES2018",
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "strict": true,
-    "pretty": true,
-    "lib": ["ES2018"]
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": [
-    "build",
-    "node_modules",
-    "tests/**"
-  ]
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "build/build",
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "declaration": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": [
+            "es2018"
+        ],
+        "module": "commonjs",
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "pretty": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "es2018",
+        "experimentalDecorators": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "tests/**/*.ts"
+    ],
+    "exclude": [
+        "build",
+        "node_modules",
+        "tests/**"
+    ]
 }
