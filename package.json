@@ -1,0 +1,26 @@
+{
+  "name": "@nolus/nolusjs",
+  "version": "0.0.1",
+  "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/N-Stealth/nolusjs.git"
+  },
+  "keywords": [
+    "nolus-protocol",
+    "typescript",
+    "blockchain",
+    "cosmos",
+    "tendermint"
+  ],
+  "author": "Nolabs",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/N-Stealth/nolusjs/issues"
+  },
+  "homepage": "https://github.com/N-Stealth/nolusjs#readme"
+}
