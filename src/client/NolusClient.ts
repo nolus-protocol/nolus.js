@@ -1,6 +1,6 @@
-import {CosmWasmClient} from "@cosmjs/cosmwasm-stargate";
-import {Tendermint34Client} from "@cosmjs/tendermint-rpc";
-import {Coin} from "@cosmjs/proto-signing";
+import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
+import { Coin } from '@cosmjs/proto-signing';
 
 export class NolusClient {
     private static instance: NolusClient | null = null;
@@ -43,10 +43,10 @@ export class NolusClient {
         const client = await this.cosmWasmClient;
         const chainId = await client?.getChainId();
         if (!chainId) {
-            throw new Error("Chain ID is missing!");
+            throw new Error('Chain ID is missing!');
         }
         return chainId;
-    }
+    };
 
     public async getBalance(address: string, denom: string): Promise<Coin> {
         const client = await this.cosmWasmClient;

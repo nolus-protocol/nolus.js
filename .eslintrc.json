@@ -1,26 +1,42 @@
 {
-  "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
-  "plugins": ["node", "prettier"],
-  "rules": {
-    "prettier/prettier": "error",
-    "block-scoped-var": "error",
-    "eqeqeq": "error",
-    "no-var": "error",
-    "prefer-const": "error",
-    "eol-last": "error",
-    "prefer-arrow-callback": "error",
-    "no-trailing-spaces": "error",
-    "quotes": ["warn", "single", { "avoidEscape": true }],
-    "no-restricted-properties": [
-      "error",
-      {
-        "object": "describe",
-        "property": "only"
-      },
-      {
-        "object": "it",
-        "property": "only"
-      }
+    "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
+    "plugins": ["node", "prettier"],
+    "rules": {
+        "prettier/prettier": "error",
+        "block-scoped-var": "error",
+        "eqeqeq": "error",
+        "no-var": "error",
+        "prefer-const": "error",
+        "eol-last": "error",
+        "prefer-arrow-callback": "error",
+        "no-trailing-spaces": "error",
+        "quotes": ["warn", "single", { "avoidEscape": true }],
+        "no-restricted-properties": [
+            "error",
+            {
+                "object": "describe",
+                "property": "only"
+            },
+            {
+                "object": "it",
+                "property": "only"
+            }
+        ]
+    },
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx"],
+            "parser": "@typescript-eslint/parser",
+            "extends": ["plugin:@typescript-eslint/recommended"],
+            "rules": {
+                "node/no-extraneous-import": "off",
+                "node/no-missing-import": "off",
+                "node/no-unsupported-features/es-syntax": "off"
+            },
+            "parserOptions": {
+                "ecmaVersion": 2018,
+                "sourceType": "module"
+            }
+        }
     ]
-  }
 }

@@ -1,3 +1,3 @@
-import { NolusClient } from "./NolusClient";
+import { NolusClient } from './NolusClient';
 
 export { NolusClient };
