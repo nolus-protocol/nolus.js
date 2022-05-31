@@ -1,6 +1,7 @@
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
-import { OfflineSigner } from '@cosmjs/proto-signing';
+import { Coin, OfflineSigner } from '@cosmjs/proto-signing';
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
+import { DeliverTxResponse, StdFee } from '@cosmjs/stargate';
 
 export class NolusWallet extends SigningCosmWasmClient {
     address?: string;
@@ -25,5 +26,25 @@ export class NolusWallet extends SigningCosmWasmClient {
         this.algo = accounts[0].algo;
 
         return true;
+    }
+
+    public async transferAmount(
+        receiverAddress: string,
+        amount: Coin[],
+        fee: StdFee | 'auto' | number = {
+            amount: [
+                {
+                    denom: 'unolus',
+                    amount: '0.0025',
+                },
+            ],
+            gas: '100000',
+        },
+        memo: string,
+    ): Promise<DeliverTxResponse> {
+        if (!this.address) {
+            throw new Error('Sender address is missing');
+        }
+        return this.sendTokens(this.address, receiverAddress, amount, fee, memo);
     }
 }
