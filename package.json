@@ -2,13 +2,14 @@
     "name": "@nolus/nolusjs",
     "author": "Nolabs",
     "license": "Apache-2.0",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
     "main": "index.js",
     "scripts": {
         "build": "yarn build:module",
         "build:module": "tsc",
-        "lint": "eslint '**/*.{ts,js}'"
+        "lint": "eslint '**/*.{ts,js}'",
+        "bump": "npm version"
     },
     "repository": {
         "type": "git",
