@@ -1,0 +1,48 @@
+name: Build code in production when there is merge in main
+
+on:
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    environment: production
+    
+    strategy:
+      matrix:
+        node-version: [14.x]
+    
+    steps:
+      - name: Checkout code
+      - uses: actions/checkout@v3
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Install dependencies
+        run: yarn install
+      
+      - name: Build module
+        run: yarn build
+        
+      - name: Copy LICENSE
+        run: cp LICENSE build/LICENSE
+
+      - name: Copy README
+        run: cp README.md build/README.md
+
+      - name: Copy package.json
+        run: cp package.json build/package.json
+        
+      - name: Publish package to NPM
+        run: npm publish ./build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
