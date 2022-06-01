@@ -4,7 +4,12 @@
     "license": "Apache-2.0",
     "version": "0.0.5",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
-    "main": "index.js",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "files": [
+        "build/",
+        "*.md"
+    ],
     "scripts": {
         "build": "yarn build:module",
         "build:module": "tsc",
