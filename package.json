@@ -8,7 +8,8 @@
     "scripts": {
         "build": "yarn build:module",
         "build:module": "tsc",
-        "lint": "eslint '**/*.{ts,js}'"
+        "lint": "eslint '**/*.{ts,js}'",
+        "bump": "npm version"
     },
     "repository": {
         "type": "git",
