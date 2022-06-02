@@ -29,41 +29,14 @@ export class NolusWallet extends SigningCosmWasmClient {
         return true;
     }
 
-    public async transferAmount(
-        receiverAddress: string,
-        amount: Coin[],
-        fee: StdFee | 'auto' | number = {
-            amount: [
-                {
-                    denom: 'unolus',
-                    amount: '0.0025',
-                },
-            ],
-            gas: '100000',
-        },
-        memo: string,
-    ): Promise<DeliverTxResponse> {
+    public async transferAmount(receiverAddress: string, amount: Coin[], fee: StdFee | 'auto' | number, memo?: string): Promise<DeliverTxResponse> {
         if (!this.address) {
             throw new Error('Sender address is missing');
         }
         return this.sendTokens(this.address, receiverAddress, amount, fee, memo);
     }
 
-    public async еxecuteContract(
-        contractAddress: string,
-        msg: Record<string, any>,
-        fee: StdFee | 'auto' | number = {
-            amount: [
-                {
-                    denom: 'unolus',
-                    amount: '0.0025',
-                },
-            ],
-            gas: '100000',
-        },
-        memo?: string,
-        funds?: Coin[],
-    ): Promise<ExecuteResult> {
+    public async еxecuteContract(contractAddress: string, msg: Record<string, any>, fee: StdFee | 'auto' | number, memo?: string, funds?: Coin[]): Promise<ExecuteResult> {
         if (!this.address) {
             throw new Error('Sender address is missing');
         }
