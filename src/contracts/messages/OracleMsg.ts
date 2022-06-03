@@ -1,4 +1,4 @@
-import { FeedPayload } from '../types/FeedPayload';
+import { FeedPrices } from '../types/FeedPrices';
 
 export const getPrices = (denoms: string[]) => {
     return {
@@ -22,21 +22,43 @@ export const addFeederMsg = (feederWalletAddress: string) => {
     };
 };
 
-export const addFeedPriceMsg = (feedPayload: FeedPayload) => {
+export const getFeedersMsg = () => {
     return {
-        feed_prices: {
-            prices: [
-                {
-                    base: feedPayload.price,
-                    values: [[feedPayload.baseAsset, feedPayload.price]],
-                },
-            ],
+        feeders: {},
+    };
+};
+
+export const isFeederMsg = (feederWalletAddress: string) => {
+    return {
+        is_feeder: {
+            address: feederWalletAddress,
         },
     };
 };
 
-export const updateSupportedPairsMsg = (pairs: [string[]]) => {
+export const addFeedPriceMsg = (feedPrices: FeedPrices) => {
+    return {
+        feed_prices: feedPrices,
+    };
+};
+
+export const updateSupportedPairsMsg = (pairs: string[][]) => {
     return {
         supported_denom_pairs: { pairs: pairs },
+    };
+};
+
+export const getConfigMsg = () => {
+    return {
+        config: {},
+    };
+};
+
+export const changeConfigMsg = (priceFeedPeriod: string, feedersPrecentageNeeded: number) => {
+    return {
+        config: {
+            price_feed_period: priceFeedPeriod,
+            feeders_percentage_needed: feedersPrecentageNeeded,
+        },
     };
 };
