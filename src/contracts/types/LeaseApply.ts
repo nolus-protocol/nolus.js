@@ -3,5 +3,5 @@ import { Asset } from './Asset';
 export interface LeaseApply {
     total: Asset;
     borrow: Asset;
-    annualInterestRate: string;
+    annual_interest_rate: string;
 }
