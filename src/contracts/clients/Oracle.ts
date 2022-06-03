@@ -49,11 +49,11 @@ export class Oracle {
     public async changeConfig(
         contractAddress: string,
         nolusWallet: NolusWallet,
-        priceFeedPeriod: string,
+        priceFeedPeriod: number,
         feedersPrecentageNeeded: number,
         fee: StdFee | 'auto' | number,
         fundCoin?: Coin[],
     ): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, changeConfigMsg(priceFeedPeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
+        return nolusWallet.еxecuteContract(contractAddress, changeConfigMsg(priceFeedPdaeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
     }
 }
