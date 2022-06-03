@@ -22,38 +22,11 @@ export class Lease {
         return await cosm.queryContractSmart(contractAddress, getLeaseStatus());
     }
 
-    public async openLease(
-        contractAddress: string,
-        nolusWallet: NolusWallet,
-        leaseDenom: string,
-        fee: StdFee | 'auto' | number = {
-            amount: [
-                {
-                    denom: 'unolus',
-                    amount: '0.0025',
-                },
-            ],
-            gas: '100000',
-        },
-        fundCoin?: Coin[],
-    ): Promise<ExecuteResult> {
+    public async openLease(contractAddress: string, nolusWallet: NolusWallet, leaseDenom: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.еxecuteContract(contractAddress, openLease(leaseDenom), fee, undefined, fundCoin);
     }
 
-    public async repayLease(
-        contractAddress: string,
-        nolusWallet: NolusWallet,
-        fee: StdFee | 'auto' | number = {
-            amount: [
-                {
-                    denom: 'unolus',
-                    amount: '0.0025',
-                },
-            ],
-            gas: '100000',
-        },
-        fundCoin?: Coin[],
-    ): Promise<ExecuteResult> {
+    public async repayLease(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.еxecuteContract(contractAddress, repayLease(), fee, undefined, fundCoin);
     }
 }

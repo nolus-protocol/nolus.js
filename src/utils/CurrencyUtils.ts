@@ -58,10 +58,6 @@ export class CurrencyUtils {
         return new Coin(cosmosCoin.denom, cosmosCoin.amount);
     }
 
-    public static getDenomFromMinimalDenom(minimalDenom: string) {
-        return minimalDenom?.replace(minimalDenom[0], '');
-    }
-
     public static calculateBalance(price: string, tokenAmount: Coin, tokenDecimal: number) {
         const amount = new Dec(tokenAmount.amount).quoTruncate(new Dec(10).pow(new Int(tokenDecimal)));
         return new PricePretty(
