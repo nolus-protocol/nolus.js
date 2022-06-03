@@ -54,6 +54,6 @@ export class Oracle {
         fee: StdFee | 'auto' | number,
         fundCoin?: Coin[],
     ): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, changeConfigMsg(priceFeedPdaeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
+        return nolusWallet.еxecuteContract(contractAddress, changeConfigMsg(priceFeedPeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
     }
 }
