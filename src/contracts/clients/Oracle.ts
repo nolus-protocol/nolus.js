@@ -14,7 +14,7 @@ export class Oracle {
         return await cosm.queryContractSmart(contractAddress, getPrices(denoms));
     }
 
-    public async getSupportedPairs(contractAddress: string): Promise<[string[]]> {
+    public async getSupportedPairs(contractAddress: string): Promise<string[][]> {
         const cosm = await NolusClient.getInstance().getCosmWasmClient();
         return await cosm.queryContractSmart(contractAddress, getSupportedPairs());
     }
