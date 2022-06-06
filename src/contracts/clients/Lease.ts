@@ -6,6 +6,7 @@ import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { LoanInfo } from '../types/LoanInfo';
+import { LeaserConfigInfo } from '../types/LeaserConfigInfo';
 
 export class Lease {
     public async makeLeaseApply(contractAddress: string, amount: string, denom: string): Promise<LeaseApply> {
@@ -41,7 +42,7 @@ export class Lease {
         return nolusWallet.еxecuteContract(contractAddress, repayLeaseMsg(), fee, undefined, fundCoin);
     }
 
-    public async setLeaserConfig(contractAddress: string, nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, setLeaserConfigMsg(leaserConfig), fee, undefined, fundCoin);
+    public async setLeaserConfig(contractAddress: string, nolusWallet: NolusWallet, leaserConfigInfo: LeaserConfigInfo, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.еxecuteContract(contractAddress, setLeaserConfigMsg(leaserConfigInfo), fee, undefined, fundCoin);
     }
 }
