@@ -56,5 +56,7 @@ export const getLeaserConfigMsg = () => {
 };
 
 export const setLeaserConfigMsg = (leaserConfig: LeaserConfig) => {
-    return leaserConfig;
+    return {
+        config: leaserConfig,
+    };
 };
