@@ -1,6 +1,6 @@
 import { LeaseApply, LeaserConfig } from '../types';
 import { NolusClient } from '../../client';
-import { getCurrentOpenLeases, getLeaserConfigMsg, getLeaseStatus, getLoanInformationMsg, makeLeaseApply, openLease, repayLease, setLeaserConfigMsg } from '../messages';
+import { getCurrentOpenLeasesMsg, getLeaserConfigMsg, getLeaseStatusMsg, getLoanInformationMsg, makeLeaseApplyMsg, openLeaseMsg, repayLeaseMsg, setLeaserConfigMsg } from '../messages';
 import { NolusWallet } from '../../wallet/NolusWallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -10,17 +10,17 @@ import { LoanInfo } from '../types/LoanInfo';
 export class Lease {
     public async makeLeaseApply(contractAddress: string, amount: string, denom: string): Promise<LeaseApply> {
         const cosm = await NolusClient.getInstance().getCosmWasmClient();
-        return await cosm.queryContractSmart(contractAddress, makeLeaseApply(amount, denom));
+        return await cosm.queryContractSmart(contractAddress, makeLeaseApplyMsg(amount, denom));
     }
 
     public async getCurrentOpenLeases(contractAddress: string, ownerAddress: string) {
         const cosm = await NolusClient.getInstance().getCosmWasmClient();
-        return await cosm.queryContractSmart(contractAddress, getCurrentOpenLeases(ownerAddress));
+        return await cosm.queryContractSmart(contractAddress, getCurrentOpenLeasesMsg(ownerAddress));
     }
 
     public async getLeaseStatus(contractAddress: string) {
         const cosm = await NolusClient.getInstance().getCosmWasmClient();
-        return await cosm.queryContractSmart(contractAddress, getLeaseStatus());
+        return await cosm.queryContractSmart(contractAddress, getLeaseStatusMsg());
     }
 
     public async getLeaserConfig(contractAddress: string): Promise<LeaserConfig> {
@@ -34,11 +34,11 @@ export class Lease {
     }
 
     public async openLease(contractAddress: string, nolusWallet: NolusWallet, leaseDenom: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, openLease(leaseDenom), fee, undefined, fundCoin);
+        return nolusWallet.еxecuteContract(contractAddress, openLeaseMsg(leaseDenom), fee, undefined, fundCoin);
     }
 
     public async repayLease(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, repayLease(), fee, undefined, fundCoin);
+        return nolusWallet.еxecuteContract(contractAddress, repayLeaseMsg(), fee, undefined, fundCoin);
     }
 
     public async setLeaserConfig(contractAddress: string, nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
