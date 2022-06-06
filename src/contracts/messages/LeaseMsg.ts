@@ -50,7 +50,9 @@ export const getLoanInformationMsg = (leaseAddress: string) => {
 };
 
 export const getLeaserConfigMsg = () => {
-    return {};
+    return {
+        config: {},
+    };
 };
 
 export const setLeaserConfigMsg = (leaserConfig: LeaserConfig) => {
