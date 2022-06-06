@@ -8,3 +8,4 @@ export * from './LeaserConfig';
 export * from './Liability';
 export * from './Repayment';
 export * from './LoanInfo';
+export * from './LeaserConfigInfo';

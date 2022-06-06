@@ -1,6 +1,3 @@
-import { Liability } from '../types/Liability';
-import { Repayment } from '../types/Repayment';
-import { LeaserConfig } from '../types/LeaserConfig';
 import { LeaserConfigInfo } from '../types/LeaserConfigInfo';
 
 export const makeLeaseApplyMsg = (amount: string, denom: string) => {
