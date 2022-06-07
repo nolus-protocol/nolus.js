@@ -1,4 +1,3 @@
-import { LeaserConfigInfo } from '../types/LeaserConfigInfo';
 import { LeaserConfig } from '../types';
 
 export const makeLeaseApplyMsg = (amount: string, denom: string) => {
