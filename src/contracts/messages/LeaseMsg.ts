@@ -1,4 +1,5 @@
 import { LeaserConfigInfo } from '../types/LeaserConfigInfo';
+import { LeaserConfig } from '../types';
 
 export const makeLeaseApplyMsg = (amount: string, denom: string) => {
     return {
@@ -53,6 +54,6 @@ export const getLeaserConfigMsg = () => {
     };
 };
 
-export const setLeaserConfigMsg = (leaserConfigInfo: LeaserConfigInfo) => {
-    return leaserConfigInfo;
+export const setLeaserConfigMsg = (leaserConfig: LeaserConfig) => {
+    return leaserConfig;
 };
