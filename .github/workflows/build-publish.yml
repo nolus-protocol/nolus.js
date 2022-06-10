@@ -27,11 +27,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
 
-      #- name: Clear cache
-      #  run: yarn cache clean
+      - name: Clear cache
+        run: yarn cache clean
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Build module
         run: yarn build
