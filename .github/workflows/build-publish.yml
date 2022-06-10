@@ -31,7 +31,7 @@ jobs:
         run: yarn cache clean
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --force
 
       - name: Build module
         run: yarn build
