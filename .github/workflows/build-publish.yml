@@ -28,7 +28,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Clear cache
-        run: yarn cache clear
+        run: yarn cache clean
 
       - name: Install dependencies
         run: yarn install
