@@ -35,15 +35,15 @@ export class Oracle {
     }
 
     public async addFeeder(contractAddress: string, nolusWallet: NolusWallet, feederWalletAddress: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, addFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
+        return nolusWallet.executeContract(contractAddress, addFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
     }
 
     public async addFeedPrice(contractAddress: string, nolusWallet: NolusWallet, feedPrices: FeedPrices, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, addFeedPriceMsg(feedPrices), fee, undefined, fundCoin);
+        return nolusWallet.executeContract(contractAddress, addFeedPriceMsg(feedPrices), fee, undefined, fundCoin);
     }
 
     public async updateSupportPairs(contractAddress: string, nolusWallet: NolusWallet, pairs: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, updateSupportedPairsMsg(pairs), fee, undefined, fundCoin);
+        return nolusWallet.executeContract(contractAddress, updateSupportedPairsMsg(pairs), fee, undefined, fundCoin);
     }
 
     public async changeConfig(
@@ -54,6 +54,6 @@ export class Oracle {
         fee: StdFee | 'auto' | number,
         fundCoin?: Coin[],
     ): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, changeConfigMsg(priceFeedPeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
+        return nolusWallet.executeContract(contractAddress, changeConfigMsg(priceFeedPeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
     }
 }

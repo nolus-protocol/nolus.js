@@ -39,6 +39,12 @@ export const repayLeaseMsg = () => {
     }
 };
 
+export const closeLeaseMsg = () => {
+    return {
+        close: []
+    }
+};
+
 export const getLoanInformationMsg = (leaseAddress: string) => {
     return {
         loan: {

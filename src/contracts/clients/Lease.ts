@@ -1,6 +1,6 @@
 import { LeaseApply, LeaserConfig } from '../types';
 import { NolusClient } from '../../client';
-import { getCurrentOpenLeasesMsg, getLeaserConfigMsg, getLeaseStatusMsg, getLoanInformationMsg, makeLeaseApplyMsg, openLeaseMsg, repayLeaseMsg, setLeaserConfigMsg } from '../messages';
+import { closeLeaseMsg, getCurrentOpenLeasesMsg, getLeaserConfigMsg, getLeaseStatusMsg, getLoanInformationMsg, makeLeaseApplyMsg, openLeaseMsg, repayLeaseMsg, setLeaserConfigMsg } from "../messages";
 import { NolusWallet } from '../../wallet/NolusWallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -35,14 +35,18 @@ export class Lease {
     }
 
     public async openLease(contractAddress: string, nolusWallet: NolusWallet, leaseDenom: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, openLeaseMsg(leaseDenom), fee, undefined, fundCoin);
+        return nolusWallet.executeContract(contractAddress, openLeaseMsg(leaseDenom), fee, undefined, fundCoin);
     }
 
     public async repayLease(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, repayLeaseMsg(), fee, undefined, fundCoin);
+        return nolusWallet.executeContract(contractAddress, repayLeaseMsg(), fee, undefined, fundCoin);
+    }
+
+    public async closeLease(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(contractAddress, closeLeaseMsg(), fee, undefined, fundCoin);
     }
 
     public async setLeaserConfig(contractAddress: string, nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.еxecuteContract(contractAddress, setLeaserConfigMsg(leaserConfig), fee, undefined, fundCoin);
+        return nolusWallet.executeContract(contractAddress, setLeaserConfigMsg(leaserConfig), fee, undefined, fundCoin);
     }
 }
