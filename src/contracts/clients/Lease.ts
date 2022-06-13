@@ -1,12 +1,11 @@
 import { LeaseApply, LeaserConfig } from '../types';
 import { NolusClient } from '../../client';
-import { closeLeaseMsg, getCurrentOpenLeasesMsg, getLeaserConfigMsg, getLeaseStatusMsg, getLoanInformationMsg, makeLeaseApplyMsg, openLeaseMsg, repayLeaseMsg, setLeaserConfigMsg } from "../messages";
+import { closeLeaseMsg, getCurrentOpenLeasesMsg, getLeaserConfigMsg, getLeaseStatusMsg, getLoanInformationMsg, makeLeaseApplyMsg, openLeaseMsg, repayLeaseMsg, setLeaserConfigMsg } from '../messages';
 import { NolusWallet } from '../../wallet/NolusWallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { LoanInfo } from '../types/LoanInfo';
-import { LeaserConfigInfo } from '../types/LeaserConfigInfo';
 
 export class Lease {
     public async makeLeaseApply(contractAddress: string, amount: string, denom: string): Promise<LeaseApply> {
