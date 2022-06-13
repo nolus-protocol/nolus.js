@@ -35,14 +35,14 @@ export const getLeaseStatusMsg = () => {
 
 export const repayLeaseMsg = () => {
     return {
-        repay: []
-    }
+        repay: [],
+    };
 };
 
 export const closeLeaseMsg = () => {
     return {
-        close: []
-    }
+        close: [],
+    };
 };
 
 export const getLoanInformationMsg = (leaseAddress: string) => {
