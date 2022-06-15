@@ -18,7 +18,7 @@ export class Lease {
         return await cosm.queryContractSmart(contractAddress, getCurrentOpenLeasesMsg(ownerAddress));
     }
 
-    public async getLeaseStatus(contractAddress: string): Promise<LeaseStatus[]> {
+    public async getLeaseStatus(contractAddress: string): Promise<LeaseStatus> {
         const cosm = await NolusClient.getInstance().getCosmWasmClient();
         return await cosm.queryContractSmart(contractAddress, getLeaseStatusMsg());
     }
