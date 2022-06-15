@@ -5,6 +5,7 @@ import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
+import { LeaseStatus } from '../types/LeaseStatus';
 
 export class Lease {
     public async makeLeaseApply(contractAddress: string, amount: string, denom: string): Promise<LeaseApply> {
@@ -12,12 +13,12 @@ export class Lease {
         return await cosm.queryContractSmart(contractAddress, makeLeaseApplyMsg(amount, denom));
     }
 
-    public async getCurrentOpenLeases(contractAddress: string, ownerAddress: string) {
+    public async getCurrentOpenLeases(contractAddress: string, ownerAddress: string): Promise<string[]> {
         const cosm = await NolusClient.getInstance().getCosmWasmClient();
         return await cosm.queryContractSmart(contractAddress, getCurrentOpenLeasesMsg(ownerAddress));
     }
 
-    public async getLeaseStatus(contractAddress: string) {
+    public async getLeaseStatus(contractAddress: string): Promise<LeaseStatus[]> {
         const cosm = await NolusClient.getInstance().getCosmWasmClient();
         return await cosm.queryContractSmart(contractAddress, getLeaseStatusMsg());
     }

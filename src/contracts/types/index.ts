@@ -5,6 +5,7 @@ export * from './FeedPrices';
 export * from './LeaseApply';
 export * from './LeaserConfig';
 export * from './LeaserConfigInfo';
+export * from './LeaseStatus';
 export * from './Liability';
 export * from './LoanInfo';
 export * from './Prices';
