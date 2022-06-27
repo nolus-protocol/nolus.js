@@ -45,6 +45,12 @@ export const closeLeaseMsg = () => {
     };
 };
 
+export const getLppBalanceMsg = () => {
+    return {
+        lpp_balance: [],
+    };
+};
+
 export const getLoanInformationMsg = (leaseAddress: string) => {
     return {
         loan: {

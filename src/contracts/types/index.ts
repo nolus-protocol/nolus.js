@@ -8,5 +8,6 @@ export * from './LeaserConfigInfo';
 export * from './LeaseStatus';
 export * from './Liability';
 export * from './LoanInfo';
+export * from './LppBalance';
 export * from './Prices';
 export * from './Repayment';
