@@ -68,3 +68,12 @@ export const getLeaserConfigMsg = () => {
 export const setLeaserConfigMsg = (leaserConfig: LeaserConfig) => {
     return leaserConfig;
 };
+
+export const getOutstandingInterestMsg = (leaseAddress: string, outstandingTime: string) => {
+    return {
+        loan_outstanding_interest: {
+            lease_addr: leaseAddress,
+            outstanding_time: outstandingTime,
+        },
+    };
+};
