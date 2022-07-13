@@ -16,8 +16,9 @@ import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
-import { LeaseStatus } from '../types/LeaseStatus';
+import { LeaseInfo } from '../types/LeaseInfo';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { LeaseStatus } from '../types/LeaseStatus';
 
 export class Lease {
     private cosmWasmClient!: CosmWasmClient;
@@ -43,6 +44,7 @@ export class Lease {
     }
 
     public async getLoanInformation(contractAddress: string, leaseAddress: string): Promise<LoanInfo> {
+        this.cosmWasmClient;
         return await this.cosmWasmClient.queryContractSmart(contractAddress, getLoanInformationMsg(leaseAddress));
     }
 
