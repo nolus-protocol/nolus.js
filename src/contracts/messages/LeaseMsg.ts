@@ -51,6 +51,12 @@ export const getLppBalanceMsg = () => {
     };
 };
 
+export const getLppConfigMsg = () => {
+    return {
+        config: [],
+    };
+};
+
 export const getLoanInformationMsg = (leaseAddress: string) => {
     return {
         loan: {

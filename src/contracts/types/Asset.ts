@@ -1,4 +1,4 @@
 export interface Asset {
     amount: string;
-    denom: string;
+    symbol: string;
 }

@@ -1,4 +1,4 @@
-import { Asset, LeaseApply, LeaserConfig, LoanInfo, LppBalance } from '../types';
+import { Asset, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig } from '../types';
 import {
     closeLeaseMsg,
     getCurrentOpenLeasesMsg,
@@ -50,6 +50,10 @@ export class Lease {
 
     public async getLppBalance(contractAddress: string): Promise<LppBalance> {
         return await this.cosmWasmClient.queryContractSmart(contractAddress, getLppBalanceMsg());
+    }
+
+    public async getLppConfig(contractAddress: string): Promise<LppConfig> {
+        return await this.cosmWasmClient.queryContractSmart(contractAddress, getLeaserConfigMsg());
     }
 
     public async getOutstandingInterest(contractAddress: string, leaseAddr: string, outstandingTime: string): Promise<Asset> {
