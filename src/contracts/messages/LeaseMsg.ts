@@ -11,10 +11,10 @@ export const makeLeaseApplyMsg = (amount: string, symbol: string) => {
     };
 };
 
-export const openLeaseMsg = (symbol: string) => {
+export const openLeaseMsg = (denom: string) => {
     return {
         open_lease: {
-            symbol: symbol,
+            currency: denom,
         },
     };
 };
