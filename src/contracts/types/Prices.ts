@@ -1,8 +1,9 @@
-import { Asset } from './Asset';
-
 export interface Denom {
     denom: string;
-    price: Asset;
+    price: {
+        amount: string;
+        denom: string;
+    };
 }
 
 export interface Prices {
