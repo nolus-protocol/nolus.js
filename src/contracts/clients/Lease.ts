@@ -1,9 +1,11 @@
-import { Asset, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig } from '../types';
+import { Asset, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig, Rewards } from '../types';
 import {
+    claimRewardsMsg,
     closeLeaseMsg,
     getCurrentOpenLeasesMsg,
     getLeaserConfigMsg,
     getLeaseStatusMsg,
+    getLenderRewardsMsg,
     getLoanInformationMsg,
     getLppBalanceMsg,
     getLppConfigMsg,
@@ -45,7 +47,6 @@ export class Lease {
     }
 
     public async getLoanInformation(contractAddress: string, leaseAddress: string): Promise<LoanInfo> {
-        this.cosmWasmClient;
         return await this.cosmWasmClient.queryContractSmart(contractAddress, getLoanInformationMsg(leaseAddress));
     }
 
@@ -75,5 +76,13 @@ export class Lease {
 
     public async setLeaserConfig(contractAddress: string, nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(contractAddress, setLeaserConfigMsg(leaserConfig), fee, undefined, fundCoin);
+    }
+
+    public async getLenderRewards(contractAddress: string, address: string): Promise<Rewards> {
+        return await this.cosmWasmClient.queryContractSmart(contractAddress, getLenderRewardsMsg(address));
+    }
+
+    public async claimRewards(contractAddress: string, nolusWallet: NolusWallet, address: string | undefined, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(contractAddress, claimRewardsMsg(address), fee, undefined, fundCoin);
     }
 }

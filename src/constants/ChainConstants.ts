@@ -1,8 +1,8 @@
 export class ChainConstants {
     /* Coin configurations */
     public static readonly CHAIN_NAME: string = 'Nolus';
-    public static readonly COIN_DENOM: string = 'nolus';
-    public static readonly COIN_MINIMAL_DENOM: string = 'unolus';
+    public static readonly COIN_DENOM: string = 'nls';
+    public static readonly COIN_MINIMAL_DENOM: string = 'unls';
     public static readonly COIN_DECIMALS: number = 6;
     public static readonly COIN_GECKO_ID: string = 'cosmos';
     public static readonly COIN_TYPE: number = 118;

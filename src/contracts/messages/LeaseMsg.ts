@@ -57,6 +57,22 @@ export const getLppConfigMsg = () => {
     };
 };
 
+export const getLenderRewardsMsg = (address: string) => {
+    return {
+        rewards: {
+            address: address,
+        },
+    };
+};
+
+export const claimRewardsMsg = (address?: string) => {
+    return {
+        claim_rewards: {
+            other_recipient: address,
+        },
+    };
+};
+
 export const getLoanInformationMsg = (leaseAddress: string) => {
     return {
         loan: {
