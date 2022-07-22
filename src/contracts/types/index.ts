@@ -13,3 +13,4 @@ export * from './LppBalance';
 export * from './LppConfig';
 export * from './Prices';
 export * from './Repayment';
+export * from './Rewards';
