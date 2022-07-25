@@ -1,15 +1,17 @@
-import { Asset, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig, Rewards } from '../types';
+import { Asset, Balance, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig, Rewards } from '../types';
 import {
     claimRewardsMsg,
     closeLeaseMsg,
     getCurrentOpenLeasesMsg,
     getLeaserConfigMsg,
     getLeaseStatusMsg,
+    getLenderDepositMsg,
     getLenderRewardsMsg,
     getLoanInformationMsg,
     getLppBalanceMsg,
     getLppConfigMsg,
     getOutstandingInterestMsg,
+    lenderDepositMsg,
     makeLeaseApplyMsg,
     openLeaseMsg,
     repayLeaseMsg,
@@ -84,5 +86,13 @@ export class Lease {
 
     public async claimRewards(contractAddress: string, nolusWallet: NolusWallet, address: string | undefined, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(contractAddress, claimRewardsMsg(address), fee, undefined, fundCoin);
+    }
+
+    public async getLenderDeposit(contractAddress: string, lenderWalletAddr: string): Promise<Balance> {
+        return await this.cosmWasmClient.queryContractSmart(contractAddress, getLenderDepositMsg(lenderWalletAddr));
+    }
+
+    public async lenderDeposit(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(contractAddress, lenderDepositMsg(), fee, undefined, fundCoin);
     }
 }

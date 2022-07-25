@@ -65,6 +65,20 @@ export const getLenderRewardsMsg = (address: string) => {
     };
 };
 
+export const getLenderDepositMsg = (address: string) => {
+    return {
+        balance: {
+            address: address,
+        },
+    };
+};
+
+export const lenderDepositMsg = () => {
+    return {
+        deposit: [],
+    };
+};
+
 export const claimRewardsMsg = (address?: string) => {
     return {
         claim_rewards: {

@@ -1,4 +1,5 @@
 export * from './Asset';
+export * from './Balance';
 export * from './Config';
 export * from './FeedPrice';
 export * from './FeedPrices';
