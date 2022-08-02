@@ -12,6 +12,7 @@ export * from './Liability';
 export * from './LoanInfo';
 export * from './LppBalance';
 export * from './LppConfig';
+export * from './Price';
 export * from './Prices';
 export * from './Repayment';
 export * from './Rewards';
