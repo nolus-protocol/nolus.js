@@ -73,6 +73,12 @@ export const getLenderDepositMsg = (address: string) => {
     };
 };
 
+export const distributeRewardsMsg = () => {
+    return {
+        distribute_rewards: [],
+    };
+};
+
 export const lenderDepositMsg = () => {
     return {
         deposit: [],

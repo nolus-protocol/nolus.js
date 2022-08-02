@@ -2,6 +2,7 @@ import { Asset, Balance, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConf
 import {
     claimRewardsMsg,
     closeLeaseMsg,
+    distributeRewardsMsg,
     getCurrentOpenLeasesMsg,
     getLeaserConfigMsg,
     getLeaseStatusMsg,
@@ -94,5 +95,9 @@ export class Lease {
 
     public async lenderDeposit(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(contractAddress, lenderDepositMsg(), fee, undefined, fundCoin);
+    }
+
+    public async distributeRewards(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(contractAddress, distributeRewardsMsg(), fee, undefined, fundCoin);
     }
 }
