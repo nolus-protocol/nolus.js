@@ -1,5 +1,5 @@
 import { Prices } from '../types';
-import { addFeederMsg, addFeedPriceMsg, changeConfigMsg, getConfigMsg, getFeedersMsg, getPrice, getPrices, getSupportedPairs, isFeederMsg, updateSupportedPairsMsg } from '../messages';
+import { addFeederMsg, addFeedPriceMsg, changeConfigMsg, getConfigMsg, getFeedersMsg, getPrices, getSupportedPairs, isFeederMsg, updateSupportedPairsMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -7,7 +7,6 @@ import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmcl
 import { FeedPrices } from '../types/FeedPrices';
 import { Config } from '../types/Config';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { Price } from '../types/Price';
 
 export class Oracle {
     private cosmWasmClient!: CosmWasmClient;
@@ -34,10 +33,6 @@ export class Oracle {
 
     public async getConfig(contractAddress: string): Promise<Config> {
         return await this.cosmWasmClient.queryContractSmart(contractAddress, getConfigMsg());
-    }
-
-    public async getPrice(contractAddress: string): Promise<Price> {
-        return await this.cosmWasmClient.queryContractSmart(contractAddress, getPrice());
     }
 
     public async addFeeder(contractAddress: string, nolusWallet: NolusWallet, feederWalletAddress: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {

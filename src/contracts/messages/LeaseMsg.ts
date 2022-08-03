@@ -119,3 +119,9 @@ export const getOutstandingInterestMsg = (leaseAddress: string, outstandingTime:
         },
     };
 };
+
+export const getPriceMsg = () => {
+    return {
+        price: [],
+    };
+};

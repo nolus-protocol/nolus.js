@@ -1,4 +1,4 @@
-import { Asset, Balance, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig, Rewards } from '../types';
+import { Asset, Balance, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig, Price, Rewards } from '../types';
 import {
     claimRewardsMsg,
     closeLeaseMsg,
@@ -12,6 +12,7 @@ import {
     getLppBalanceMsg,
     getLppConfigMsg,
     getOutstandingInterestMsg,
+    getPriceMsg,
     lenderDepositMsg,
     makeLeaseApplyMsg,
     openLeaseMsg,
@@ -99,5 +100,9 @@ export class Lease {
 
     public async distributeRewards(contractAddress: string, nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(contractAddress, distributeRewardsMsg(), fee, undefined, fundCoin);
+    }
+
+    public async getPrice(contractAddress: string): Promise<Price> {
+        return await this.cosmWasmClient.queryContractSmart(contractAddress, getPriceMsg());
     }
 }

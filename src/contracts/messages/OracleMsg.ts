@@ -54,12 +54,6 @@ export const getConfigMsg = () => {
     };
 };
 
-export const getPrice = () => {
-    return {
-        price: [],
-    };
-};
-
 export const changeConfigMsg = (priceFeedPeriod: number, feedersPrecentageNeeded: number) => {
     return {
         config: {
