@@ -125,3 +125,11 @@ export const getPriceMsg = () => {
         price: [],
     };
 };
+
+export const burnMsg = (burnAmount: string) => {
+    return {
+        burn: {
+            amount: burnAmount,
+        },
+    };
+};
