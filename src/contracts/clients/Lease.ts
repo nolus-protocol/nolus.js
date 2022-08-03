@@ -1,5 +1,6 @@
 import { Asset, Balance, LeaseApply, LeaserConfig, LoanInfo, LppBalance, LppConfig, Price, Rewards } from '../types';
 import {
+    burnMsg,
     claimRewardsMsg,
     closeLeaseMsg,
     distributeRewardsMsg,
@@ -66,6 +67,10 @@ export class Lease {
         return await this.cosmWasmClient.queryContractSmart(contractAddress, getOutstandingInterestMsg(leaseAddr, outstandingTime));
     }
 
+    public async getPrice(contractAddress: string): Promise<Price> {
+        return await this.cosmWasmClient.queryContractSmart(contractAddress, getPriceMsg());
+    }
+
     public async openLease(contractAddress: string, nolusWallet: NolusWallet, leaseDenom: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(contractAddress, openLeaseMsg(leaseDenom), fee, undefined, fundCoin);
     }
@@ -102,7 +107,7 @@ export class Lease {
         return nolusWallet.executeContract(contractAddress, distributeRewardsMsg(), fee, undefined, fundCoin);
     }
 
-    public async getPrice(contractAddress: string): Promise<Price> {
-        return await this.cosmWasmClient.queryContractSmart(contractAddress, getPriceMsg());
+    public async burnDeposit(contractAddress: string, nolusWallet: NolusWallet, burnAmount: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(contractAddress, burnMsg(burnAmount), fee, undefined, fundCoin);
     }
 }
