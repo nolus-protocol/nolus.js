@@ -3,6 +3,7 @@ import {
     burnMsg,
     claimRewardsMsg,
     closeLeaseMsg,
+    configRewardsTransferMsg,
     distributeRewardsMsg,
     getCurrentOpenLeasesMsg,
     getLeaserConfigMsg,
@@ -18,6 +19,7 @@ import {
     makeLeaseApplyMsg,
     openLeaseMsg,
     repayLeaseMsg,
+    sendRewardsMsg,
     setLeaserConfigMsg,
 } from '../messages';
 import { NolusWallet } from '../../wallet';
@@ -109,5 +111,13 @@ export class Lease {
 
     public async burnDeposit(contractAddress: string, nolusWallet: NolusWallet, burnAmount: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(contractAddress, burnMsg(burnAmount), fee, undefined, fundCoin);
+    }
+
+    public async configRewardsTransfer(contractAddress: string, nolusWallet: NolusWallet, address: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(contractAddress, configRewardsTransferMsg(address), fee, undefined, fundCoin);
+    }
+
+    public async sendRewardsMsg(contractAddress: string, nolusWallet: NolusWallet, rewards: Asset, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(contractAddress, sendRewardsMsg(rewards), fee, undefined, fundCoin);
     }
 }
