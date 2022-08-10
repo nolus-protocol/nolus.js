@@ -144,6 +144,8 @@ export const configRewardsTransferMsg = (address: string) => {
 
 export const sendRewardsMsg = (rewards: Asset) => {
     return {
-        send_rewards: rewards,
+        send_rewards: {
+            amount: rewards,
+        },
     };
 };
