@@ -3,8 +3,8 @@ import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
-import { configRewardsTransferMsg, getLoanInformationMsg, getLppBalanceMsg, getLppConfigMsg, getOutstandingInterestMsg, getPriceMsg, sendRewardsMsg } from '../messages';
-import { Asset, LoanInfo, LppBalance, LppConfig, Price } from '../types';
+import { configRewardsTransferMsg, sendRewardsMsg } from '../messages';
+import { Asset } from '../types';
 
 export class Treasury {
     private cosmWasmClient!: CosmWasmClient;
