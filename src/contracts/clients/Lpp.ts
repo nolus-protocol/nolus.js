@@ -6,7 +6,6 @@ import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmcl
 import {
     burnMsg,
     claimRewardsMsg,
-    configRewardsTransferMsg,
     distributeRewardsMsg,
     getLenderDepositMsg,
     getLenderRewardsMsg,
@@ -16,7 +15,6 @@ import {
     getOutstandingInterestMsg,
     getPriceMsg,
     lenderDepositMsg,
-    sendRewardsMsg,
 } from '../messages';
 import { Asset, Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards } from '../types';
 
