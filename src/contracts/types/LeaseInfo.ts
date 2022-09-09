@@ -9,4 +9,5 @@ export interface LeaseInfo {
     previous_interest_due: Asset;
     current_margin_due: Asset;
     current_interest_due: Asset;
+    validity: string;
 }
