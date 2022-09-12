@@ -1,8 +1,11 @@
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
-import { Coin, OfflineSigner } from '@cosmjs/proto-signing';
+import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
-import { DeliverTxResponse, StdFee } from '@cosmjs/stargate';
+import stargate_1, { DeliverTxResponse, isDeliverTxFailure, StdFee } from '@cosmjs/stargate';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
+import { toUtf8 } from '@cosmjs/encoding';
+import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
+import { ContractData } from '../contracts/types/ContractData';
 
 export class NolusWallet extends SigningCosmWasmClient {
     address?: string;
@@ -41,5 +44,38 @@ export class NolusWallet extends SigningCosmWasmClient {
             throw new Error('Sender address is missing');
         }
         return this.execute(this.address, contractAddress, msg, fee, memo, funds);
+    }
+
+    public async executeContractSubMsg(contractData: ContractData[], fee: StdFee | 'auto' | number, memo?: string, funds?: Coin[]): Promise<ExecuteResult> {
+        if (!this.address) {
+            throw new Error('Sender address is missing');
+        }
+
+        const executeContractMsg: EncodeObject[] = contractData.map((contractData) => {
+            return {
+                typeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
+                value: MsgExecuteContract.fromPartial({
+                    sender: this.address,
+                    contract: contractData.contractAddress,
+                    msg: toUtf8(JSON.stringify(contractData.msg)),
+                    funds: [...(funds || [])],
+                }),
+            };
+        });
+        const result = await this.signAndBroadcast(this.address, executeContractMsg, fee, memo);
+        if (isDeliverTxFailure(result)) {
+            throw new Error(this.createDeliverTxResponseErrorMessage(result));
+        }
+        return {
+            logs: stargate_1.logs.parseRawLog(result.rawLog),
+            height: result.height,
+            transactionHash: result.transactionHash,
+            gasWanted: result.gasWanted,
+            gasUsed: result.gasUsed,
+        };
+    }
+
+    private createDeliverTxResponseErrorMessage(result: DeliverTxResponse) {
+        return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
     }
 }
