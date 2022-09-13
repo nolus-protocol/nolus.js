@@ -1,5 +1,5 @@
 import { Prices } from '../types';
-import { addFeederMsg, addFeedPriceMsg, changeConfigMsg, getConfigMsg, getFeedersMsg, getPrices, getSupportedPairs, isFeederMsg, updateSupportedPairsMsg } from '../messages';
+import { addFeederMsg, feedPricesMsg, getConfigMsg, getFeedersMsg, getPricesForMsg, getSupportedPairs, isFeederMsg, setConfigMsg, updateSupportedPairsMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -10,51 +10,54 @@ import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 
 export class Oracle {
     private cosmWasmClient!: CosmWasmClient;
+    private _contractAddress: string;
 
-    constructor(cosmWasmClient: CosmWasmClient) {
+    constructor(cosmWasmClient: CosmWasmClient, contractAddress: string) {
         this.cosmWasmClient = cosmWasmClient;
+        this._contractAddress = contractAddress;
     }
 
-    public async getPrices(contractAddress: string, denoms: string[]): Promise<Prices> {
-        return await this.cosmWasmClient.queryContractSmart(contractAddress, getPrices(denoms));
+    get contractAddress(): string {
+        return this._contractAddress;
     }
 
-    public async getSupportedPairs(contractAddress: string): Promise<string[][]> {
-        return await this.cosmWasmClient.queryContractSmart(contractAddress, getSupportedPairs());
+    set contractAddress(value: string) {
+        this._contractAddress = value;
     }
 
-    public async isFeeder(contractAddress: string, address: string): Promise<boolean> {
-        return await this.cosmWasmClient.queryContractSmart(contractAddress, isFeederMsg(address));
+    public async getPricesFor(denoms: string[]): Promise<Prices> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesForMsg(denoms));
     }
 
-    public async getFeeders(contractAddress: string): Promise<string[]> {
-        return await this.cosmWasmClient.queryContractSmart(contractAddress, getFeedersMsg());
+    public async getSupportedPairs(): Promise<string[][]> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getSupportedPairs());
     }
 
-    public async getConfig(contractAddress: string): Promise<Config> {
-        return await this.cosmWasmClient.queryContractSmart(contractAddress, getConfigMsg());
+    public async isFeeder(address: string): Promise<boolean> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, isFeederMsg(address));
     }
 
-    public async addFeeder(contractAddress: string, nolusWallet: NolusWallet, feederWalletAddress: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(contractAddress, addFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
+    public async getFeeders(): Promise<string[]> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getFeedersMsg());
     }
 
-    public async addFeedPrice(contractAddress: string, nolusWallet: NolusWallet, feedPrices: FeedPrices, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(contractAddress, addFeedPriceMsg(feedPrices), fee, undefined, fundCoin);
+    public async getConfig(): Promise<Config> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getConfigMsg());
     }
 
-    public async updateSupportPairs(contractAddress: string, nolusWallet: NolusWallet, pairs: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(contractAddress, updateSupportedPairsMsg(pairs), fee, undefined, fundCoin);
+    public async addFeeder(nolusWallet: NolusWallet, feederWalletAddress: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, addFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
     }
 
-    public async changeConfig(
-        contractAddress: string,
-        nolusWallet: NolusWallet,
-        priceFeedPeriod: number,
-        feedersPrecentageNeeded: number,
-        fee: StdFee | 'auto' | number,
-        fundCoin?: Coin[],
-    ): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(contractAddress, changeConfigMsg(priceFeedPeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
+    public async feedPrices(nolusWallet: NolusWallet, feedPrices: FeedPrices, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, feedPricesMsg(feedPrices), fee, undefined, fundCoin);
+    }
+
+    public async updateSupportPairs(nolusWallet: NolusWallet, pairs: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, updateSupportedPairsMsg(pairs), fee, undefined, fundCoin);
+    }
+
+    public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, feedersPrecentageNeeded: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, setConfigMsg(priceFeedPeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
     }
 }
