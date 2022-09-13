@@ -1,6 +1,6 @@
 import { FeedPrices } from '../types/FeedPrices';
 
-export const getPrices = (denoms: string[]) => {
+export const getPricesForMsg = (denoms: string[]) => {
     return {
         price_for: {
             denoms: denoms,
@@ -36,7 +36,7 @@ export const isFeederMsg = (feederWalletAddress: string) => {
     };
 };
 
-export const addFeedPriceMsg = (feedPrices: FeedPrices) => {
+export const feedPricesMsg = (feedPrices: FeedPrices) => {
     return {
         feed_prices: feedPrices,
     };
@@ -54,7 +54,7 @@ export const getConfigMsg = () => {
     };
 };
 
-export const changeConfigMsg = (priceFeedPeriod: number, feedersPrecentageNeeded: number) => {
+export const setConfigMsg = (priceFeedPeriod: number, feedersPrecentageNeeded: number) => {
     return {
         config: {
             price_feed_period_secs: priceFeedPeriod,
