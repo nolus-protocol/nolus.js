@@ -15,14 +15,6 @@ export class Leaser {
         this._contractAddress = contractAddress;
     }
 
-    get contractAddress(): string {
-        return this._contractAddress;
-    }
-
-    set contractAddress(value: string) {
-        this._contractAddress = value;
-    }
-
     public async leaseQuote(amount: string, symbol: string): Promise<LeaseApply> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, leaseQuoteMsg(amount, symbol));
     }
