@@ -15,14 +15,6 @@ export class Treasury {
         this._contractAddress = contractAddress;
     }
 
-    get contractAddress(): string {
-        return this._contractAddress;
-    }
-
-    set contractAddress(value: string) {
-        this._contractAddress = value;
-    }
-
     public async configRewardsTransfer(nolusWallet: NolusWallet, address: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, configRewardsTransferMsg(address), fee, undefined, fundCoin);
     }

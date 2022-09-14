@@ -27,14 +27,6 @@ export class Lpp {
         this._contractAddress = contractAddress;
     }
 
-    get contractAddress(): string {
-        return this._contractAddress;
-    }
-
-    set contractAddress(value: string) {
-        this._contractAddress = value;
-    }
-
     public async getLoanInformation(leaseAddress: string): Promise<LoanInfo> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLoanInformationMsg(leaseAddress));
     }

@@ -17,14 +17,6 @@ export class Oracle {
         this._contractAddress = contractAddress;
     }
 
-    get contractAddress(): string {
-        return this._contractAddress;
-    }
-
-    set contractAddress(value: string) {
-        this._contractAddress = value;
-    }
-
     public async getPricesFor(denoms: string[]): Promise<Prices> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesForMsg(denoms));
     }
