@@ -1,4 +1,4 @@
 export interface Repayment {
-    period_sec: number;
-    grace_period_sec: number;
+    period: number;
+    grace_period: number;
 }
