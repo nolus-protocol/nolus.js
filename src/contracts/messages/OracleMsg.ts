@@ -22,6 +22,14 @@ export const addFeederMsg = (feederWalletAddress: string) => {
     };
 };
 
+export const removeFeederMsg = (feederWalletAddress: string) => {
+    return {
+        remove_feeder: {
+            feeder_address: feederWalletAddress,
+        },
+    };
+};
+
 export const getFeedersMsg = () => {
     return {
         feeders: {},

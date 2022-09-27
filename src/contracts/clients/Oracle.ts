@@ -1,5 +1,5 @@
 import { Prices } from '../types';
-import { addFeederMsg, feedPricesMsg, getConfigMsg, getFeedersMsg, getPricesForMsg, getSupportedPairs, isFeederMsg, setConfigMsg, updateSupportedPairsMsg } from '../messages';
+import { addFeederMsg, feedPricesMsg, getConfigMsg, getFeedersMsg, getPricesForMsg, getSupportedPairs, isFeederMsg, removeFeederMsg, setConfigMsg, updateSupportedPairsMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -39,6 +39,10 @@ export class Oracle {
 
     public async addFeeder(nolusWallet: NolusWallet, feederWalletAddress: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, addFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
+    }
+
+    public async removeFeeder(nolusWallet: NolusWallet, feederWalletAddress: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, removeFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
     }
 
     public async feedPrices(nolusWallet: NolusWallet, feedPrices: FeedPrices, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
