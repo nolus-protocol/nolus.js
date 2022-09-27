@@ -1,9 +1,17 @@
 import { FeedPrices } from '../types/FeedPrices';
 
+export const getPriceForMsg = (denoms: string) => {
+    return {
+        price: {
+            currency: denoms,
+        },
+    };
+};
+
 export const getPricesForMsg = (denoms: string[]) => {
     return {
-        price_for: {
-            denoms: denoms,
+        prices: {
+            currencies: denoms,
         },
     };
 };
@@ -50,9 +58,9 @@ export const feedPricesMsg = (feedPrices: FeedPrices) => {
     };
 };
 
-export const updateSupportedPairsMsg = (pairs: string[][]) => {
+export const updateSupportedPairsMsg = (currency_paths: string[][]) => {
     return {
-        supported_denom_pairs: { pairs: pairs },
+        currency_paths: currency_paths,
     };
 };
 

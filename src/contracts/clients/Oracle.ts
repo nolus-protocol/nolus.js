@@ -1,5 +1,17 @@
 import { Prices } from '../types';
-import { addFeederMsg, feedPricesMsg, getConfigMsg, getFeedersMsg, getPricesForMsg, getSupportedPairs, isFeederMsg, removeFeederMsg, setConfigMsg, updateSupportedPairsMsg } from '../messages';
+import {
+    addFeederMsg,
+    feedPricesMsg,
+    getConfigMsg,
+    getFeedersMsg,
+    getPriceForMsg,
+    getPricesForMsg,
+    getSupportedPairs,
+    isFeederMsg,
+    removeFeederMsg,
+    setConfigMsg,
+    updateSupportedPairsMsg,
+} from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -17,8 +29,12 @@ export class Oracle {
         this._contractAddress = contractAddress;
     }
 
-    public async getPricesFor(denoms: string[]): Promise<Prices> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesForMsg(denoms));
+    public async getPricesFor(currencies: string[]): Promise<Prices> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesForMsg(currencies));
+    }
+
+    public async getPriceFor(currency: string): Promise<Prices> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceForMsg(currency));
     }
 
     public async getSupportedPairs(): Promise<string[][]> {
@@ -49,8 +65,8 @@ export class Oracle {
         return nolusWallet.executeContract(this._contractAddress, feedPricesMsg(feedPrices), fee, undefined, fundCoin);
     }
 
-    public async updateSupportPairs(nolusWallet: NolusWallet, pairs: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, updateSupportedPairsMsg(pairs), fee, undefined, fundCoin);
+    public async updateSupportPairs(nolusWallet: NolusWallet, currency_paths: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, updateSupportedPairsMsg(currency_paths), fee, undefined, fundCoin);
     }
 
     public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, feedersPrecentageNeeded: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
