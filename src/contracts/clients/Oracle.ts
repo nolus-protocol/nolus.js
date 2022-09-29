@@ -69,7 +69,7 @@ export class Oracle {
         return nolusWallet.executeContract(this._contractAddress, updateSupportedPairsMsg(paths), fee, undefined, fundCoin);
     }
 
-    public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, feedersPrecentageNeeded: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, setConfigMsg(priceFeedPeriod, feedersPrecentageNeeded), fee, undefined, fundCoin);
+    public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, setConfigMsg(priceFeedPeriod, expectedFeeders), fee, undefined, fundCoin);
     }
 }
