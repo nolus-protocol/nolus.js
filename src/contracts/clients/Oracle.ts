@@ -1,4 +1,4 @@
-import { Prices } from '../types';
+import { Price } from '../types';
 import {
     addFeederMsg,
     feedPricesMsg,
@@ -29,11 +29,11 @@ export class Oracle {
         this._contractAddress = contractAddress;
     }
 
-    public async getPricesFor(currencies: string[]): Promise<Prices> {
+    public async getPricesFor(currencies: string[]): Promise<Price[]> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesForMsg(currencies));
     }
 
-    public async getPriceFor(currency: string): Promise<Prices> {
+    public async getPriceFor(currency: string): Promise<Price> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceForMsg(currency));
     }
 
