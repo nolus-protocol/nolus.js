@@ -72,11 +72,11 @@ export const getConfigMsg = () => {
     };
 };
 
-export const setConfigMsg = (priceFeedPeriod: number, feedersPrecentageNeeded: number) => {
+export const setConfigMsg = (priceFeedPeriod: number, expectedFeeders: number) => {
     return {
         config: {
             price_feed_period_secs: priceFeedPeriod,
-            feeders_percentage_needed: feedersPrecentageNeeded,
+            expected_feeders: expectedFeeders,
         },
     };
 };
