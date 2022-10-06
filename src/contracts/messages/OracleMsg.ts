@@ -58,7 +58,7 @@ export const feedPricesMsg = (feedPrices: FeedPrices) => {
     };
 };
 
-export const updateSupportedPairsMsg = (paths: string[][]) => {
+export const updateCurrencyPathsMsg = (paths: string[][]) => {
     return {
         currency_paths: {
             paths: paths,
