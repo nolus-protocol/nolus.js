@@ -10,7 +10,7 @@ import {
     isFeederMsg,
     removeFeederMsg,
     setConfigMsg,
-    updateSupportedPairsMsg,
+    updateCurrencyPathsMsg,
 } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
@@ -65,8 +65,8 @@ export class Oracle {
         return nolusWallet.executeContract(this._contractAddress, feedPricesMsg(feedPrices), fee, undefined, fundCoin);
     }
 
-    public async updateSupportPairs(nolusWallet: NolusWallet, paths: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, updateSupportedPairsMsg(paths), fee, undefined, fundCoin);
+    public async updateCurrencyPaths(nolusWallet: NolusWallet, paths: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, updateCurrencyPathsMsg(paths), fee, undefined, fundCoin);
     }
 
     public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {

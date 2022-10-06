@@ -1,7 +1,7 @@
 export interface Liability {
-    max_percent: number;
-    healthy_percent: number;
-    init_percent: number;
+    max: number;
+    healthy: number;
+    init: number;
     recalc_time: number;
     first_liq_warn: number;
     second_liq_warn: number;
