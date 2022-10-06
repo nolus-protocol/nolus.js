@@ -1,7 +1,7 @@
 export interface Liability {
     max: number;
     healthy: number;
-    init: number;
+    initial: number;
     recalc_time: number;
     first_liq_warn: number;
     second_liq_warn: number;
