@@ -6,6 +6,7 @@ export class ChainConstants {
     public static readonly COIN_DECIMALS: number = 6;
     public static readonly COIN_GECKO_ID: string = 'cosmos';
     public static readonly COIN_TYPE: number = 118;
+    public static readonly GAS_PRICE: string = '0.0025unls';
 
     /* Chain configurations */
     public static readonly BECH32_PREFIX_ACC_ADDR: string = 'nolus';
