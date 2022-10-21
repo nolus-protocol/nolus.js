@@ -33,26 +33,26 @@ export const getPriceMsg = () => {
     };
 };
 
-export const getLenderRewardsMsg = (address: string) => {
+export const getLenderRewardsMsg = (lenderAddress: string) => {
     return {
         rewards: {
-            address: address,
+            address: lenderAddress,
         },
     };
 };
 
-export const claimRewardsMsg = (address?: string) => {
+export const claimRewardsMsg = (recipientAddress?: string) => {
     return {
         claim_rewards: {
-            other_recipient: address,
+            other_recipient: recipientAddress,
         },
     };
 };
 
-export const getLenderDepositMsg = (address: string) => {
+export const getLenderDepositMsg = (lenderAddress: string) => {
     return {
         balance: {
-            address: address,
+            address: lenderAddress,
         },
     };
 };

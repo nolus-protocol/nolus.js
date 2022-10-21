@@ -15,8 +15,8 @@ export class Leaser {
         this._contractAddress = contractAddress;
     }
 
-    public async leaseQuote(amount: string, symbol: string): Promise<LeaseApply> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, leaseQuoteMsg(amount, symbol));
+    public async leaseQuote(downpaymentAmount: string, downpaymentCurrency: string): Promise<LeaseApply> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, leaseQuoteMsg(downpaymentAmount, downpaymentCurrency));
     }
 
     public async getCurrentOpenLeasesByOwner(ownerAddress: string): Promise<string[]> {
@@ -27,8 +27,8 @@ export class Leaser {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLeaserConfigMsg());
     }
 
-    public async openLease(nolusWallet: NolusWallet, leaseDenom: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, openLeaseMsg(leaseDenom), fee, undefined, fundCoin);
+    public async openLease(nolusWallet: NolusWallet, leaseCurrency: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, openLeaseMsg(leaseCurrency), fee, undefined, fundCoin);
     }
 
     public async setLeaserConfig(nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {

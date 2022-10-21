@@ -39,24 +39,24 @@ export class Lpp {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLppConfigMsg());
     }
 
-    public async getOutstandingInterest(leaseAddr: string, outstandingTime: string): Promise<Asset> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getOutstandingInterestMsg(leaseAddr, outstandingTime));
+    public async getOutstandingInterest(leaseAddress: string, outstandingTime: string): Promise<Asset> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getOutstandingInterestMsg(leaseAddress, outstandingTime));
     }
 
     public async getPrice(): Promise<Price> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceMsg());
     }
 
-    public async getLenderRewards(address: string): Promise<Rewards> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderRewardsMsg(address));
+    public async getLenderRewards(lenderAddress: string): Promise<Rewards> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderRewardsMsg(lenderAddress));
     }
 
-    public async claimRewards(nolusWallet: NolusWallet, address: string | undefined, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, claimRewardsMsg(address), fee, undefined, fundCoin);
+    public async claimRewards(nolusWallet: NolusWallet, recipientAddress: string | undefined, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, claimRewardsMsg(recipientAddress), fee, undefined, fundCoin);
     }
 
-    public async getLenderDeposit(lenderWalletAddr: string): Promise<Balance> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderDepositMsg(lenderWalletAddr));
+    public async getLenderDeposit(lenderAddress: string): Promise<Balance> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderDepositMsg(lenderAddress));
     }
 
     public async deposit(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {

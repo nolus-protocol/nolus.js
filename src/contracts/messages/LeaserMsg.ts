@@ -1,20 +1,20 @@
 import { LeaserConfig } from '../types';
 
-export const leaseQuoteMsg = (amount: string, symbol: string) => {
+export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string) => {
     return {
         quote: {
             downpayment: {
-                symbol: symbol,
-                amount: amount,
+                ticker: downpaymentAmount,
+                amount: downpaymentCurrency,
             },
         },
     };
 };
 
-export const getCurrentOpenLeasesByOwnerMsg = (address: string) => {
+export const getCurrentOpenLeasesByOwnerMsg = (ownerAddress: string) => {
     return {
         leases: {
-            owner: address,
+            owner: ownerAddress,
         },
     };
 };
@@ -25,10 +25,10 @@ export const getLeaserConfigMsg = () => {
     };
 };
 
-export const openLeaseMsg = (denom: string) => {
+export const openLeaseMsg = (leaseCurrency: string) => {
     return {
         open_lease: {
-            currency: denom,
+            currency: leaseCurrency,
         },
     };
 };
