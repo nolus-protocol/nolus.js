@@ -4,8 +4,8 @@ export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: st
     return {
         quote: {
             downpayment: {
-                ticker: downpaymentAmount,
-                amount: downpaymentCurrency,
+                ticker: downpaymentCurrency,
+                amount: downpaymentAmount,
             },
         },
     };
