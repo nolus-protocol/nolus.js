@@ -1,5 +1,5 @@
 export interface LppConfig {
-    lpn_symbol: string;
+    lpn_ticker: string;
     lease_code_id: number;
     base_interest_rate: number;
     utilization_optimal: number;
