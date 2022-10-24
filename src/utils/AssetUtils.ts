@@ -9,12 +9,17 @@ export class AssetUtils {
         const response = execSync(curlCommand).toString();
 
         const currencyData = JSON.parse(response).currencies[ticker.toString()];
+        if (currencyData === undefined) {
+            return 'Ticker was not found in the list.';
+        }
         const currencyIBCroutes = currencyData.ibc_route;
         const currencySymbol = currencyData.symbol;
 
-        let stringToConvert = 'transfer/';
+        if (currencyIBCroutes.length === 0) return currencySymbol;
+
+        let stringToConvert = '';
         currencyIBCroutes.forEach((IBCroute: string) => {
-            stringToConvert += IBCroute + '/transfer/';
+            stringToConvert += 'transfer/' + IBCroute + '/';
         });
         stringToConvert += currencySymbol;
 
