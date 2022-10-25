@@ -1,14 +1,10 @@
 import { Buffer } from 'buffer';
 import { Hash } from '@keplr-wallet/crypto';
-import { execSync } from 'child_process';
-
+import * as fs from 'fs';
 export class AssetUtils {
-    public static makeIBCMinimalDenom(accessToken: string, ticker: string): string {
-        const currenciesFilePath = 'https://gitlab-nomo.credissimo.net/api/v4/projects/15/repository/files/testnet-rila%2Fcurrencies%2Ejson/raw?ref=main';
-        const curlCommand = 'curl ' + currenciesFilePath + " -H 'PRIVATE-TOKEN: " + accessToken + "'";
-        const response = execSync(curlCommand).toString();
-
-        const currencyData = JSON.parse(response).currencies[ticker.toString()];
+    public static async makeIBCMinimalDenom(accessToken: string, ticker: string): Promise<string> {
+        const filePath = 'currencies.json';
+        const currencyData = JSON.parse(fs.readFileSync(filePath).toString()).currencies[ticker.toString()];
         if (currencyData === undefined) {
             return 'Ticker was not found in the list.';
         }

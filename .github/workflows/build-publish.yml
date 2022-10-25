@@ -33,6 +33,14 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Download currencies data
+        env:
+          ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
+          CURRENCIES_FILE_NAME: "currencies.json"
+        run: |
+         apt install curl
+         curl -H "PRIVATE-TOKEN: $ACCESS_TOKEN" "https://gitlab-nomo.credissimo.net/api/v4/projects/15/repository/files/testnet-rila%2Fcurrencies%2Ejson/raw?ref=main" -o "$CURRENCIES_FILE_NAME"
+
       - name: Build module
         run: yarn build
 
@@ -44,6 +52,9 @@ jobs:
 
       - name: Copy package.json
         run: cp package.json build/package.json
+
+      - name: Copy currencies data file
+        run: cp $CURRENCIES_FILE_NAME build/$CURRENCIES_FILE_NAME
 
       - name: Publish package to NPM
         run: npm publish ./build
