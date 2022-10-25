@@ -6,11 +6,12 @@ import {
     getFeedersMsg,
     getPriceForMsg,
     getPricesForMsg,
-    getSupportedPairs,
+    getCurrencyPairsMsg,
+    getSwapPathMsg,
     isFeederMsg,
     removeFeederMsg,
     setConfigMsg,
-    updateCurrencyPathsMsg,
+    updateSwapTreeMsg,
 } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
@@ -37,8 +38,8 @@ export class Oracle {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceForMsg(currency));
     }
 
-    public async getSupportedPairs(): Promise<string[][]> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getSupportedPairs());
+    public async getCurrencyPairs(): Promise<string[][]> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getCurrencyPairsMsg());
     }
 
     public async isFeeder(address: string): Promise<boolean> {
@@ -65,8 +66,8 @@ export class Oracle {
         return nolusWallet.executeContract(this._contractAddress, feedPricesMsg(feedPrices), fee, undefined, fundCoin);
     }
 
-    public async updateCurrencyPaths(nolusWallet: NolusWallet, paths: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, updateCurrencyPathsMsg(paths), fee, undefined, fundCoin);
+    public async updateSwapTree(nolusWallet: NolusWallet, swapTree: string[][], fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, updateSwapTreeMsg(swapTree), fee, undefined, fundCoin);
     }
 
     public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {

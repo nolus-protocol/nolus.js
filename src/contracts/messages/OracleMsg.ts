@@ -1,9 +1,9 @@
 import { FeedPrices } from '../types/FeedPrices';
 
-export const getPriceForMsg = (denoms: string) => {
+export const getPriceForMsg = (denom: string) => {
     return {
         price: {
-            currency: denoms,
+            currency: denom,
         },
     };
 };
@@ -16,9 +16,9 @@ export const getPricesForMsg = (denoms: string[]) => {
     };
 };
 
-export const getSupportedPairs = () => {
+export const getCurrencyPairsMsg = () => {
     return {
-        supported_denom_pairs: {},
+        supported_currency_pairs: {},
     };
 };
 
@@ -58,10 +58,10 @@ export const feedPricesMsg = (feedPrices: FeedPrices) => {
     };
 };
 
-export const updateCurrencyPathsMsg = (paths: string[][]) => {
+export const updateSwapTreeMsg = (swapTree: string[][]) => {
     return {
-        currency_paths: {
-            paths: paths,
+        swap_tree: {
+            tree: swapTree,
         },
     };
 };
@@ -77,6 +77,15 @@ export const setConfigMsg = (priceFeedPeriod: number, expectedFeeders: number) =
         config: {
             price_feed_period_secs: priceFeedPeriod,
             expected_feeders: expectedFeeders,
+        },
+    };
+};
+
+export const getSwapPathMsg = (fromCurrency: string, toCurrency: string) => {
+    return {
+        swap_path: {
+            from: fromCurrency,
+            to: toCurrency,
         },
     };
 };
