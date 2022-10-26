@@ -54,7 +54,7 @@ jobs:
         run: cp package.json build/package.json
 
       - name: Copy currencies data file
-        run: cp $CURRENCIES_FILE_NAME build/$CURRENCIES_FILE_NAME
+        run: cp "$CURRENCIES_FILE_NAME" build/"$CURRENCIES_FILE_NAME"
 
       - name: Publish package to NPM
         run: npm publish ./build
