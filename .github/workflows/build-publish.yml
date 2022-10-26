@@ -12,7 +12,8 @@ jobs:
     name: Build and Publish
     runs-on: ubuntu-latest
     environment: production
-
+    env:
+      CURRENCIES_FILE_NAME: "currencies.json"
     strategy:
       matrix:
         node-version: [14.x]
@@ -34,9 +35,6 @@ jobs:
         run: yarn install
 
       - name: Download currencies data
-        env:
-          ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
-          CURRENCIES_FILE_NAME: "currencies.json"
         run: |
          sudo apt-get install curl -y
          curl "https://raw.githubusercontent.com/Nolus-Protocol/Wiki/main/testnet-rila/currencies.json?token=GHSAT0AAAAAABZMOGLRYSN44MP6RLPLZH7IY2Y3MZQ" -o "$CURRENCIES_FILE_NAME"
