@@ -38,7 +38,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
           CURRENCIES_FILE_NAME: "currencies.json"
         run: |
-         apt install curl
+         apk add curl
          curl -H "PRIVATE-TOKEN: $ACCESS_TOKEN" "https://gitlab-nomo.credissimo.net/api/v4/projects/15/repository/files/testnet-rila%2Fcurrencies%2Ejson/raw?ref=main" -o "$CURRENCIES_FILE_NAME"
 
       - name: Build module
