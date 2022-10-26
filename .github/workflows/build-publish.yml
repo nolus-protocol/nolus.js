@@ -39,7 +39,7 @@ jobs:
           CURRENCIES_FILE_NAME: "currencies.json"
         run: |
          sudo apt-get install curl -y
-         curl -H "PRIVATE-TOKEN: $ACCESS_TOKEN" "https://gitlab-nomo.credissimo.net/api/v4/projects/15/repository/files/testnet-rila%2Fcurrencies%2Ejson/raw?ref=main" -o "$CURRENCIES_FILE_NAME"
+         curl "https://raw.githubusercontent.com/Nolus-Protocol/Wiki/main/testnet-rila/currencies.json?token=GHSAT0AAAAAABZMOGLRYSN44MP6RLPLZH7IY2Y3MZQ" -o "$CURRENCIES_FILE_NAME"
 
       - name: Build module
         run: yarn build
