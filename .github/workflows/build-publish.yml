@@ -44,7 +44,7 @@ jobs:
         run: yarn build
 
       - name: Copy LICENSE
-        run: cp LICENSE build/LICENSE
+        run: cp LICENSE.txt build/LICENSE.txt
 
       - name: Copy README
         run: cp README.md build/README.md
