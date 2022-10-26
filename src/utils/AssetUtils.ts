@@ -1,10 +1,22 @@
 import { Buffer } from 'buffer';
 import { Hash } from '@keplr-wallet/crypto';
-import * as fs from 'fs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import CURRENCIES from './currencies.json';
 export class AssetUtils {
-    public static async makeIBCMinimalDenom(accessToken: string, ticker: string): Promise<string> {
-        const filePath = 'currencies.json';
-        const currencyData = JSON.parse(fs.readFileSync(filePath).toString()).currencies[ticker.toString()];
+    public static getCurrenciesByGroup(group: string): string[] {
+        const currenciesData = CURRENCIES.currencies;
+        const currenciesByGroup: string[] = [];
+        Object.keys(currenciesData).forEach((key) => {
+            const currencyObj = currenciesData[key as keyof typeof currenciesData];
+            if (currencyObj.groups.indexOf(group) > -1) currenciesByGroup.push(key);
+        });
+        return currenciesByGroup;
+    }
+
+    public static makeIBCMinimalDenom(ticker: string): string {
+        const currenciesData = CURRENCIES.currencies;
+        const currencyData = currenciesData[ticker as keyof typeof currenciesData];
         if (currencyData === undefined) {
             return 'Ticker was not found in the list.';
         }
