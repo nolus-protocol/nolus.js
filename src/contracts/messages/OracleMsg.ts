@@ -58,7 +58,7 @@ export const feedPricesMsg = (feedPrices: FeedPrices) => {
     };
 };
 
-export const updateSwapTreeMsg = (swapTree: string[][]) => {
+export const updateSwapTreeMsg = (swapTree: ((string | number)[] | ((string | number)[] | (string | number)[][])[])[]) => {
     return {
         swap_tree: {
             tree: swapTree,
