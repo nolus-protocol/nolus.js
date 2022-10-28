@@ -1,4 +1,5 @@
 import { FeedPrices } from '../types/FeedPrices';
+import { SwapTree } from '../types/SwapTree';
 
 export const getPriceForMsg = (denom: string) => {
     return {
@@ -58,7 +59,7 @@ export const feedPricesMsg = (feedPrices: FeedPrices) => {
     };
 };
 
-export const updateSwapTreeMsg = (swapTree: ((string | number)[] | ((string | number)[] | (string | number)[][])[])[]) => {
+export const updateSwapTreeMsg = (swapTree: SwapTree) => {
     return {
         swap_tree: {
             tree: swapTree,

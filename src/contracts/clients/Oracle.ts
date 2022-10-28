@@ -21,6 +21,7 @@ import { FeedPrices } from '../types/FeedPrices';
 import { Config } from '../types/Config';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { SwapNode } from '../types/SwapNode';
+import { SwapTree } from '../types/SwapTree';
 
 export class Oracle {
     private cosmWasmClient!: CosmWasmClient;
@@ -71,12 +72,7 @@ export class Oracle {
         return nolusWallet.executeContract(this._contractAddress, feedPricesMsg(feedPrices), fee, undefined, fundCoin);
     }
 
-    public async updateSwapTree(
-        nolusWallet: NolusWallet,
-        swapTree: ((string | number)[] | ((string | number)[] | (string | number)[][])[])[],
-        fee: StdFee | 'auto' | number,
-        fundCoin?: Coin[],
-    ): Promise<ExecuteResult> {
+    public async updateSwapTree(nolusWallet: NolusWallet, swapTree: SwapTree, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, updateSwapTreeMsg(swapTree), fee, undefined, fundCoin);
     }
 
