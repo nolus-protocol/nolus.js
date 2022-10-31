@@ -20,8 +20,9 @@ import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmcl
 import { FeedPrices } from '../types/FeedPrices';
 import { Config } from '../types/Config';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { SwapNode } from '../types/SwapNode';
+import { SwapPath } from '../types/SwapPath';
 import { SwapTree } from '../types/SwapTree';
+import { CurrencyPair } from '../types/CurrencyPair';
 
 export class Oracle {
     private cosmWasmClient!: CosmWasmClient;
@@ -40,11 +41,11 @@ export class Oracle {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceForMsg(currency));
     }
 
-    public async getCurrencyPairs(): Promise<string[][]> {
+    public async getCurrencyPairs(): Promise<CurrencyPair[]> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getCurrencyPairsMsg());
     }
 
-    public async getSwapPath(fromCurrency: string, toCurrency: string): Promise<SwapNode[]> {
+    public async getSwapPath(fromCurrency: string, toCurrency: string): Promise<SwapPath[]> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getSwapPathMsg(fromCurrency, toCurrency));
     }
 
