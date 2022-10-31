@@ -9,8 +9,7 @@ export class AssetUtils {
         const currenciesByGroup: string[] = [];
         Object.keys(currenciesData).forEach((key) => {
             const currencyObj = currenciesData[key as keyof typeof currenciesData];
-            if (currencyObj.groups.indexOf(group) > -1 || (group === 'Payment' && (currencyObj.groups.indexOf('Lpn') > -1 || currencyObj.groups.indexOf('Lease') > -1)))
-                currenciesByGroup.push(currencyObj.ticker);
+            if (currencyObj.groups.indexOf(group) > -1 || (group === 'Payment' && (currencyObj.groups.indexOf('Lpn') > -1 || currencyObj.groups.indexOf('Lease') > -1))) currenciesByGroup.push(key);
         });
         return currenciesByGroup;
     }
