@@ -90,3 +90,9 @@ export const getSwapPathMsg = (fromCurrency: string, toCurrency: string) => {
         },
     };
 };
+
+export const getSwapTreeMsg = () => {
+    return {
+        swap_tree: {},
+    };
+};

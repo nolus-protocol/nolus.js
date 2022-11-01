@@ -12,6 +12,7 @@ import {
     removeFeederMsg,
     setConfigMsg,
     updateSwapTreeMsg,
+    getSwapTreeMsg,
 } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
@@ -47,6 +48,10 @@ export class Oracle {
 
     public async getSwapPath(fromCurrency: string, toCurrency: string): Promise<SwapPath[]> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getSwapPathMsg(fromCurrency, toCurrency));
+    }
+
+    public async getSwapTree(): Promise<SwapTree> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getSwapTreeMsg());
     }
 
     public async isFeeder(address: string): Promise<boolean> {
