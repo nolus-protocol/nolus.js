@@ -1,8 +1,9 @@
 import { LeaserConfig } from '../types';
 
-export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string) => {
+export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string) => {
     return {
         quote: {
+            lease_asset: leaseAsset,
             downpayment: {
                 ticker: downpaymentCurrency,
                 amount: downpaymentAmount,

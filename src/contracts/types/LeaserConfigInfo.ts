@@ -8,7 +8,7 @@ export interface LeaserConfigInfo {
     lease_interest_rate_margin: number;
     liability: Liability;
     repayment: Repayment;
-    time_alarms: string;
-    market_price_oracle: string;
-    profit: string;
+    time_alarms?: string;
+    market_price_oracle?: string;
+    profit?: string;
 }
