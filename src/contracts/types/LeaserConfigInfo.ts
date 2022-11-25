@@ -7,7 +7,7 @@ export interface LeaserConfigInfo {
     lpp_addr?: number;
     lease_interest_rate_margin: number;
     liability: Liability;
-    repayment: Repayment;
+    lease_interest_payment: Repayment;
     time_alarms?: string;
     market_price_oracle?: string;
     profit?: string;

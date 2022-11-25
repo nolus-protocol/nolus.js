@@ -1,4 +1,4 @@
 export interface Repayment {
-    period: number;
+    due_period: number;
     grace_period: number;
 }
