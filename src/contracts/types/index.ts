@@ -16,3 +16,6 @@ export * from './LppConfig';
 export * from './Price';
 export * from './Repayment';
 export * from './Rewards';
+export * from './SwapTree';
+export * from './SwapPath';
+export * from './CurrencyPair';
