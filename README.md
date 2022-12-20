@@ -30,7 +30,7 @@ npm install @nolus/nolusjs
 
 Set up Nolus client:
 
-```sh
+```js
 NolusClient.setInstance(tendermintRpc);
 ```
 
@@ -38,7 +38,7 @@ NolusClient.setInstance(tendermintRpc);
 
 Create and set up wallet:
 
-```sh
+```js
 const mnemonic = KeyUtils.generateMnemonic();
   const accountNumbers = [0];
   const path = accountNumbers.map(makeCosmoshubPath)[0];
@@ -58,7 +58,7 @@ nolusWallet.useAccount();
 
 Set up instance:
 
-```sh
+```js
 NolusClient.setInstance(NODE_ENDPOINT);
 const cosm = await NolusClient.getInstance().getCosmWasmClient();
 
@@ -73,7 +73,7 @@ Nolus Protocol interacting:
 
 Lease Quote:
 
-```sh
+```js
 await leaserInstance.leaseQuote(
         '1000', // downpaymentAmount
         'unls' // downpaymentCurrencyTicker
@@ -83,7 +83,7 @@ await leaserInstance.leaseQuote(
 
 Open Lease:
 
-```sh
+```js
 // fee structure example
 
 const fee =  {
@@ -108,7 +108,7 @@ await leaserInstance.openLease(
 
 Get Leaser contract config:
 
-```sh
+```js
 await leaserInstance.getConfig();
 ```
 
@@ -116,11 +116,11 @@ await leaserInstance.getConfig();
 
 Import and use directly:
 
-```sh
+```js
 ChainConstants.COIN_TYPE;
 ```
 
-```sh
+```js
 const privateKey = await KeyUtils.getPrivateKeyFromMnemonic(mnemonic, path);
 ```
 
