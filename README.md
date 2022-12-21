@@ -59,7 +59,7 @@ nolusWallet.useAccount();
 Set up instance:
 
 ```js
-NolusClient.setInstance(NODE_ENDPOINT);
+NolusClient.setInstance(tendermintRpc);
 const cosm = await NolusClient.getInstance().getCosmWasmClient();
 
     oracleInstance = new NolusContracts.Oracle(cosm, oracleContractAddress);
@@ -128,6 +128,6 @@ const privateKey = await KeyUtils.getPrivateKeyFromMnemonic(mnemonic, path);
 
 See [DEVELOPMENT.md](DEVELOPMENT.md).
 
-## References
+## Collaboration
 
 Nolus.js uses [CosmJS](https://github.com/cosmos/cosmjs).
