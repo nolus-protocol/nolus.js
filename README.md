@@ -126,6 +126,10 @@ ChainConstants.COIN_TYPE;
 const privateKey = await KeyUtils.getPrivateKeyFromMnemonic(mnemonic, path);
 ```
 
+## API Documentation
+
+[The auto-generated API documentation](https://nolus-protocol.github.io/nolus.js/) - Requires basic TypeScript understanding.
+
 ## Development
 
 See [DEVELOPMENT.md](DEVELOPMENT.md).
