@@ -1,6 +1,6 @@
 # Nolus.js
 
-<p align="center"><img alt="Nolus.js" src="nolusjs-logo.svg" width="180" /></p>
+<br /><p align="center"><img alt="Nolus.js" src="nolusjs-logo.svg" width="100" margin-top="px"/></p><br />
 
 JavaScript SDK for Nolus, written in TypeScript.
 
