@@ -6,6 +6,19 @@ import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmcl
 import { configRewardsTransferMsg, sendRewardsMsg } from '../messages';
 import { Asset } from '../types';
 
+/**
+ * The Treasury has the basic functionality available to a regular account. We envision its role as a collector of fees and profit,
+ * and as a source of rewards directed to lenders via Liquidity Pools.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { NolusClient, NolusContracts } from '@nolus/nolusjs';
+ *
+ * const cosm = await NolusClient.getInstance().getCosmWasmClient();
+ * treasuryInstance = new NolusContracts.Treasury(cosm, treasuryContractAddress);
+ * ```
+ */
 export class Treasury {
     private cosmWasmClient!: CosmWasmClient;
     private _contractAddress: string;

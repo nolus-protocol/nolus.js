@@ -2,6 +2,9 @@ import { Bip39, EnglishMnemonic, HdPath, Random, ripemd160, Secp256k1, sha256, S
 import { Bech32 } from '@cosmjs/encoding';
 import { ChainConstants } from '../constants';
 
+/**
+ * KeyUtils provides helpers for working with Nolus accounts.
+ */
 export class KeyUtils {
     public static async getPrivateKeyFromMnemonic(mnemonic: string, hdPath: HdPath) {
         const seed = await this.getSeedFromMnemonic(mnemonic);

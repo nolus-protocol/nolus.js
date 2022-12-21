@@ -2,6 +2,9 @@ import { Coin, CoinPretty, Dec, DecUtils, Int, PricePretty } from '@keplr-wallet
 import { Coin as CosmosCoin } from '@cosmjs/proto-signing';
 import { ChainConstants } from '../constants';
 
+/**
+ * CurrencyUtils provides helpers for working with Nolus currencies. Conversion, formatting and calculation.
+ */
 export class CurrencyUtils {
     public static convertNolusToUNolus(tokenAmount: string): Coin {
         return this.convertDenomToMinimalDenom(tokenAmount, ChainConstants.COIN_MINIMAL_DENOM, ChainConstants.COIN_DECIMALS);

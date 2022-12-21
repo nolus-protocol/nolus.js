@@ -25,6 +25,18 @@ import { SwapPath } from '../types/SwapPath';
 import { SwapTree, Tree } from '../types/SwapTree';
 import { CurrencyPair } from '../types/CurrencyPair';
 
+/**
+ * An on-chain oracle providing market data prices to the rest of the system.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { NolusClient, NolusContracts } from '@nolus/nolusjs';
+ *
+ * const cosm = await NolusClient.getInstance().getCosmWasmClient();
+ * oracleInstance = new NolusContracts.Oracle(cosm, oracleContractAddress);
+ * ```
+ */
 export class Oracle {
     private cosmWasmClient!: CosmWasmClient;
     private _contractAddress: string;

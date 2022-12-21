@@ -4,6 +4,17 @@ import { Coin } from '@cosmjs/proto-signing';
 import { toHex } from '@cosmjs/encoding';
 import { IndexedTx } from '@cosmjs/stargate';
 
+/**
+ * Nolus Client service class.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { NolusClient } from '@nolus/nolusjs';
+ *
+ * NolusClient.setInstance(tendermintRpc);
+ * ```
+ */
 export class NolusClient {
     private static instance: NolusClient | null = null;
     protected cosmWasmClient: Promise<CosmWasmClient> | undefined;
@@ -85,6 +96,9 @@ export class NolusClient {
         });
     }
 
+    /**
+     * Search tx by address in all modules.
+     */
     public async searchTxByAddress(address: string): Promise<readonly IndexedTx[]> {
         let txs: readonly IndexedTx[] = [];
         const bankSenderQuery = `message.module='bank' AND transfer.sender='${address}'`;

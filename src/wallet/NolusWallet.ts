@@ -7,6 +7,18 @@ import { toUtf8 } from '@cosmjs/encoding';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
 import { ContractData } from '../contracts/types/ContractData';
 
+/**
+ * Nolus Wallet service class.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { nolusOfflineSigner } from '@nolus/nolusjs/build/wallet/NolusWalletFactory';
+ *
+ * const nolusWallet = await nolusOfflineSigner(offlineSigner);
+ * nolusWallet.useAccount();
+ * ```
+ */
 export class NolusWallet extends SigningCosmWasmClient {
     address?: string;
     pubKey?: Uint8Array;

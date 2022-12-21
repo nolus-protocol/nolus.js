@@ -6,6 +6,18 @@ import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmcl
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { LeaseStatus } from '../types/LeaseStatus';
 
+/**
+ * Each Lease instance tracks a new customer's lease.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { NolusClient, NolusContracts } from '@nolus/nolusjs';
+ *
+ * const cosm = await NolusClient.getInstance().getCosmWasmClient();
+ * leaseInstance = new NolusContracts.Lease(cosm, leaseContractAddress);
+ * ```
+ */
 export class Lease {
     private cosmWasmClient!: CosmWasmClient;
     private _contractAddress: string;

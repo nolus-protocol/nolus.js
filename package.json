@@ -14,7 +14,8 @@
         "build": "yarn build:module",
         "build:module": "tsc",
         "lint": "eslint '**/*.{ts,js}'",
-        "bump": "npm version"
+        "bump": "npm version",
+        "generate-docs": "npx typedoc src/index.ts"
     },
     "repository": {
         "type": "git",
@@ -34,11 +35,11 @@
     "dependencies": {
         "@cosmjs/cosmwasm-stargate": "0.28.4",
         "@cosmjs/crypto": "0.28.4",
+        "@cosmjs/encoding": "0.28.4",
         "@cosmjs/ledger-amino": "0.28.4",
         "@cosmjs/proto-signing": "0.28.4",
-        "@cosmjs/tendermint-rpc": "0.28.4",
-        "@cosmjs/encoding": "0.28.4",
         "@cosmjs/stargate": "0.28.4",
+        "@cosmjs/tendermint-rpc": "0.28.4",
         "@keplr-wallet/crypto": "^0.10.5",
         "@keplr-wallet/unit": "^0.10.5",
         "@ledgerhq/hw-app-cosmos": "^6.27.1",
@@ -49,7 +50,8 @@
         "@types/ledgerhq__hw-transport": "^4.21.4",
         "@types/uuid": "^8.3.1",
         "crypto-browserify": "^3.12.0",
-        "crypto-js": "^4.1.1"
+        "crypto-js": "^4.1.1",
+        "typedoc": "^0.23.23"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.27.1",

@@ -6,6 +6,18 @@ import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 
+/**
+ * A customer-facing smart contract keeping a register of customer's Lease instances.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { NolusClient, NolusContracts } from '@nolus/nolusjs';
+ *
+ * const cosm = await NolusClient.getInstance().getCosmWasmClient();
+ * leaserInstance = new NolusContracts.Leaser(cosm, leaserContractAddress);
+ * ```
+ */
 export class Leaser {
     private cosmWasmClient!: CosmWasmClient;
     private _contractAddress: string;

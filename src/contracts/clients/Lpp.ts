@@ -18,6 +18,21 @@ import {
 } from '../messages';
 import { Asset, Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards } from '../types';
 
+/**
+ * The Lpp is a complex smart contract. We can consider three points of view:
+ * - There is an Lpp instance per currency that serves all borrow requests and repayments in that same currency;
+ * - There is an Lpp instance per currency, serving all lenders that provide liquidity in that same currency;
+ * - There is an Lpp instance per currency which regularly receives rewards from the Rewards Dispatcher contract.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { NolusClient, NolusContracts } from '@nolus/nolusjs';
+ *
+ * const cosm = await NolusClient.getInstance().getCosmWasmClient();
+ * lppInstance = new NolusContracts.Lpp(cosm, lppContractAddress);
+ * ```
+ */
 export class Lpp {
     private cosmWasmClient!: CosmWasmClient;
     private _contractAddress: string;
