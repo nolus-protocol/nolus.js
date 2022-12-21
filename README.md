@@ -1,5 +1,7 @@
 # Nolus.js
 
+<h1><p align="center"><img alt="Nolus.js" src="nolusjs-logo.svg" width="180" /></p></h1>
+
 JavaScript SDK for Nolus, written in TypeScript.
 
 ## Modules
