@@ -21,13 +21,14 @@
 <p>Usage:</p>
 <pre><code class="language-ts"><span class="hl-6">import</span><span class="hl-0"> { </span><span class="hl-1">NolusClient</span><span class="hl-0">, </span><span class="hl-1">NolusContracts</span><span class="hl-0"> } </span><span class="hl-6">from</span><span class="hl-0"> </span><span class="hl-8">&#39;@nolus/nolusjs&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-4">cosm</span><span class="hl-0"> = </span><span class="hl-6">await</span><span class="hl-0"> </span><span class="hl-1">NolusClient</span><span class="hl-0">.</span><span class="hl-2">getInstance</span><span class="hl-0">().</span><span class="hl-2">getCosmWasmClient</span><span class="hl-0">();</span><br/><span class="hl-1">oracleInstance</span><span class="hl-0"> = </span><span class="hl-3">new</span><span class="hl-0"> </span><span class="hl-1">NolusContracts</span><span class="hl-0">.</span><span class="hl-2">Oracle</span><span class="hl-0">(</span><span class="hl-1">cosm</span><span class="hl-0">, </span><span class="hl-1">oracleContractAddress</span><span class="hl-0">);</span>
 </code></pre>
+<p>There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">Oracle</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:40</li></ul></aside>
+<li>Defined in src/contracts/clients/Oracle.ts:42</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -56,6 +57,11 @@
 <a href="NolusContracts.Oracle.html#isFeeder" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Feeder</span></a>
 <a href="NolusContracts.Oracle.html#removeFeeder" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>remove<wbr/>Feeder</span></a>
 <a href="NolusContracts.Oracle.html#setConfig" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Config</span></a>
+<a href="NolusContracts.Oracle.html#simulateAddFeederTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Add<wbr/>Feeder<wbr/>Tx</span></a>
+<a href="NolusContracts.Oracle.html#simulateFeedPricesTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Feed<wbr/>Prices<wbr/>Tx</span></a>
+<a href="NolusContracts.Oracle.html#simulateRemoveFeederTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Remove<wbr/>Feeder<wbr/>Tx</span></a>
+<a href="NolusContracts.Oracle.html#simulateSetConfigTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Set<wbr/>Config<wbr/>Tx</span></a>
+<a href="NolusContracts.Oracle.html#simulateUpdateSwapTreeTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Update<wbr/>Swap<wbr/>Tree<wbr/>Tx</span></a>
 <a href="NolusContracts.Oracle.html#updateSwapTree" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update<wbr/>Swap<wbr/>Tree</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
@@ -74,19 +80,19 @@
 <h5>contractAddress: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="NolusContracts.Oracle.html" class="tsd-signature-type" data-tsd-kind="Class">Oracle</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:44</li></ul></aside></li></ul></section></section>
+<li>Defined in src/contracts/clients/Oracle.ts:46</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_contractAddress" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_contract<wbr/>Address</span><a href="#_contractAddress" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_contract<wbr/>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:42</li></ul></aside></section>
+<li>Defined in src/contracts/clients/Oracle.ts:44</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="cosmWasmClient" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>cosm<wbr/>Wasm<wbr/>Client</span><a href="#cosmWasmClient" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">cosm<wbr/>Wasm<wbr/>Client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CosmWasmClient</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:41</li></ul></aside></section></section>
+<li>Defined in src/contracts/clients/Oracle.ts:43</li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="addFeeder" class="tsd-anchor"></a>
@@ -107,7 +113,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:81</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:83</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="feedPrices" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>feed<wbr/>Prices</span><a href="#feedPrices" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -126,7 +132,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:89</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:99</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Config</span><a href="#getConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -134,7 +140,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:77</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:79</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getCurrencyPairs" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Currency<wbr/>Pairs</span><a href="#getCurrencyPairs" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -142,7 +148,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.CurrencyPair.html" class="tsd-signature-type" data-tsd-kind="Interface">CurrencyPair</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:57</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:59</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getFeeders" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Feeders</span><a href="#getFeeders" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -150,7 +156,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:73</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:75</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getPriceFor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Price<wbr/>For</span><a href="#getPriceFor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -163,7 +169,7 @@
 <h5>currency: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.Price.html" class="tsd-signature-type" data-tsd-kind="Interface">Price</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:53</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:55</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getPricesFor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Prices<wbr/>For</span><a href="#getPricesFor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -176,7 +182,7 @@
 <h5>currencies: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.Price.html" class="tsd-signature-type" data-tsd-kind="Interface">Price</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:49</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:51</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getSwapPath" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Swap<wbr/>Path</span><a href="#getSwapPath" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -191,7 +197,7 @@
 <h5>toCurrency: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.SwapPath.html" class="tsd-signature-type" data-tsd-kind="Interface">SwapPath</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:61</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:63</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getSwapTree" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Swap<wbr/>Tree</span><a href="#getSwapTree" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -199,7 +205,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.SwapTree.html" class="tsd-signature-type" data-tsd-kind="Interface">SwapTree</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:65</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:67</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isFeeder" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Feeder</span><a href="#isFeeder" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -212,7 +218,7 @@
 <h5>address: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:69</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:71</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="removeFeeder" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove<wbr/>Feeder</span><a href="#removeFeeder" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -231,7 +237,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:85</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:91</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Config</span><a href="#setConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -252,7 +258,94 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:97</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Oracle.ts:115</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateAddFeederTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Add<wbr/>Feeder<wbr/>Tx</span><a href="#simulateAddFeederTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateAddFeederTx.simulateAddFeederTx-1">simulate<wbr/>Add<wbr/>Feeder<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, feederWalletAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateAddFeederTx.simulateAddFeederTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>feederWalletAddress: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Oracle.ts:87</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateFeedPricesTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Feed<wbr/>Prices<wbr/>Tx</span><a href="#simulateFeedPricesTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateFeedPricesTx.simulateFeedPricesTx-1">simulate<wbr/>Feed<wbr/>Prices<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, feedPrices<span class="tsd-signature-symbol">: </span><a href="../interfaces/NolusContracts.FeedPrices.html" class="tsd-signature-type" data-tsd-kind="Interface">FeedPrices</a>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateFeedPricesTx.simulateFeedPricesTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>feedPrices: <a href="../interfaces/NolusContracts.FeedPrices.html" class="tsd-signature-type" data-tsd-kind="Interface">FeedPrices</a></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Oracle.ts:103</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateRemoveFeederTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Remove<wbr/>Feeder<wbr/>Tx</span><a href="#simulateRemoveFeederTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateRemoveFeederTx.simulateRemoveFeederTx-1">simulate<wbr/>Remove<wbr/>Feeder<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, feederWalletAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateRemoveFeederTx.simulateRemoveFeederTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>feederWalletAddress: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Oracle.ts:95</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateSetConfigTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Set<wbr/>Config<wbr/>Tx</span><a href="#simulateSetConfigTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateSetConfigTx.simulateSetConfigTx-1">simulate<wbr/>Set<wbr/>Config<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, priceFeedPeriod<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, expectedFeeders<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateSetConfigTx.simulateSetConfigTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>priceFeedPeriod: <span class="tsd-signature-type">number</span></h5></li>
+<li>
+<h5>expectedFeeders: <span class="tsd-signature-type">number</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Oracle.ts:119</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateUpdateSwapTreeTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Update<wbr/>Swap<wbr/>Tree<wbr/>Tx</span><a href="#simulateUpdateSwapTreeTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateUpdateSwapTreeTx.simulateUpdateSwapTreeTx-1">simulate<wbr/>Update<wbr/>Swap<wbr/>Tree<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, swapTree<span class="tsd-signature-symbol">: </span><a href="../interfaces/NolusContracts.Tree.html" class="tsd-signature-type" data-tsd-kind="Interface">Tree</a>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateUpdateSwapTreeTx.simulateUpdateSwapTreeTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>swapTree: <a href="../interfaces/NolusContracts.Tree.html" class="tsd-signature-type" data-tsd-kind="Interface">Tree</a></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Oracle.ts:111</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateSwapTree" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Swap<wbr/>Tree</span><a href="#updateSwapTree" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -271,7 +364,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Oracle.ts:93</li></ul></aside></li></ul></section></section></div>
+<li>Defined in src/contracts/clients/Oracle.ts:107</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -314,6 +407,11 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#isFeeder" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Feeder</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#removeFeeder" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>remove<wbr/>Feeder</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#setConfig" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Config</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#simulateAddFeederTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Add<wbr/>Feeder<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#simulateFeedPricesTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Feed<wbr/>Prices<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#simulateRemoveFeederTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Remove<wbr/>Feeder<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#simulateSetConfigTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Set<wbr/>Config<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#simulateUpdateSwapTreeTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Update<wbr/>Swap<wbr/>Tree<wbr/>Tx</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Oracle.html#updateSwapTree" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update<wbr/>Swap<wbr/>Tree</a></li></ul></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>

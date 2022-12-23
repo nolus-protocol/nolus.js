@@ -26,13 +26,14 @@
 <p>Usage:</p>
 <pre><code class="language-ts"><span class="hl-6">import</span><span class="hl-0"> { </span><span class="hl-1">NolusClient</span><span class="hl-0">, </span><span class="hl-1">NolusContracts</span><span class="hl-0"> } </span><span class="hl-6">from</span><span class="hl-0"> </span><span class="hl-8">&#39;@nolus/nolusjs&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-4">cosm</span><span class="hl-0"> = </span><span class="hl-6">await</span><span class="hl-0"> </span><span class="hl-1">NolusClient</span><span class="hl-0">.</span><span class="hl-2">getInstance</span><span class="hl-0">().</span><span class="hl-2">getCosmWasmClient</span><span class="hl-0">();</span><br/><span class="hl-1">lppInstance</span><span class="hl-0"> = </span><span class="hl-3">new</span><span class="hl-0"> </span><span class="hl-1">NolusContracts</span><span class="hl-0">.</span><span class="hl-2">Lpp</span><span class="hl-0">(</span><span class="hl-1">cosm</span><span class="hl-0">, </span><span class="hl-1">lppContractAddress</span><span class="hl-0">);</span>
 </code></pre>
+<p>There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">Lpp</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:36</li></ul></aside>
+<li>Defined in src/contracts/clients/Lpp.ts:38</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -60,6 +61,10 @@
 <a href="NolusContracts.Lpp.html#getLppConfig" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Lpp<wbr/>Config</span></a>
 <a href="NolusContracts.Lpp.html#getOutstandingInterest" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Outstanding<wbr/>Interest</span></a>
 <a href="NolusContracts.Lpp.html#getPrice" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Price</span></a>
+<a href="NolusContracts.Lpp.html#simulateBurnDepositTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Burn<wbr/>Deposit<wbr/>Tx</span></a>
+<a href="NolusContracts.Lpp.html#simulateClaimRewardsTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Claim<wbr/>Rewards<wbr/>Tx</span></a>
+<a href="NolusContracts.Lpp.html#simulateDepositTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Deposit<wbr/>Tx</span></a>
+<a href="NolusContracts.Lpp.html#simulateDistributeRewardsTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Distribute<wbr/>Rewards<wbr/>Tx</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Constructors</h2>
@@ -77,19 +82,19 @@
 <h5>contractAddress: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="NolusContracts.Lpp.html" class="tsd-signature-type" data-tsd-kind="Class">Lpp</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:40</li></ul></aside></li></ul></section></section>
+<li>Defined in src/contracts/clients/Lpp.ts:42</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_contractAddress" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_contract<wbr/>Address</span><a href="#_contractAddress" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_contract<wbr/>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:38</li></ul></aside></section>
+<li>Defined in src/contracts/clients/Lpp.ts:40</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="cosmWasmClient" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>cosm<wbr/>Wasm<wbr/>Client</span><a href="#cosmWasmClient" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">cosm<wbr/>Wasm<wbr/>Client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CosmWasmClient</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:37</li></ul></aside></section></section>
+<li>Defined in src/contracts/clients/Lpp.ts:39</li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="burnDeposit" class="tsd-anchor"></a>
@@ -110,7 +115,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:85</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:99</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="claimRewards" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>claim<wbr/>Rewards</span><a href="#claimRewards" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -129,7 +134,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:69</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:71</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="deposit" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>deposit</span><a href="#deposit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -146,7 +151,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:77</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:83</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="distributeRewards" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>distribute<wbr/>Rewards</span><a href="#distributeRewards" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -163,7 +168,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:81</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:91</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLenderDeposit" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Lender<wbr/>Deposit</span><a href="#getLenderDeposit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -176,7 +181,7 @@
 <h5>lenderAddress: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.Balance.html" class="tsd-signature-type" data-tsd-kind="Interface">Balance</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:73</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:79</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLenderRewards" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Lender<wbr/>Rewards</span><a href="#getLenderRewards" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -189,7 +194,7 @@
 <h5>lenderAddress: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.Rewards.html" class="tsd-signature-type" data-tsd-kind="Interface">Rewards</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:65</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:67</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLoanInformation" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Loan<wbr/>Information</span><a href="#getLoanInformation" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -202,7 +207,7 @@
 <h5>leaseAddress: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.LoanInfo.html" class="tsd-signature-type" data-tsd-kind="Interface">LoanInfo</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:45</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:47</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLppBalance" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Lpp<wbr/>Balance</span><a href="#getLppBalance" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -210,7 +215,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.LppBalance.html" class="tsd-signature-type" data-tsd-kind="Interface">LppBalance</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:49</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:51</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLppConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Lpp<wbr/>Config</span><a href="#getLppConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -218,7 +223,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.LppConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LppConfig</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:53</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:55</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getOutstandingInterest" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Outstanding<wbr/>Interest</span><a href="#getOutstandingInterest" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -233,7 +238,7 @@
 <h5>outstandingTime: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.Asset.html" class="tsd-signature-type" data-tsd-kind="Interface">Asset</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:57</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Lpp.ts:59</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getPrice" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Price</span><a href="#getPrice" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -241,7 +246,71 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.Price.html" class="tsd-signature-type" data-tsd-kind="Interface">Price</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Lpp.ts:61</li></ul></aside></li></ul></section></section></div>
+<li>Defined in src/contracts/clients/Lpp.ts:63</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateBurnDepositTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Burn<wbr/>Deposit<wbr/>Tx</span><a href="#simulateBurnDepositTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateBurnDepositTx.simulateBurnDepositTx-1">simulate<wbr/>Burn<wbr/>Deposit<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, burnAmount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateBurnDepositTx.simulateBurnDepositTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>burnAmount: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Lpp.ts:103</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateClaimRewardsTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Claim<wbr/>Rewards<wbr/>Tx</span><a href="#simulateClaimRewardsTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateClaimRewardsTx.simulateClaimRewardsTx-1">simulate<wbr/>Claim<wbr/>Rewards<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, recipientAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateClaimRewardsTx.simulateClaimRewardsTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>recipientAddress: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Lpp.ts:75</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateDepositTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Deposit<wbr/>Tx</span><a href="#simulateDepositTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateDepositTx.simulateDepositTx-1">simulate<wbr/>Deposit<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateDepositTx.simulateDepositTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Lpp.ts:87</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateDistributeRewardsTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Distribute<wbr/>Rewards<wbr/>Tx</span><a href="#simulateDistributeRewardsTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateDistributeRewardsTx.simulateDistributeRewardsTx-1">simulate<wbr/>Distribute<wbr/>Rewards<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateDistributeRewardsTx.simulateDistributeRewardsTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Lpp.ts:95</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -282,7 +351,11 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#getLppBalance" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Lpp<wbr/>Balance</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#getLppConfig" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Lpp<wbr/>Config</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#getOutstandingInterest" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Outstanding<wbr/>Interest</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#getPrice" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Price</a></li></ul></li></ul></nav></div></div>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#getPrice" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Price</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#simulateBurnDepositTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Burn<wbr/>Deposit<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#simulateClaimRewardsTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Claim<wbr/>Rewards<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#simulateDepositTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Deposit<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Lpp.html#simulateDistributeRewardsTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Distribute<wbr/>Rewards<wbr/>Tx</a></li></ul></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>

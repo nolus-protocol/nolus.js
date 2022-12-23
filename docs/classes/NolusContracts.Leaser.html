@@ -21,13 +21,14 @@
 <p>Usage:</p>
 <pre><code class="language-ts"><span class="hl-6">import</span><span class="hl-0"> { </span><span class="hl-1">NolusClient</span><span class="hl-0">, </span><span class="hl-1">NolusContracts</span><span class="hl-0"> } </span><span class="hl-6">from</span><span class="hl-0"> </span><span class="hl-8">&#39;@nolus/nolusjs&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-3">const</span><span class="hl-0"> </span><span class="hl-4">cosm</span><span class="hl-0"> = </span><span class="hl-6">await</span><span class="hl-0"> </span><span class="hl-1">NolusClient</span><span class="hl-0">.</span><span class="hl-2">getInstance</span><span class="hl-0">().</span><span class="hl-2">getCosmWasmClient</span><span class="hl-0">();</span><br/><span class="hl-1">leaserInstance</span><span class="hl-0"> = </span><span class="hl-3">new</span><span class="hl-0"> </span><span class="hl-1">NolusContracts</span><span class="hl-0">.</span><span class="hl-2">Leaser</span><span class="hl-0">(</span><span class="hl-1">cosm</span><span class="hl-0">, </span><span class="hl-1">leaserContractAddress</span><span class="hl-0">);</span>
 </code></pre>
+<p>There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">Leaser</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:21</li></ul></aside>
+<li>Defined in src/contracts/clients/Leaser.ts:23</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -49,6 +50,8 @@
 <a href="NolusContracts.Leaser.html#leaseQuote" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>lease<wbr/>Quote</span></a>
 <a href="NolusContracts.Leaser.html#openLease" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>open<wbr/>Lease</span></a>
 <a href="NolusContracts.Leaser.html#setLeaserConfig" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Leaser<wbr/>Config</span></a>
+<a href="NolusContracts.Leaser.html#simulateOpenLeaseTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Open<wbr/>Lease<wbr/>Tx</span></a>
+<a href="NolusContracts.Leaser.html#simulateSetLeaserConfigTx" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>simulate<wbr/>Set<wbr/>Leaser<wbr/>Config<wbr/>Tx</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Constructors</h2>
@@ -66,19 +69,19 @@
 <h5>contractAddress: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="NolusContracts.Leaser.html" class="tsd-signature-type" data-tsd-kind="Class">Leaser</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:25</li></ul></aside></li></ul></section></section>
+<li>Defined in src/contracts/clients/Leaser.ts:27</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_contractAddress" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_contract<wbr/>Address</span><a href="#_contractAddress" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_contract<wbr/>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:23</li></ul></aside></section>
+<li>Defined in src/contracts/clients/Leaser.ts:25</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="cosmWasmClient" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>cosm<wbr/>Wasm<wbr/>Client</span><a href="#cosmWasmClient" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">cosm<wbr/>Wasm<wbr/>Client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CosmWasmClient</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:22</li></ul></aside></section></section>
+<li>Defined in src/contracts/clients/Leaser.ts:24</li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getCurrentOpenLeasesByOwner" class="tsd-anchor"></a>
@@ -93,7 +96,7 @@
 <h5>ownerAddress: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:34</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Leaser.ts:36</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getLeaserConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Leaser<wbr/>Config</span><a href="#getLeaserConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -101,7 +104,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.LeaserConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LeaserConfig</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:38</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Leaser.ts:40</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="leaseQuote" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>lease<wbr/>Quote</span><a href="#leaseQuote" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -118,7 +121,7 @@
 <h5>leaseAsset: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/NolusContracts.LeaseApply.html" class="tsd-signature-type" data-tsd-kind="Interface">LeaseApply</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:30</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Leaser.ts:32</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="openLease" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>open<wbr/>Lease</span><a href="#openLease" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -137,7 +140,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:42</li></ul></aside></li></ul></section>
+<li>Defined in src/contracts/clients/Leaser.ts:44</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setLeaserConfig" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Leaser<wbr/>Config</span><a href="#setLeaserConfig" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -156,7 +159,41 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/contracts/clients/Leaser.ts:46</li></ul></aside></li></ul></section></section></div>
+<li>Defined in src/contracts/clients/Leaser.ts:52</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateOpenLeaseTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Open<wbr/>Lease<wbr/>Tx</span><a href="#simulateOpenLeaseTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateOpenLeaseTx.simulateOpenLeaseTx-1">simulate<wbr/>Open<wbr/>Lease<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, leaseCurrency<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateOpenLeaseTx.simulateOpenLeaseTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>leaseCurrency: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Leaser.ts:48</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="simulateSetLeaserConfigTx" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>simulate<wbr/>Set<wbr/>Leaser<wbr/>Config<wbr/>Tx</span><a href="#simulateSetLeaserConfigTx" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="simulateSetLeaserConfigTx.simulateSetLeaserConfigTx-1">simulate<wbr/>Set<wbr/>Leaser<wbr/>Config<wbr/>Tx<span class="tsd-signature-symbol">(</span>nolusWallet<span class="tsd-signature-symbol">: </span><a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a>, leaserConfig<span class="tsd-signature-symbol">: </span><a href="../interfaces/NolusContracts.LeaserConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LeaserConfig</a>, fundCoin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#simulateSetLeaserConfigTx.simulateSetLeaserConfigTx-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>nolusWallet: <a href="NolusWallet.html" class="tsd-signature-type" data-tsd-kind="Class">NolusWallet</a></h5></li>
+<li>
+<h5>leaserConfig: <a href="../interfaces/NolusContracts.LeaserConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LeaserConfig</a></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> fundCoin: <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>txBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>txHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>usedFee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/contracts/clients/Leaser.ts:56</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -191,7 +228,9 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Leaser.html#getLeaserConfig" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Leaser<wbr/>Config</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Leaser.html#leaseQuote" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>lease<wbr/>Quote</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Leaser.html#openLease" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>open<wbr/>Lease</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Leaser.html#setLeaserConfig" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Leaser<wbr/>Config</a></li></ul></li></ul></nav></div></div>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Leaser.html#setLeaserConfig" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Leaser<wbr/>Config</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Leaser.html#simulateOpenLeaseTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Open<wbr/>Lease<wbr/>Tx</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="NolusContracts.Leaser.html#simulateSetLeaserConfigTx" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>simulate<wbr/>Set<wbr/>Leaser<wbr/>Config<wbr/>Tx</a></li></ul></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>
