@@ -1,8 +1,6 @@
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
 import { Coin } from '@cosmjs/proto-signing';
-import { toHex } from '@cosmjs/encoding';
-import { IndexedTx } from '@cosmjs/stargate';
 
 /**
  * Nolus Client service class.
@@ -79,52 +77,4 @@ export class NolusClient {
         return block?.header.height;
     }
 
-    private async txsQuery(query: string) {
-        const tmClient = await NolusClient.getInstance().getTendermintClient();
-        const results = await tmClient?.txSearchAll({ query: query });
-
-        return results?.txs.map((tx) => {
-            return {
-                height: tx.height,
-                hash: toHex(tx.hash).toUpperCase(),
-                code: tx.result.code,
-                rawLog: tx.result.log || '',
-                tx: tx.tx,
-                gasUsed: tx.result.gasUsed,
-                gasWanted: tx.result.gasWanted,
-            };
-        });
-    }
-
-    /**
-     * Search tx by address in all modules.
-     */
-    public async searchTxByAddress(address: string): Promise<readonly IndexedTx[]> {
-        let txs: readonly IndexedTx[] = [];
-        const bankSenderQuery = `message.module='bank' AND transfer.sender='${address}'`;
-        const bankReceiverQuery = `message.module='bank' AND transfer.recipient='${address}'`;
-        const wasmSenderQuery = `message.module='wasm' AND transfer.sender='${address}'`;
-        const wasmReceiverQuery = `message.module='wasm' AND transfer.recipient='${address}'`;
-        const stakingSenderQuery = `message.module='staking' AND transfer.sender='${address}'`;
-        const stakingReceiverQuery = `message.module='staking' AND transfer.recipient='${address}'`;
-
-        const [bankSent, bankReceived, wasmSent, wasmReceived, stakingSent, stakingReceived] = await Promise.all(
-            [bankSenderQuery, bankReceiverQuery, wasmSenderQuery, wasmReceiverQuery, stakingSenderQuery, stakingReceiverQuery].map((rawQuery) => this.txsQuery(rawQuery)),
-        );
-
-        const bankSentHashes = bankSent.map((t) => t.hash);
-        const wasmSentHashes = wasmSent.map((t) => t.hash);
-        const stakingSentHashes = stakingSent.map((t) => t.hash);
-
-        txs = [
-            ...bankSent,
-            ...bankReceived.filter((tx) => !bankSentHashes.includes(tx.hash)),
-            ...wasmSent,
-            ...wasmReceived.filter((tx) => !wasmSentHashes.includes(tx.hash)),
-            ...stakingSent,
-            ...stakingReceived.filter((tx) => !stakingSentHashes.includes(tx.hash)),
-        ];
-
-        return txs;
-    }
 }

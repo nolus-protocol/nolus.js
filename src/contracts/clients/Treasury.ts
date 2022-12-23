@@ -32,7 +32,15 @@ export class Treasury {
         return nolusWallet.executeContract(this._contractAddress, configRewardsTransferMsg(address), fee, undefined, fundCoin);
     }
 
+    public async configRewardsTransferData(nolusWallet: NolusWallet, address: string, fundCoin?: Coin[]) {
+        return nolusWallet.executeContractData(this._contractAddress, configRewardsTransferMsg(address), undefined, fundCoin);
+    }
+
     public async sendRewards(nolusWallet: NolusWallet, rewards: Asset, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, sendRewardsMsg(rewards), fee, undefined, fundCoin);
+    }
+
+    public async sendRewardsData(nolusWallet: NolusWallet, rewards: Asset, fundCoin?: Coin[]){
+        return nolusWallet.executeContractData(this._contractAddress, sendRewardsMsg(rewards), undefined, fundCoin);
     }
 }

@@ -35,7 +35,15 @@ export class Lease {
         return nolusWallet.executeContract(this._contractAddress, repayLeaseMsg(), fee, undefined, fundCoin);
     }
 
+    public async repayLeaseData(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.executeContractData(this._contractAddress, repayLeaseMsg(), undefined, fundCoin);
+    }
+
     public async closeLease(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, closeLeaseMsg(), fee, undefined, fundCoin);
+    }
+
+    public async closeLeaseData(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.executeContractData(this._contractAddress, closeLeaseMsg(), undefined, fundCoin);
     }
 }

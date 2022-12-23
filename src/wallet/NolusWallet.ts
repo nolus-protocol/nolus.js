@@ -1,11 +1,16 @@
+import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee, calculateFee } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
 import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
-import stargate_1, { DeliverTxResponse, isDeliverTxFailure, StdFee } from '@cosmjs/stargate';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
-import { toUtf8 } from '@cosmjs/encoding';
+import { toUtf8, toHex } from '@cosmjs/encoding';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
+import { MsgSend } from 'cosmjs-types/cosmos/bank/v1beta1/tx';
+import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { ContractData } from '../contracts/types/ContractData';
+import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
+import { ChainConstants } from '../constants';
+import { sha256 } from '@cosmjs/crypto';
 
 /**
  * Nolus Wallet service class.
@@ -79,12 +84,112 @@ export class NolusWallet extends SigningCosmWasmClient {
             throw new Error(this.createDeliverTxResponseErrorMessage(result));
         }
         return {
-            logs: stargate_1.logs.parseRawLog(result.rawLog),
+            logs: stargate.logs.parseRawLog(result.rawLog),
             height: result.height,
             transactionHash: result.transactionHash,
             gasWanted: result.gasWanted,
             gasUsed: result.gasUsed,
+            events: []
         };
+    }
+
+    /**
+     * 
+     * const amount = coin(1, 'unls')
+     * const {
+     *     txHash,
+     *     txBytes,
+     *     usedFee
+     * } = await wallet.transferAmountTransactionData('nolusaddress', [amount]);
+     * const item = await wallet.broadcastTx(txBytes);
+     *
+     */
+    
+    public async transferAmountTransactionData(toAddress: string, amount: Coin[], memo: string = ''){
+        const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
+        const msg = MsgSend.fromPartial({
+            fromAddress: this.address,
+            toAddress,
+            amount,
+        });
+
+        const msgAny = {
+            typeUrl: '/cosmos.bank.v1beta1.MsgSend',
+            value: msg,
+        };
+
+        const sequence = await this.sequence();
+        const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
+
+        const gas = Math.round(gasInfo?.gasUsed.toNumber() as number * ChainConstants.MULTIPLIER);
+        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
+        const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
+
+        const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+        const txHash = toHex(sha256(txBytes));
+
+        return {
+            txHash,
+            txBytes,
+            usedFee
+        }
+    }
+
+    /**
+     * 
+     * const amount = coin(1, 'ibc/7FBDBEEEBA9C50C4BCDF7BF438EAB99E64360833D240B32655C96E319559E911')
+     * const cosmWasmClient = await NolusClient.getInstance().getCosmWasmClient();
+     * const lppClient = new Lpp(
+     *   cosmWasmClient,
+     *   contractAddress
+     * );
+     *
+     * const {
+     *     txHash,
+     *     txBytes,
+     *     usedFee
+     * } = await lppClient.depositData(wallet, [amount]);
+     * const item = await wallet.broadcastTx(txBytes);
+     */
+    public async executeContractData(contract: string, msgData: Record<string, any>, memo: string = '', funds: Coin[] = []) {
+        const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
+        const msg = MsgExecuteContract.fromPartial({
+            sender: this.address,
+            contract,
+            msg: toUtf8(JSON.stringify(msgData)),
+            funds,
+        });
+
+        const msgAny = {
+            typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+            value: msg,
+        };
+
+        const sequence = await this.sequence();
+        const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
+
+        const gas = Math.round(gasInfo?.gasUsed.toNumber() as number * ChainConstants.MULTIPLIER);
+        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
+        const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
+
+        const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+        const txHash = toHex(sha256(txBytes));
+
+        return {
+            txHash,
+            txBytes,
+            usedFee
+        }
+
+    }
+
+    private async sequence() {
+        try {
+            const { sequence } = await this.getSequence(this.address as string);
+            return sequence;
+        } catch (error) {
+            throw new Error('Insufficient amount of NLS');
+        }
     }
 
     private createDeliverTxResponseErrorMessage(result: DeliverTxResponse) {

@@ -70,6 +70,10 @@ export class Lpp {
         return nolusWallet.executeContract(this._contractAddress, claimRewardsMsg(recipientAddress), fee, undefined, fundCoin);
     }
 
+    public async claimRewardsData(nolusWallet: NolusWallet, recipientAddress: string | undefined, fundCoin?: Coin[]) {
+        return nolusWallet.executeContractData(this._contractAddress, claimRewardsMsg(recipientAddress), undefined, fundCoin);
+    }
+
     public async getLenderDeposit(lenderAddress: string): Promise<Balance> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderDepositMsg(lenderAddress));
     }
@@ -78,11 +82,23 @@ export class Lpp {
         return nolusWallet.executeContract(this._contractAddress, depositMsg(), fee, undefined, fundCoin);
     }
 
+    public async depositData(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.executeContractData(this._contractAddress, depositMsg(), undefined, fundCoin);
+    }
+
     public async distributeRewards(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, distributeRewardsMsg(), fee, undefined, fundCoin);
     }
 
+    public async distributeRewardsData(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.executeContractData(this._contractAddress, distributeRewardsMsg(), undefined, fundCoin);
+    }
+
     public async burnDeposit(nolusWallet: NolusWallet, burnAmount: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, burnMsg(burnAmount), fee, undefined, fundCoin);
+    }
+
+    public async burnDepositData(nolusWallet: NolusWallet, burnAmount: string, fundCoin?: Coin[]) {
+        return nolusWallet.executeContractData(this._contractAddress, burnMsg(burnAmount), undefined, fundCoin);
     }
 }
