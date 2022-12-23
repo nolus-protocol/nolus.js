@@ -36,6 +36,8 @@ import { CurrencyPair } from '../types/CurrencyPair';
  * const cosm = await NolusClient.getInstance().getCosmWasmClient();
  * oracleInstance = new NolusContracts.Oracle(cosm, oracleContractAddress);
  * ```
+ *
+ * There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.
  */
 export class Oracle {
     private cosmWasmClient!: CosmWasmClient;
@@ -82,39 +84,39 @@ export class Oracle {
         return nolusWallet.executeContract(this._contractAddress, addFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
     }
 
-    public async addFeederData(nolusWallet: NolusWallet, feederWalletAddress: string, fundCoin?: Coin[]) {
-        return nolusWallet.executeContractData(this._contractAddress, addFeederMsg(feederWalletAddress), undefined, fundCoin);
+    public async simulateAddFeederTx(nolusWallet: NolusWallet, feederWalletAddress: string, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, addFeederMsg(feederWalletAddress), fundCoin);
     }
 
     public async removeFeeder(nolusWallet: NolusWallet, feederWalletAddress: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, removeFeederMsg(feederWalletAddress), fee, undefined, fundCoin);
     }
 
-    public async removeFeederData(nolusWallet: NolusWallet, feederWalletAddress: string, fundCoin?: Coin[]){
-        return nolusWallet.executeContractData(this._contractAddress, removeFeederMsg(feederWalletAddress), undefined, fundCoin);
+    public async simulateRemoveFeederTx(nolusWallet: NolusWallet, feederWalletAddress: string, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, removeFeederMsg(feederWalletAddress), fundCoin);
     }
 
     public async feedPrices(nolusWallet: NolusWallet, feedPrices: FeedPrices, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, feedPricesMsg(feedPrices), fee, undefined, fundCoin);
     }
 
-    public async feedPricesData(nolusWallet: NolusWallet, feedPrices: FeedPrices, fundCoin?: Coin[]) {
-        return nolusWallet.executeContractData(this._contractAddress, feedPricesMsg(feedPrices), undefined, fundCoin);
+    public async simulateFeedPricesTx(nolusWallet: NolusWallet, feedPrices: FeedPrices, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, feedPricesMsg(feedPrices), fundCoin);
     }
 
     public async updateSwapTree(nolusWallet: NolusWallet, swapTree: Tree, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, updateSwapTreeMsg(swapTree), fee, undefined, fundCoin);
     }
 
-    public async updateSwapTreeData(nolusWallet: NolusWallet, swapTree: Tree, fundCoin?: Coin[]) {
-        return nolusWallet.executeContractData(this._contractAddress, updateSwapTreeMsg(swapTree), undefined, fundCoin);
+    public async simulateUpdateSwapTreeTx(nolusWallet: NolusWallet, swapTree: Tree, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateSwapTreeMsg(swapTree), fundCoin);
     }
 
     public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, setConfigMsg(priceFeedPeriod, expectedFeeders), fee, undefined, fundCoin);
     }
 
-    public async setConfigData(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fundCoin?: Coin[]) {
-        return nolusWallet.executeContractData(this._contractAddress, setConfigMsg(priceFeedPeriod, expectedFeeders), undefined, fundCoin);
+    public async simulateSetConfigTx(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, setConfigMsg(priceFeedPeriod, expectedFeeders), fundCoin);
     }
 }

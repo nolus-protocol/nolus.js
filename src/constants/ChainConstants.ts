@@ -17,8 +17,6 @@ export class ChainConstants {
     public static readonly COIN_DECIMALS: number = 6;
     public static readonly COIN_GECKO_ID: string = 'cosmos';
     public static readonly COIN_TYPE: number = 118;
-    public static readonly GAS_PRICE: string = '0.0025unls';
-    public static readonly MULTIPLIER: number = 2;
 
     /* Chain configurations */
     public static readonly BECH32_PREFIX_ACC_ADDR: string = 'nolus';
@@ -42,6 +40,8 @@ export class ChainConstants {
      * value = BECH32_PREFIX_ACC_ADDR + 'valconspub'
      */
     public static readonly BECH32_PREFIX_CONS_PUB: string = this.BECH32_PREFIX_ACC_ADDR + 'valconspub';
+    public static readonly GAS_PRICE: string = '0.0025unls';
+    public static readonly GAS_MULTIPLIER: number = 2;
 
     /* Wallet configurations */
     public static readonly BIP44_PATH: string = "44'/118'/0'/0/0";

@@ -36,6 +36,30 @@ export class NolusWallet extends SigningCosmWasmClient {
         this.offlineSigner = signer;
     }
 
+    private async simulateTx(msg: MsgSend | MsgExecuteContract, msgTypeUrl: string, memo = '') {
+        const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
+        const msgAny = {
+            typeUrl: msgTypeUrl,
+            value: msg,
+        };
+
+        const sequence = await this.sequence();
+        const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
+
+        const gas = Math.round((gasInfo?.gasUsed.toNumber() as number) * ChainConstants.GAS_MULTIPLIER);
+        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
+        const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
+
+        const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+        const txHash = toHex(sha256(txBytes));
+
+        return {
+            txHash,
+            txBytes,
+            usedFee,
+        };
+    }
+
     public async useAccount(): Promise<boolean> {
         const accounts = await this.offlineSigner.getAccounts();
         if (accounts.length === 0) {
@@ -89,70 +113,52 @@ export class NolusWallet extends SigningCosmWasmClient {
             transactionHash: result.transactionHash,
             gasWanted: result.gasWanted,
             gasUsed: result.gasUsed,
-            events: []
+            events: [],
         };
     }
 
     /**
-     * 
-     * const amount = coin(1, 'unls')
+     * Usage:
+     *
+     * ```ts
+     * const amount = coin(1, 'unls');
      * const {
      *     txHash,
      *     txBytes,
      *     usedFee
-     * } = await wallet.transferAmountTransactionData('nolusaddress', [amount]);
+     * } = await wallet.simulateBankTransferTx('nolusAddress', [amount]);
      * const item = await wallet.broadcastTx(txBytes);
-     *
+     *```
      */
-    
-    public async transferAmountTransactionData(toAddress: string, amount: Coin[], memo: string = ''){
-        const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
+    public async simulateBankTransferTx(toAddress: string, amount: Coin[], memo = '') {
         const msg = MsgSend.fromPartial({
             fromAddress: this.address,
             toAddress,
             amount,
         });
 
-        const msgAny = {
-            typeUrl: '/cosmos.bank.v1beta1.MsgSend',
-            value: msg,
-        };
-
-        const sequence = await this.sequence();
-        const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
-
-        const gas = Math.round(gasInfo?.gasUsed.toNumber() as number * ChainConstants.MULTIPLIER);
-        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
-        const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
-
-        const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
-        const txHash = toHex(sha256(txBytes));
-
-        return {
-            txHash,
-            txBytes,
-            usedFee
-        }
+        return await this.simulateTx(msg, '/cosmos.bank.v1beta1.MsgSend');
     }
 
     /**
-     * 
-     * const amount = coin(1, 'ibc/7FBDBEEEBA9C50C4BCDF7BF438EAB99E64360833D240B32655C96E319559E911')
-     * const cosmWasmClient = await NolusClient.getInstance().getCosmWasmClient();
-     * const lppClient = new Lpp(
-     *   cosmWasmClient,
-     *   contractAddress
-     * );
+     * Usage:
      *
+     * ```ts
+     * const downpayment = coin(1, 'ibc/....');
+     * const msg = {
+     *  open_lease: {
+     *      currency: 'OSMO',
+     *  },
+     * };
      * const {
      *     txHash,
      *     txBytes,
      *     usedFee
-     * } = await lppClient.depositData(wallet, [amount]);
+     * } = await wallet.simulateExecuteContractTx('leaserAddress', msg, [downpayment]);
      * const item = await wallet.broadcastTx(txBytes);
+     * ```
      */
-    public async executeContractData(contract: string, msgData: Record<string, any>, memo: string = '', funds: Coin[] = []) {
-        const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
+    public async simulateExecuteContractTx(contract: string, msgData: Record<string, any>, funds: Coin[] = [], memo = '') {
         const msg = MsgExecuteContract.fromPartial({
             sender: this.address,
             contract,
@@ -160,27 +166,7 @@ export class NolusWallet extends SigningCosmWasmClient {
             funds,
         });
 
-        const msgAny = {
-            typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-            value: msg,
-        };
-
-        const sequence = await this.sequence();
-        const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
-
-        const gas = Math.round(gasInfo?.gasUsed.toNumber() as number * ChainConstants.MULTIPLIER);
-        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
-        const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
-
-        const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
-        const txHash = toHex(sha256(txBytes));
-
-        return {
-            txHash,
-            txBytes,
-            usedFee
-        }
-
+        return await this.simulateTx(msg, '/cosmwasm.wasm.v1.MsgExecuteContract');
     }
 
     private async sequence() {

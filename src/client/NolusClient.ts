@@ -76,5 +76,4 @@ export class NolusClient {
         }
         return block?.header.height;
     }
-
 }
