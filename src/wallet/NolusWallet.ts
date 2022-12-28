@@ -1,11 +1,16 @@
+import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee, calculateFee } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
 import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
-import stargate_1, { DeliverTxResponse, isDeliverTxFailure, StdFee } from '@cosmjs/stargate';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
-import { toUtf8 } from '@cosmjs/encoding';
+import { toUtf8, toHex } from '@cosmjs/encoding';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
+import { MsgSend } from 'cosmjs-types/cosmos/bank/v1beta1/tx';
+import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 import { ContractData } from '../contracts/types/ContractData';
+import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
+import { ChainConstants } from '../constants';
+import { sha256 } from '@cosmjs/crypto';
 
 /**
  * Nolus Wallet service class.
@@ -29,6 +34,30 @@ export class NolusWallet extends SigningCosmWasmClient {
     constructor(tmClient: Tendermint34Client | undefined, signer: OfflineSigner, options: SigningCosmWasmClientOptions) {
         super(tmClient, signer, options);
         this.offlineSigner = signer;
+    }
+
+    private async simulateTx(msg: MsgSend | MsgExecuteContract, msgTypeUrl: string, memo = '') {
+        const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
+        const msgAny = {
+            typeUrl: msgTypeUrl,
+            value: msg,
+        };
+
+        const sequence = await this.sequence();
+        const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
+
+        const gas = Math.round((gasInfo?.gasUsed.toNumber() as number) * ChainConstants.GAS_MULTIPLIER);
+        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
+        const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
+
+        const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+        const txHash = toHex(sha256(txBytes));
+
+        return {
+            txHash,
+            txBytes,
+            usedFee,
+        };
     }
 
     public async useAccount(): Promise<boolean> {
@@ -79,12 +108,74 @@ export class NolusWallet extends SigningCosmWasmClient {
             throw new Error(this.createDeliverTxResponseErrorMessage(result));
         }
         return {
-            logs: stargate_1.logs.parseRawLog(result.rawLog),
+            logs: stargate.logs.parseRawLog(result.rawLog),
             height: result.height,
             transactionHash: result.transactionHash,
             gasWanted: result.gasWanted,
             gasUsed: result.gasUsed,
+            events: [],
         };
+    }
+
+    /**
+     * Usage:
+     *
+     * ```ts
+     * const amount = coin(1, 'unls');
+     * const {
+     *     txHash,
+     *     txBytes,
+     *     usedFee
+     * } = await wallet.simulateBankTransferTx('nolusAddress', [amount]);
+     * const item = await wallet.broadcastTx(txBytes);
+     *```
+     */
+    public async simulateBankTransferTx(toAddress: string, amount: Coin[], memo = '') {
+        const msg = MsgSend.fromPartial({
+            fromAddress: this.address,
+            toAddress,
+            amount,
+        });
+
+        return await this.simulateTx(msg, '/cosmos.bank.v1beta1.MsgSend');
+    }
+
+    /**
+     * Usage:
+     *
+     * ```ts
+     * const downpayment = coin(1, 'ibc/....');
+     * const msg = {
+     *  open_lease: {
+     *      currency: 'OSMO',
+     *  },
+     * };
+     * const {
+     *     txHash,
+     *     txBytes,
+     *     usedFee
+     * } = await wallet.simulateExecuteContractTx('leaserAddress', msg, [downpayment]);
+     * const item = await wallet.broadcastTx(txBytes);
+     * ```
+     */
+    public async simulateExecuteContractTx(contract: string, msgData: Record<string, any>, funds: Coin[] = [], memo = '') {
+        const msg = MsgExecuteContract.fromPartial({
+            sender: this.address,
+            contract,
+            msg: toUtf8(JSON.stringify(msgData)),
+            funds,
+        });
+
+        return await this.simulateTx(msg, '/cosmwasm.wasm.v1.MsgExecuteContract');
+    }
+
+    private async sequence() {
+        try {
+            const { sequence } = await this.getSequence(this.address as string);
+            return sequence;
+        } catch (error) {
+            throw new Error('Insufficient amount of NLS');
+        }
     }
 
     private createDeliverTxResponseErrorMessage(result: DeliverTxResponse) {

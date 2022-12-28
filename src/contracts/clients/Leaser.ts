@@ -17,6 +17,8 @@ import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmcl
  * const cosm = await NolusClient.getInstance().getCosmWasmClient();
  * leaserInstance = new NolusContracts.Leaser(cosm, leaserContractAddress);
  * ```
+ *
+ * There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.
  */
 export class Leaser {
     private cosmWasmClient!: CosmWasmClient;
@@ -43,7 +45,15 @@ export class Leaser {
         return nolusWallet.executeContract(this._contractAddress, openLeaseMsg(leaseCurrency), fee, undefined, fundCoin);
     }
 
+    public async simulateOpenLeaseTx(nolusWallet: NolusWallet, leaseCurrency: string, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, openLeaseMsg(leaseCurrency), fundCoin);
+    }
+
     public async setLeaserConfig(nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, setLeaserConfigMsg(leaserConfig), fee, undefined, fundCoin);
+    }
+
+    public async simulateSetLeaserConfigTx(nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, setLeaserConfigMsg(leaserConfig), fundCoin);
     }
 }

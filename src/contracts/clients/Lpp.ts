@@ -32,6 +32,8 @@ import { Asset, Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards } from 
  * const cosm = await NolusClient.getInstance().getCosmWasmClient();
  * lppInstance = new NolusContracts.Lpp(cosm, lppContractAddress);
  * ```
+ *
+ * There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.
  */
 export class Lpp {
     private cosmWasmClient!: CosmWasmClient;
@@ -70,6 +72,10 @@ export class Lpp {
         return nolusWallet.executeContract(this._contractAddress, claimRewardsMsg(recipientAddress), fee, undefined, fundCoin);
     }
 
+    public async simulateClaimRewardsTx(nolusWallet: NolusWallet, recipientAddress: string | undefined, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, claimRewardsMsg(recipientAddress), fundCoin);
+    }
+
     public async getLenderDeposit(lenderAddress: string): Promise<Balance> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderDepositMsg(lenderAddress));
     }
@@ -78,11 +84,23 @@ export class Lpp {
         return nolusWallet.executeContract(this._contractAddress, depositMsg(), fee, undefined, fundCoin);
     }
 
+    public async simulateDepositTx(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, depositMsg(), fundCoin);
+    }
+
     public async distributeRewards(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, distributeRewardsMsg(), fee, undefined, fundCoin);
     }
 
+    public async simulateDistributeRewardsTx(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, distributeRewardsMsg(), fundCoin);
+    }
+
     public async burnDeposit(nolusWallet: NolusWallet, burnAmount: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, burnMsg(burnAmount), fee, undefined, fundCoin);
+    }
+
+    public async simulateBurnDepositTx(nolusWallet: NolusWallet, burnAmount: string, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, burnMsg(burnAmount), fundCoin);
     }
 }

@@ -18,6 +18,8 @@ import { Asset } from '../types';
  * const cosm = await NolusClient.getInstance().getCosmWasmClient();
  * treasuryInstance = new NolusContracts.Treasury(cosm, treasuryContractAddress);
  * ```
+ *
+ * There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.
  */
 export class Treasury {
     private cosmWasmClient!: CosmWasmClient;
@@ -32,7 +34,15 @@ export class Treasury {
         return nolusWallet.executeContract(this._contractAddress, configRewardsTransferMsg(address), fee, undefined, fundCoin);
     }
 
+    public async simulateConfigRewardsTransferTx(nolusWallet: NolusWallet, address: string, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, configRewardsTransferMsg(address), fundCoin);
+    }
+
     public async sendRewards(nolusWallet: NolusWallet, rewards: Asset, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, sendRewardsMsg(rewards), fee, undefined, fundCoin);
+    }
+
+    public async simulateSendRewardsTx(nolusWallet: NolusWallet, rewards: Asset, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, sendRewardsMsg(rewards), fundCoin);
     }
 }

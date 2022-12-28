@@ -17,6 +17,8 @@ import { LeaseStatus } from '../types/LeaseStatus';
  * const cosm = await NolusClient.getInstance().getCosmWasmClient();
  * leaseInstance = new NolusContracts.Lease(cosm, leaseContractAddress);
  * ```
+ *
+ * There are also methods for simulating contract operations in order to obtain preliminary information about the transaction.
  */
 export class Lease {
     private cosmWasmClient!: CosmWasmClient;
@@ -35,7 +37,15 @@ export class Lease {
         return nolusWallet.executeContract(this._contractAddress, repayLeaseMsg(), fee, undefined, fundCoin);
     }
 
+    public async simulateRepayLeaseTx(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, repayLeaseMsg(), fundCoin);
+    }
+
     public async closeLease(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, closeLeaseMsg(), fee, undefined, fundCoin);
+    }
+
+    public async simulateCloseLeaseTx(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, closeLeaseMsg(), fundCoin);
     }
 }
