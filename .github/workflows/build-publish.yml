@@ -14,7 +14,6 @@ jobs:
     environment: production
     env:
       CURRENCIES_FILE_NAME: "currencies.json"
-      ACCESS_TOKEN: ${{ secrets.DOWNLOAD_ACCESS_TOKEN }}
     strategy:
       matrix:
         node-version: [14.x]
@@ -38,7 +37,7 @@ jobs:
       - name: Download currencies data
         run: |
          sudo apt-get install curl -y
-         curl -H "Authorization: Token $ACCESS_TOKEN" "https://raw.githubusercontent.com/Nolus-Protocol/Wiki/main/testnet-rila/currencies.json" -o "$CURRENCIES_FILE_NAME"
+         curl "https://raw.githubusercontent.com/Nolus-Protocol/nolus-networks/main/testnet/nolus-rila/currencies.json" -o "$CURRENCIES_FILE_NAME"
 
       - name: Build module
         run: yarn build
