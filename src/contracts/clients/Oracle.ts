@@ -10,7 +10,7 @@ import {
     getSwapPathMsg,
     isFeederMsg,
     removeFeederMsg,
-    setConfigMsg,
+    updateConfigMsg,
     updateSwapTreeMsg,
     getSwapTreeMsg,
 } from '../messages';
@@ -24,6 +24,7 @@ import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { SwapPath } from '../types/SwapPath';
 import { SwapTree, Tree } from '../types/SwapTree';
 import { CurrencyPair } from '../types/CurrencyPair';
+import { OraclePriceConfig } from '../types/OraclePriceConfig';
 
 /**
  * An on-chain oracle providing market data prices to the rest of the system.
@@ -112,11 +113,11 @@ export class Oracle {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateSwapTreeMsg(swapTree), fundCoin);
     }
 
-    public async setConfig(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, setConfigMsg(priceFeedPeriod, expectedFeeders), fee, undefined, fundCoin);
+    public async updateConfig(nolusWallet: NolusWallet, priceConfig: OraclePriceConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, updateConfigMsg(priceConfig), fee, undefined, fundCoin);
     }
 
-    public async simulateSetConfigTx(nolusWallet: NolusWallet, priceFeedPeriod: number, expectedFeeders: number, fundCoin?: Coin[]) {
-        return nolusWallet.simulateExecuteContractTx(this._contractAddress, setConfigMsg(priceFeedPeriod, expectedFeeders), fundCoin);
+    public async simulateUpdateConfigTx(nolusWallet: NolusWallet, priceConfig: OraclePriceConfig, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateConfigMsg(priceConfig), fundCoin);
     }
 }

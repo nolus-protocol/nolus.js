@@ -1,5 +1,6 @@
 import { FeedPrices } from '../types/FeedPrices';
-import { SwapTree, Tree } from '../types/SwapTree';
+import { OraclePriceConfig } from '../types/OraclePriceConfig';
+import { Tree } from '../types/SwapTree';
 
 export const getPriceForMsg = (denom: string) => {
     return {
@@ -73,12 +74,9 @@ export const getConfigMsg = () => {
     };
 };
 
-export const setConfigMsg = (priceFeedPeriod: number, expectedFeeders: number) => {
+export const updateConfigMsg = (priceConfig: OraclePriceConfig) => {
     return {
-        config: {
-            price_feed_period_secs: priceFeedPeriod,
-            expected_feeders: expectedFeeders,
-        },
+        config: priceConfig,
     };
 };
 

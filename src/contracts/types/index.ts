@@ -1,6 +1,7 @@
 export * from './Asset';
 export * from './Balance';
 export * from './Config';
+export * from './OraclePriceConfig';
 export * from './ContractData';
 export * from './FeedPrice';
 export * from './FeedPrices';
