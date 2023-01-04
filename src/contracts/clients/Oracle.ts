@@ -113,11 +113,11 @@ export class Oracle {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateSwapTreeMsg(swapTree), fundCoin);
     }
 
-    public async updateConfig(nolusWallet: NolusWallet, baseAsset: string, priceConfig: OraclePriceConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, updateConfigMsg(baseAsset, priceConfig), fee, undefined, fundCoin);
+    public async updateConfig(nolusWallet: NolusWallet, priceConfig: OraclePriceConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, updateConfigMsg(priceConfig), fee, undefined, fundCoin);
     }
 
-    public async simulateUpdateConfigTx(nolusWallet: NolusWallet, baseAsset: string, priceConfig: OraclePriceConfig, fundCoin?: Coin[]) {
-        return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateConfigMsg(baseAsset, priceConfig), fundCoin);
+    public async simulateUpdateConfigTx(nolusWallet: NolusWallet, priceConfig: OraclePriceConfig, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateConfigMsg(priceConfig), fundCoin);
     }
 }
