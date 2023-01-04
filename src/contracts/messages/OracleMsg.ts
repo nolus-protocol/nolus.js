@@ -74,9 +74,10 @@ export const getConfigMsg = () => {
     };
 };
 
-export const updateConfigMsg = (priceConfig: OraclePriceConfig) => {
+export const updateConfigMsg = (baseAsset: string, priceConfig: OraclePriceConfig) => {
     return {
-        config: priceConfig,
+        base_asset: baseAsset,
+        price_config: priceConfig,
     };
 };
 

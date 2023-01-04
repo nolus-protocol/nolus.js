@@ -19,7 +19,7 @@ import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { FeedPrices } from '../types/FeedPrices';
-import { Config } from '../types/Config';
+import { OracleConfig } from '../types/OracleConfig';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { SwapPath } from '../types/SwapPath';
 import { SwapTree, Tree } from '../types/SwapTree';
@@ -77,7 +77,7 @@ export class Oracle {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getFeedersMsg());
     }
 
-    public async getConfig(): Promise<Config> {
+    public async getConfig(): Promise<OracleConfig> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getConfigMsg());
     }
 
@@ -113,11 +113,11 @@ export class Oracle {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateSwapTreeMsg(swapTree), fundCoin);
     }
 
-    public async updateConfig(nolusWallet: NolusWallet, priceConfig: OraclePriceConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, updateConfigMsg(priceConfig), fee, undefined, fundCoin);
+    public async updateConfig(nolusWallet: NolusWallet, baseAsset: string, priceConfig: OraclePriceConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, updateConfigMsg(baseAsset, priceConfig), fee, undefined, fundCoin);
     }
 
-    public async simulateUpdateConfigTx(nolusWallet: NolusWallet, priceConfig: OraclePriceConfig, fundCoin?: Coin[]) {
-        return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateConfigMsg(priceConfig), fundCoin);
+    public async simulateUpdateConfigTx(nolusWallet: NolusWallet, baseAsset: string, priceConfig: OraclePriceConfig, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, updateConfigMsg(baseAsset, priceConfig), fundCoin);
     }
 }
