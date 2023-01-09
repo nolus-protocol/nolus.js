@@ -1,5 +1,5 @@
 import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee, calculateFee } from '@cosmjs/stargate';
-import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
+import { SigningCosmWasmClient, SigningCosmWasmClientOptions, } from '@cosmjs/cosmwasm-stargate';
 import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
@@ -11,6 +11,9 @@ import { ContractData } from '../contracts/types/ContractData';
 import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
 import { ChainConstants } from '../constants';
 import { sha256 } from '@cosmjs/crypto';
+import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
+
+import Long from 'long';
 
 /**
  * Nolus Wallet service class.
@@ -36,7 +39,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         this.offlineSigner = signer;
     }
 
-    private async simulateTx(msg: MsgSend | MsgExecuteContract, msgTypeUrl: string, memo = '') {
+    private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer, msgTypeUrl: string, memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const msgAny = {
             typeUrl: msgTypeUrl,
@@ -167,6 +170,35 @@ export class NolusWallet extends SigningCosmWasmClient {
         });
 
         return await this.simulateTx(msg, '/cosmwasm.wasm.v1.MsgExecuteContract');
+    }
+
+    public async simulateSendIbcTokensTx({
+        toAddress,
+        amount,
+        sourcePort,
+        sourceChannel,
+        memo = ''
+    }: {
+        toAddress: string,
+        amount: Coin,
+        sourcePort: string,
+        sourceChannel: string,
+        memo?: string
+    }) {
+        const timeOut = Math.floor(Date.now() / 1000) + ChainConstants.IBC_TRANSFER_TIMEOUT;
+        const longTimeOut = Long.fromNumber(timeOut).multiply(1_000_000_000)
+
+        const msg = MsgTransfer.fromPartial({
+            sourcePort,
+            sourceChannel,
+            sender: this.address?.toString(),
+            receiver: toAddress,
+            token: amount,
+            timeoutHeight: undefined,
+            timeoutTimestamp: longTimeOut
+        });
+
+        return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', memo);
     }
 
     private async sequence() {

@@ -17,6 +17,7 @@ export class ChainConstants {
     public static readonly COIN_DECIMALS: number = 6;
     public static readonly COIN_GECKO_ID: string = 'cosmos';
     public static readonly COIN_TYPE: number = 118;
+    public static readonly IBC_TRANSFER_TIMEOUT: number = 60;
 
     /* Chain configurations */
     public static readonly BECH32_PREFIX_ACC_ADDR: string = 'nolus';
