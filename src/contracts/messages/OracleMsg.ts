@@ -76,7 +76,7 @@ export const getConfigMsg = () => {
 
 export const updateConfigMsg = (priceConfig: OraclePriceConfig) => {
     return {
-        udate_config: priceConfig,
+        update_config: priceConfig,
     };
 };
 
