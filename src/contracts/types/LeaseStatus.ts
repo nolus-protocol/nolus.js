@@ -1,8 +1,10 @@
-import { LeaseInfo } from './LeaseInfo';
-import { Asset } from './Asset';
+import { OpenedLeaseInfo } from './OpenedLeaseInfo';
+import { OpeningLeaseInfo } from './OpeningLeaseInfo';
+import { PaidLeaseInfo } from './PaidLeaseInfo';
 
 export interface LeaseStatus {
-    opened?: LeaseInfo;
+    opening?: OpeningLeaseInfo;
+    opened?: OpenedLeaseInfo;
+    paid?: PaidLeaseInfo;
     closed?: object;
-    paid?: Asset;
 }
