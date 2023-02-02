@@ -1,14 +1,16 @@
 import { OfflineDirectSigner } from '@cosmjs/proto-signing';
-import { createIbcAminoConverters, GasPrice, createBankAminoConverters } from '@cosmjs/stargate';
+import { createIbcAminoConverters, GasPrice, createBankAminoConverters, createStakingAminoConverters } from '@cosmjs/stargate';
 import { NolusClient } from '../client';
 import { NolusWallet } from './NolusWallet';
 import { ChainConstants } from '../constants/';
 import { LedgerSigner } from '@cosmjs/ledger-amino';
 import { AminoTypes } from "@cosmjs/stargate";
 
+
 const aminoTypes = {
     ...createIbcAminoConverters(),
-    ...createBankAminoConverters()
+    ...createBankAminoConverters(),
+    ...createStakingAminoConverters("nolus")
 }
 
 const MsgTransferAmino = new AminoTypes(aminoTypes);
@@ -24,3 +26,4 @@ export const nolusLedgerWallet = async (ledgerSigner: LedgerSigner): Promise<Nol
     return new NolusWallet(tendermintClient, ledgerSigner, { prefix: ChainConstants.BECH32_PREFIX_ACC_ADDR, aminoTypes: MsgTransferAmino });
 };
 
+export { aminoTypes };

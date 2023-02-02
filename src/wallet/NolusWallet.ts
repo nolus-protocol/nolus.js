@@ -12,6 +12,7 @@ import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
 import { ChainConstants } from '../constants';
 import { sha256 } from '@cosmjs/crypto';
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
+import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 
 import Long from 'long';
 
@@ -39,7 +40,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         this.offlineSigner = signer;
     }
 
-    private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer, msgTypeUrl: string, memo = '') {
+    private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate, msgTypeUrl: string, memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const msgAny = {
             typeUrl: msgTypeUrl,
@@ -200,6 +201,16 @@ export class NolusWallet extends SigningCosmWasmClient {
 
         return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', memo);
     }
+
+    public async simulateDelegate(validator: string, amount: Coin) {
+        const msg = MsgDelegate.fromPartial({
+            validatorAddress: validator,
+            delegatorAddress: this.address,
+            amount,
+        });
+        return await this.simulateTx(msg, '/cosmos.staking.v1beta1.MsgDelegate');
+    }
+
 
     private async sequence() {
         try {
