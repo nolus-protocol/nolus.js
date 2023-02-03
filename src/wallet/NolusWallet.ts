@@ -13,7 +13,6 @@ import { ChainConstants } from '../constants';
 import { sha256 } from '@cosmjs/crypto';
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
-import { MsgWithdrawDelegatorReward } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 
 import Long from 'long';
 
@@ -54,6 +53,40 @@ export class NolusWallet extends SigningCosmWasmClient {
         const gas = Math.round((gasInfo?.gasUsed.toNumber() as number) * ChainConstants.GAS_MULTIPLIER);
         const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
         const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
+
+        const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
+        const txHash = toHex(sha256(txBytes));
+
+        return {
+            txHash,
+            txBytes,
+            usedFee,
+        };
+    }
+
+    private async simulateMultiTx(
+        messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate, msgTypeUrl: string }[],
+        memo = ''
+    ) {
+        const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
+        const encodedMSGS = [];
+        const msgs = [];
+
+        for (const item of messages) {
+            const msgAny = {
+                typeUrl: item.msgTypeUrl,
+                value: item.msg,
+            };
+            encodedMSGS.push(this.registry.encodeAsAny(msgAny));
+            msgs.push(msgAny);
+        }
+
+        const sequence = await this.sequence();
+        const { gasInfo } = await this.forceGetQueryClient().tx.simulate(encodedMSGS, memo, pubkey, sequence);
+
+        const gas = Math.round((gasInfo?.gasUsed.toNumber() as number) * ChainConstants.GAS_MULTIPLIER);
+        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
+        const txRaw = await this.sign(this.address as string, msgs, usedFee, memo);
 
         const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
         const txHash = toHex(sha256(txBytes));
@@ -203,13 +236,23 @@ export class NolusWallet extends SigningCosmWasmClient {
         return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', memo);
     }
 
-    public async simulateDelegate(validator: string, amount: Coin) {
-        const msg = MsgDelegate.fromPartial({
-            validatorAddress: validator,
-            delegatorAddress: this.address,
-            amount,
-        });
-        return await this.simulateTx(msg, '/cosmos.staking.v1beta1.MsgDelegate');
+    public async simulateDelegate(data: { validator: string, amount: Coin }[]) {
+
+        const msgs = [];
+
+        for(const item of data){
+            const msg = MsgDelegate.fromPartial({
+                validatorAddress: item.validator,
+                delegatorAddress: this.address,
+                amount: item.amount,
+            });
+            msgs.push({
+                msg: msg,
+                msgTypeUrl: '/cosmos.staking.v1beta1.MsgDelegate'
+            })
+        }
+
+        return await this.simulateMultiTx(msgs, '');
     }
 
 
