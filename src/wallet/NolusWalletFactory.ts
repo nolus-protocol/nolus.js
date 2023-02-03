@@ -1,5 +1,5 @@
 import { OfflineDirectSigner } from '@cosmjs/proto-signing';
-import { createIbcAminoConverters, GasPrice, createBankAminoConverters, createStakingAminoConverters } from '@cosmjs/stargate';
+import { createIbcAminoConverters, GasPrice, createBankAminoConverters, createStakingAminoConverters, createDistributionAminoConverters } from '@cosmjs/stargate';
 import { NolusClient } from '../client';
 import { NolusWallet } from './NolusWallet';
 import { ChainConstants } from '../constants/';
@@ -10,7 +10,8 @@ import { AminoTypes } from "@cosmjs/stargate";
 const aminoTypes = {
     ...createIbcAminoConverters(),
     ...createBankAminoConverters(),
-    ...createStakingAminoConverters("nolus")
+    ...createStakingAminoConverters(ChainConstants.BECH32_PREFIX_ACC_ADDR),
+    ...createDistributionAminoConverters()
 }
 
 const MsgTransferAmino = new AminoTypes(aminoTypes);

@@ -12,7 +12,8 @@ import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
 import { ChainConstants } from '../constants';
 import { sha256 } from '@cosmjs/crypto';
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgDelegate,  } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgWithdrawDelegatorReward,  } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 
 import Long from 'long';
 
@@ -236,7 +237,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', memo);
     }
 
-    public async simulateDelegate(data: { validator: string, amount: Coin }[]) {
+    public async simulateDelegateTx(data: { validator: string, amount: Coin }[]) {
 
         const msgs = [];
 
@@ -249,6 +250,25 @@ export class NolusWallet extends SigningCosmWasmClient {
             msgs.push({
                 msg: msg,
                 msgTypeUrl: '/cosmos.staking.v1beta1.MsgDelegate'
+            })
+        }
+
+        return await this.simulateMultiTx(msgs, '');
+    }
+
+    public async simulateWithdrawRewardTx(data: { validator: string, delegator: string }[]) {
+
+        const msgs = [];
+
+        for(const item of data){
+            const msg = MsgWithdrawDelegatorReward.fromPartial({
+                validatorAddress: item.validator,
+                delegatorAddress: this.address,
+            });
+
+            msgs.push({
+                msg: msg,
+                msgTypeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
             })
         }
 
