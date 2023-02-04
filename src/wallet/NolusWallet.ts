@@ -12,8 +12,8 @@ import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
 import { ChainConstants } from '../constants';
 import { sha256 } from '@cosmjs/crypto';
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
-import { MsgDelegate,  } from "cosmjs-types/cosmos/staking/v1beta1/tx";
-import { MsgWithdrawDelegatorReward,  } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
+import { MsgDelegate, MsgUndelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
+import { MsgWithdrawDelegatorReward  } from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 
 import Long from 'long';
 
@@ -41,7 +41,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         this.offlineSigner = signer;
     }
 
-    private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate, msgTypeUrl: string, memo = '') {
+    private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate, msgTypeUrl: string, memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const msgAny = {
             typeUrl: msgTypeUrl,
@@ -66,7 +66,7 @@ export class NolusWallet extends SigningCosmWasmClient {
     }
 
     private async simulateMultiTx(
-        messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate, msgTypeUrl: string }[],
+        messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate, msgTypeUrl: string }[],
         memo = ''
     ) {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
@@ -250,6 +250,25 @@ export class NolusWallet extends SigningCosmWasmClient {
             msgs.push({
                 msg: msg,
                 msgTypeUrl: '/cosmos.staking.v1beta1.MsgDelegate'
+            })
+        }
+
+        return await this.simulateMultiTx(msgs, '');
+    }
+
+    public async simulateUndelegateTx(data: { validator: string, amount: Coin }[]) {
+
+        const msgs = [];
+
+        for(const item of data){
+            const msg = MsgUndelegate.fromPartial({
+                validatorAddress: item.validator,
+                delegatorAddress: this.address,
+                amount: item.amount,
+            });
+            msgs.push({
+                msg: msg,
+                msgTypeUrl: '/cosmos.staking.v1beta1.MsgUndelegate'
             })
         }
 
