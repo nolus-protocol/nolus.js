@@ -5,13 +5,14 @@ import { NolusWallet } from './NolusWallet';
 import { ChainConstants } from '../constants/';
 import { LedgerSigner } from '@cosmjs/ledger-amino';
 import { AminoTypes } from "@cosmjs/stargate";
-
+import { createWasmAminoConverters } from '@cosmjs/cosmwasm-stargate';
 
 const aminoTypes = {
     ...createIbcAminoConverters(),
     ...createBankAminoConverters(),
     ...createStakingAminoConverters(ChainConstants.BECH32_PREFIX_ACC_ADDR),
-    ...createDistributionAminoConverters()
+    ...createDistributionAminoConverters(),
+    ...createWasmAminoConverters()
 }
 
 const MsgTransferAmino = new AminoTypes(aminoTypes);

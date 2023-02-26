@@ -4,8 +4,8 @@ import { RepaymentOngoingState } from './RepaymentOngoingState';
 
 export interface OpenedLeaseInfo {
     amount: Asset;
-    interest_rate: number;
-    interest_rate_margin: number;
+    loan_interest_rate: number;
+    margin_interest_rate: number;
     principal_due: Asset;
     previous_margin_due: Asset;
     previous_interest_due: Asset;
