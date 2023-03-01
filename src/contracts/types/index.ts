@@ -21,7 +21,6 @@ export * from './Repayment';
 export * from './Rewards';
 export * from './SwapTree';
 export * from './SwapPath';
-export * from './CurrencyPair';
 export * from './ICAAccountOngoingStates';
 export * from './RepaymentOngoingState';
 export * from './LiquidationOngoingState';

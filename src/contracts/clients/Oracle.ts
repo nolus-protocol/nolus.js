@@ -23,7 +23,6 @@ import { OracleConfig } from '../types/OracleConfig';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { SwapPath } from '../types/SwapPath';
 import { SwapTree, Tree } from '../types/SwapTree';
-import { CurrencyPair } from '../types/CurrencyPair';
 import { OraclePriceConfig } from '../types/OraclePriceConfig';
 
 /**
@@ -57,7 +56,7 @@ export class Oracle {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceForMsg(currency));
     }
 
-    public async getCurrencyPairs(): Promise<CurrencyPair[]> {
+    public async getCurrencyPairs(): Promise<[string, [number, string]][]> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getCurrencyPairsMsg());
     }
 
