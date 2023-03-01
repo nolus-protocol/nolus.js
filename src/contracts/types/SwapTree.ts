@@ -1,5 +1,9 @@
 type Node = [number, string];
-type Branch<T> = (Node | T)[];
+type Branch<T> = {
+    value: Node;
+    children?: T[];
+};
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Tree extends Branch<Tree> {}
 
