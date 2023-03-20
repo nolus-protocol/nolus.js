@@ -26,10 +26,18 @@ export const getLeaserConfigMsg = () => {
     };
 };
 
-export const openLeaseMsg = (leaseCurrency: string) => {
+export const openLeaseMsg = (leaseCurrency: string, max_ltv?: number) => {
+    if (max_ltv === null)
+        return {
+            open_lease: {
+                currency: leaseCurrency,
+            },
+        };
+
     return {
         open_lease: {
             currency: leaseCurrency,
+            max_ltv: max_ltv,
         },
     };
 };

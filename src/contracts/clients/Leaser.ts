@@ -41,12 +41,12 @@ export class Leaser {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLeaserConfigMsg());
     }
 
-    public async openLease(nolusWallet: NolusWallet, leaseCurrency: string, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, openLeaseMsg(leaseCurrency), fee, undefined, fundCoin);
+    public async openLease(nolusWallet: NolusWallet, leaseCurrency: string, fee: StdFee | 'auto' | number, max_ltv?: number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, openLeaseMsg(leaseCurrency, max_ltv), fee, undefined, fundCoin);
     }
 
-    public async simulateOpenLeaseTx(nolusWallet: NolusWallet, leaseCurrency: string, fundCoin?: Coin[]) {
-        return nolusWallet.simulateExecuteContractTx(this._contractAddress, openLeaseMsg(leaseCurrency), fundCoin);
+    public async simulateOpenLeaseTx(nolusWallet: NolusWallet, leaseCurrency: string, max_ltv?: number, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, openLeaseMsg(leaseCurrency, max_ltv), fundCoin);
     }
 
     public async setLeaserConfig(nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
