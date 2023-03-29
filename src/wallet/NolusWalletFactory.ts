@@ -10,7 +10,7 @@ import { createWasmAminoConverters } from '@cosmjs/cosmwasm-stargate';
 const aminoTypes = {
     ...createIbcAminoConverters(),
     ...createBankAminoConverters(),
-    ...createStakingAminoConverters(ChainConstants.BECH32_PREFIX_ACC_ADDR),
+    ...createStakingAminoConverters(),
     ...createDistributionAminoConverters(),
     ...createWasmAminoConverters()
 }
@@ -20,12 +20,12 @@ const MsgTransferAmino = new AminoTypes(aminoTypes);
 export const nolusOfflineSigner = async (offlineDirectSigner: OfflineDirectSigner): Promise<NolusWallet> => {
     const tendermintClient = await NolusClient.getInstance().getTendermintClient();
     const price = GasPrice.fromString(ChainConstants.GAS_PRICE);
-    return new NolusWallet(tendermintClient, offlineDirectSigner, { prefix: ChainConstants.BECH32_PREFIX_ACC_ADDR, aminoTypes: MsgTransferAmino, gasPrice: price });
+    return new NolusWallet(tendermintClient, offlineDirectSigner, { aminoTypes: MsgTransferAmino, gasPrice: price });
 };
 
 export const nolusLedgerWallet = async (ledgerSigner: LedgerSigner): Promise<NolusWallet> => {
     const tendermintClient = await NolusClient.getInstance().getTendermintClient();
-    return new NolusWallet(tendermintClient, ledgerSigner, { prefix: ChainConstants.BECH32_PREFIX_ACC_ADDR, aminoTypes: MsgTransferAmino });
+    return new NolusWallet(tendermintClient, ledgerSigner, { aminoTypes: MsgTransferAmino });
 };
 
 export { aminoTypes };

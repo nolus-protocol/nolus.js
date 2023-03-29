@@ -1,5 +1,5 @@
 import { Bip39, EnglishMnemonic, HdPath, Random, ripemd160, Secp256k1, sha256, Slip10, Slip10Curve } from '@cosmjs/crypto';
-import { Bech32 } from '@cosmjs/encoding';
+import { toBech32, fromBech32 } from '@cosmjs/encoding';
 import { ChainConstants } from '../constants';
 
 /**
@@ -27,7 +27,7 @@ export class KeyUtils {
         }
         const hash1 = sha256(publicKey);
         const hash2 = ripemd160(hash1);
-        return Bech32.encode(prefix, hash2);
+        return toBech32(prefix, hash2);
     }
 
     public static async getPublicKeyFromPrivateKey(privateKey: Uint8Array) {
@@ -37,7 +37,7 @@ export class KeyUtils {
 
     public static isAddressValid(address: string, prefix = ChainConstants.BECH32_PREFIX_ACC_ADDR): boolean {
         try {
-            const decoded = Bech32.decode(address);
+            const decoded = fromBech32(address);
             return (!prefix || prefix === decoded.prefix) && decoded.data.length === 20;
         } catch (err) {
             return false;

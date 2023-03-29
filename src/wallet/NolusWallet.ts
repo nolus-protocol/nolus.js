@@ -1,7 +1,7 @@
 import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee, calculateFee } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions, } from '@cosmjs/cosmwasm-stargate';
 import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
-import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
+import { TendermintClient } from '@cosmjs/tendermint-rpc';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { toUtf8, toHex } from '@cosmjs/encoding';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
@@ -36,7 +36,7 @@ export class NolusWallet extends SigningCosmWasmClient {
 
     protected offlineSigner: OfflineSigner;
 
-    constructor(tmClient: Tendermint34Client | undefined, signer: OfflineSigner, options: SigningCosmWasmClientOptions) {
+    constructor(tmClient: TendermintClient | undefined, signer: OfflineSigner, options: SigningCosmWasmClientOptions) {
         super(tmClient, signer, options);
         this.offlineSigner = signer;
     }
