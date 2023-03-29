@@ -4,7 +4,7 @@ import { NolusClient } from '../client';
 import { NolusWallet } from './NolusWallet';
 import { ChainConstants } from '../constants/';
 import { LedgerSigner } from '@cosmjs/ledger-amino';
-import { AminoTypes } from "@cosmjs/stargate";
+import { AminoTypes } from '@cosmjs/stargate';
 import { createWasmAminoConverters } from '@cosmjs/cosmwasm-stargate';
 
 const aminoTypes = {
@@ -12,8 +12,8 @@ const aminoTypes = {
     ...createBankAminoConverters(),
     ...createStakingAminoConverters(),
     ...createDistributionAminoConverters(),
-    ...createWasmAminoConverters()
-}
+    ...createWasmAminoConverters(),
+};
 
 const MsgTransferAmino = new AminoTypes(aminoTypes);
 
