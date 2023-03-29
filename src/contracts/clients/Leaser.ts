@@ -29,8 +29,8 @@ export class Leaser {
         this._contractAddress = contractAddress;
     }
 
-    public async leaseQuote(downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string): Promise<LeaseApply> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, leaseQuoteMsg(downpaymentAmount, downpaymentCurrency, leaseAsset));
+    public async leaseQuote(downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltv?: number): Promise<LeaseApply> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, leaseQuoteMsg(downpaymentAmount, downpaymentCurrency, leaseAsset, max_ltv));
     }
 
     public async getCurrentOpenLeasesByOwner(ownerAddress: string): Promise<string[]> {

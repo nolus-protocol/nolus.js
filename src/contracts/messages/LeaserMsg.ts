@@ -1,6 +1,16 @@
 import { LeaserConfig } from '../types';
 
-export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string) => {
+export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltv?: number) => {
+    if (max_ltv === null)
+        return {
+            quote: {
+                lease_asset: leaseAsset,
+                downpayment: {
+                    ticker: downpaymentCurrency,
+                    amount: downpaymentAmount,
+                },
+            },
+        };
     return {
         quote: {
             lease_asset: leaseAsset,
@@ -8,6 +18,7 @@ export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: st
                 ticker: downpaymentCurrency,
                 amount: downpaymentAmount,
             },
+            max_ltv: max_ltv,
         },
     };
 };
