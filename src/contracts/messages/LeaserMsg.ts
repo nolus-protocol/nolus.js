@@ -1,7 +1,7 @@
 import { LeaserConfig } from '../types';
 
 export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltv?: number) => {
-    if (max_ltv === null)
+    if (typeof max_ltv === 'undefined')
         return {
             quote: {
                 lease_asset: leaseAsset,
@@ -38,7 +38,7 @@ export const getLeaserConfigMsg = () => {
 };
 
 export const openLeaseMsg = (leaseCurrency: string, max_ltv?: number) => {
-    if (max_ltv === null)
+    if (typeof max_ltv === 'undefined')
         return {
             open_lease: {
                 currency: leaseCurrency,
