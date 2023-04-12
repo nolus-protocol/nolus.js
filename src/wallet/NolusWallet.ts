@@ -16,6 +16,7 @@ import { MsgDelegate, MsgUndelegate } from 'cosmjs-types/cosmos/staking/v1beta1/
 import { MsgWithdrawDelegatorReward } from 'cosmjs-types/cosmos/distribution/v1beta1/tx';
 
 import Long from 'long';
+import { claimRewardsMsg, getLenderRewardsMsg } from '../contracts';
 
 /**
  * Nolus Wallet service class.
@@ -274,6 +275,40 @@ export class NolusWallet extends SigningCosmWasmClient {
         }
 
         return await this.simulateMultiTx(msgs, '');
+    }
+
+    public async simulateClaimRewards(data: { validator: string; delegator: string }[], lppContract: string) {
+        const msgs = [];
+
+        for (const item of data) {
+            const msg = MsgWithdrawDelegatorReward.fromPartial({
+                validatorAddress: item.validator,
+                delegatorAddress: this.address,
+            });
+
+            msgs.push({
+                msg: msg,
+                msgTypeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+            });
+        }
+
+        const item = await this.queryContractSmart(lppContract, getLenderRewardsMsg(this.address as string));
+
+        if (Number(item.rewards.amount) > 0) {
+            const msg = MsgExecuteContract.fromPartial({
+                sender: this.address,
+                contract: lppContract,
+                msg: toUtf8(JSON.stringify(claimRewardsMsg(this.address))),
+            });
+
+            msgs.push({
+                msg: msg,
+                msgTypeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
+            });
+        }
+
+        return await this.simulateMultiTx(msgs, '');
+
     }
 
     private async sequence() {
