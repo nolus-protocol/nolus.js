@@ -1,6 +1,4 @@
 import { FeedPrices } from '../types/FeedPrices';
-import { OraclePriceConfig } from '../types/OraclePriceConfig';
-import { Tree } from '../types/SwapTree';
 
 export const getPriceForMsg = (denom: string) => {
     return {
@@ -24,22 +22,6 @@ export const getCurrencyPairsMsg = () => {
     };
 };
 
-export const addFeederMsg = (feederWalletAddress: string) => {
-    return {
-        register_feeder: {
-            feeder_address: feederWalletAddress,
-        },
-    };
-};
-
-export const removeFeederMsg = (feederWalletAddress: string) => {
-    return {
-        remove_feeder: {
-            feeder_address: feederWalletAddress,
-        },
-    };
-};
-
 export const getFeedersMsg = () => {
     return {
         feeders: {},
@@ -60,23 +42,9 @@ export const feedPricesMsg = (feedPrices: FeedPrices) => {
     };
 };
 
-export const updateSwapTreeMsg = (swapTree: Tree) => {
-    return {
-        swap_tree: {
-            tree: swapTree,
-        },
-    };
-};
-
 export const getConfigMsg = () => {
     return {
         config: {},
-    };
-};
-
-export const updateConfigMsg = (priceConfig: OraclePriceConfig) => {
-    return {
-        update_config: priceConfig,
     };
 };
 

@@ -1,5 +1,3 @@
-import { LeaserConfig } from '../types';
-
 export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltv?: number) => {
     if (typeof max_ltv === 'undefined')
         return {
@@ -51,8 +49,4 @@ export const openLeaseMsg = (leaseCurrency: string, max_ltv?: number) => {
             max_ltv: max_ltv,
         },
     };
-};
-
-export const setLeaserConfigMsg = (leaserConfig: LeaserConfig) => {
-    return leaserConfig;
 };

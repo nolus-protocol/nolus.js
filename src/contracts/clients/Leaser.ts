@@ -1,6 +1,6 @@
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { LeaseApply, LeaserConfig } from '../types';
-import { getCurrentOpenLeasesByOwnerMsg, getLeaserConfigMsg, leaseQuoteMsg, openLeaseMsg, setLeaserConfigMsg } from '../messages';
+import { getCurrentOpenLeasesByOwnerMsg, getLeaserConfigMsg, leaseQuoteMsg, openLeaseMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -47,13 +47,5 @@ export class Leaser {
 
     public async simulateOpenLeaseTx(nolusWallet: NolusWallet, leaseCurrency: string, max_ltv?: number, fundCoin?: Coin[]) {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, openLeaseMsg(leaseCurrency, max_ltv), fundCoin);
-    }
-
-    public async setLeaserConfig(nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, setLeaserConfigMsg(leaserConfig), fee, undefined, fundCoin);
-    }
-
-    public async simulateSetLeaserConfigTx(nolusWallet: NolusWallet, leaserConfig: LeaserConfig, fundCoin?: Coin[]) {
-        return nolusWallet.simulateExecuteContractTx(this._contractAddress, setLeaserConfigMsg(leaserConfig), fundCoin);
     }
 }
