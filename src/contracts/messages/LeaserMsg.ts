@@ -1,5 +1,5 @@
-export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltv?: number) => {
-    if (typeof max_ltv === 'undefined')
+export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltd?: number) => {
+    if (typeof max_ltd === 'undefined')
         return {
             quote: {
                 lease_asset: leaseAsset,
@@ -16,7 +16,7 @@ export const leaseQuoteMsg = (downpaymentAmount: string, downpaymentCurrency: st
                 ticker: downpaymentCurrency,
                 amount: downpaymentAmount,
             },
-            max_ltv: max_ltv,
+            max_ltd: max_ltd,
         },
     };
 };
@@ -35,8 +35,8 @@ export const getLeaserConfigMsg = () => {
     };
 };
 
-export const openLeaseMsg = (leaseCurrency: string, max_ltv?: number) => {
-    if (typeof max_ltv === 'undefined')
+export const openLeaseMsg = (leaseCurrency: string, max_ltd?: number) => {
+    if (typeof max_ltd === 'undefined')
         return {
             open_lease: {
                 currency: leaseCurrency,
@@ -46,7 +46,7 @@ export const openLeaseMsg = (leaseCurrency: string, max_ltv?: number) => {
     return {
         open_lease: {
             currency: leaseCurrency,
-            max_ltv: max_ltv,
+            max_ltd: max_ltd,
         },
     };
 };

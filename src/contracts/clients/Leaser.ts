@@ -29,8 +29,8 @@ export class Leaser {
         this._contractAddress = contractAddress;
     }
 
-    public async leaseQuote(downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltv?: number): Promise<LeaseApply> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, leaseQuoteMsg(downpaymentAmount, downpaymentCurrency, leaseAsset, max_ltv));
+    public async leaseQuote(downpaymentAmount: string, downpaymentCurrency: string, leaseAsset: string, max_ltd?: number): Promise<LeaseApply> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, leaseQuoteMsg(downpaymentAmount, downpaymentCurrency, leaseAsset, max_ltd));
     }
 
     public async getCurrentOpenLeasesByOwner(ownerAddress: string): Promise<string[]> {
@@ -41,11 +41,11 @@ export class Leaser {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLeaserConfigMsg());
     }
 
-    public async openLease(nolusWallet: NolusWallet, leaseCurrency: string, fee: StdFee | 'auto' | number, max_ltv?: number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, openLeaseMsg(leaseCurrency, max_ltv), fee, undefined, fundCoin);
+    public async openLease(nolusWallet: NolusWallet, leaseCurrency: string, fee: StdFee | 'auto' | number, max_ltd?: number, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, openLeaseMsg(leaseCurrency, max_ltd), fee, undefined, fundCoin);
     }
 
-    public async simulateOpenLeaseTx(nolusWallet: NolusWallet, leaseCurrency: string, max_ltv?: number, fundCoin?: Coin[]) {
-        return nolusWallet.simulateExecuteContractTx(this._contractAddress, openLeaseMsg(leaseCurrency, max_ltv), fundCoin);
+    public async simulateOpenLeaseTx(nolusWallet: NolusWallet, leaseCurrency: string, max_ltd?: number, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, openLeaseMsg(leaseCurrency, max_ltd), fundCoin);
     }
 }
