@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Buffer } from 'buffer';
 import { Hash } from '@keplr-wallet/crypto';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 // @ts-ignore
-import CURRENCIES from './currencies.json';
+import CURRENCIES_TESTNET from './currencies_testnet.json';
+// @ts-ignore
+import CURRENCIES_MAINNET from './currencies_mainnet.json';
 
 /**
  * AssetUtils provides helpers for working with Nolus assets.
@@ -24,8 +27,7 @@ export class AssetUtils {
      *
      *  The current method returns a list of tickers by group.
      */
-    public static getCurrenciesByGroup(group: string): string[] {
-        const currenciesData = CURRENCIES.currencies;
+    public static getCurrenciesByGroup(group: string, currenciesData: any): string[] {
         const currenciesByGroup: string[] = [];
         Object.keys(currenciesData).forEach((key) => {
             const currencyObj = currenciesData[key as keyof typeof currenciesData];
@@ -34,14 +36,25 @@ export class AssetUtils {
         return currenciesByGroup;
     }
 
+    public static getCurrenciesByGroupTestnet(group: string): string[] {
+        const currenciesData = CURRENCIES_TESTNET.currencies;
+
+        return this.getCurrenciesByGroup(group, currenciesData);
+    }
+
+    public static getCurrenciesByGroupMainnet(group: string): string[] {
+        const currenciesData = CURRENCIES_MAINNET.currencies;
+
+        return this.getCurrenciesByGroup(group, currenciesData);
+    }
+
     /**
      * The current method converts 'ticker' to ibc/ denom.
      *
      * "The currency symbol at Nolus network is either equal to the currency 'symbol' if its 'ibc_route' == [], or ",
      * "'ibc/' + sha256('transfer' + '/' + ibc_route[0] + '/' + ... + 'transfer' + '/' + ibc_route[n-1] + '/' + symbol) otherwise."
      */
-    public static makeIBCMinimalDenom(ticker: string): string {
-        const currenciesData = CURRENCIES.currencies;
+    public static makeIBCMinimalDenom(ticker: string, currenciesData: any): string {
         const currencyData = currenciesData[ticker as keyof typeof currenciesData];
         if (currencyData === undefined) {
             return 'Ticker was not found in the list.';
@@ -63,5 +76,17 @@ export class AssetUtils {
                 .toString('hex')
                 .toUpperCase()
         );
+    }
+
+    public static makeIBCMinimalDenomTestnet(ticker: string): string {
+        const currenciesData = CURRENCIES_TESTNET.currencies;
+
+        return this.makeIBCMinimalDenom(ticker, currenciesData);
+    }
+
+    public static makeIBCMinimalDenomMainnet(ticker: string): string {
+        const currenciesData = CURRENCIES_MAINNET.currencies;
+
+        return this.makeIBCMinimalDenom(ticker, currenciesData);
     }
 }
