@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      CURRENCIES_FILE_NAME: "currencies.json"
+      CURRENCIES_TESTNET_FILE_NAME: "currencies_testnet.json"
+      CURRENCIES_MAINNET_FILE_NAME: "currencies_mainnet.json"
     strategy:
       matrix:
         node-version: [14.x]
@@ -34,10 +35,15 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Download currencies data
+      - name: Download currencies data - testnet
         run: |
          sudo apt-get install curl -y
-         curl "https://raw.githubusercontent.com/Nolus-Protocol/nolus-networks/main/testnet/nolus-rila/currencies.json" -o "$CURRENCIES_FILE_NAME"
+         curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/testnet/nolus-rila/currencies.json" -o "$CURRENCIES_TESTNET_FILE_NAME"
+
+      - name: Download currencies data - mainnet
+        run: |
+         sudo apt-get install curl -y
+         curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/mainnet/pirin-1/currencies.json" -o "$CURRENCIES_MAINNET_FILE_NAME"
 
       - name: Build module
         run: yarn build
@@ -51,8 +57,11 @@ jobs:
       - name: Copy package.json
         run: cp package.json build/package.json
 
-      - name: Copy currencies data file
-        run: cp "$CURRENCIES_FILE_NAME" build/build/utils/"$CURRENCIES_FILE_NAME"
+      - name: Copy currencies-testnet data file
+        run: cp "$CURRENCIES_TESTNET_FILE_NAME" build/build/utils/"$CURRENCIES_TESTNET_FILE_NAME"
+
+      - name: Copy currencies-mainnet data file
+        run: cp "$CURRENCIES_MAINNET_FILE_NAME" build/build/utils/"$CURRENCIES_MAINNET_FILE_NAME"
 
       - name: Publish package to NPM
         run: npm publish ./build
