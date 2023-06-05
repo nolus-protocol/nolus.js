@@ -38,7 +38,7 @@ jobs:
       - name: Download currencies data - testnet
         run: |
          sudo apt-get install curl -y
-         curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/testnet/nolus-rila/currencies.json" -o "$CURRENCIES_TESTNET_FILE_NAME"
+         curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/testnet/rila-1/currencies.json" -o "$CURRENCIES_TESTNET_FILE_NAME"
 
       - name: Download currencies data - mainnet
         run: |
