@@ -17,7 +17,7 @@ jobs:
       CURRENCIES_MAINNET_FILE_NAME: "currencies_mainnet.json"
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
 
     steps:
       - name: Checkout code
