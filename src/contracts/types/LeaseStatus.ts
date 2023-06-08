@@ -7,4 +7,5 @@ export interface LeaseStatus {
     opened?: OpenedLeaseInfo;
     paid?: PaidLeaseInfo;
     closed?: object;
+    liquidated?: object;
 }
