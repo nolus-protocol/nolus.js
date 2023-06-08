@@ -3,6 +3,8 @@ import { Buffer } from 'buffer';
 import { Hash } from '@keplr-wallet/crypto';
 
 // @ts-ignore
+import CURRENCIES_DEVNET from './currencies_devnet.json';
+// @ts-ignore
 import CURRENCIES_TESTNET from './currencies_testnet.json';
 // @ts-ignore
 import CURRENCIES_MAINNET from './currencies_mainnet.json';
@@ -48,6 +50,12 @@ export class AssetUtils {
         return this.getCurrenciesByGroup(group, currenciesData);
     }
 
+    public static getCurrenciesByGroupDevnet(group: string): string[] {
+        const currenciesData = CURRENCIES_DEVNET.currencies;
+
+        return this.getCurrenciesByGroup(group, currenciesData);
+    }
+
     /**
      * The current method converts 'ticker' to ibc/ denom.
      *
@@ -76,6 +84,12 @@ export class AssetUtils {
                 .toString('hex')
                 .toUpperCase()
         );
+    }
+
+    public static makeIBCMinimalDenomDevnet(ticker: string): string {
+        const currenciesData = CURRENCIES_DEVNET.currencies;
+
+        return this.makeIBCMinimalDenom(ticker, currenciesData);
     }
 
     public static makeIBCMinimalDenomTestnet(ticker: string): string {
