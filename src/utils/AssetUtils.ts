@@ -18,40 +18,53 @@ import CURRENCIES_MAINNET from './currencies_mainnet.json';
  */
 export class AssetUtils {
     /**
-     * The supported currencies are organized into several groups - Lpn, Lease, Payment.
+     * The supported currencies are organized into several groups - Lpn, Lease, Native.
      * The following rules apply here:
      * - "Lpn contains the Lpp currencies.",
      * - "Lease currencies are the ones customers may open lease in.",
-     * - "Payment defines the currencies customers may repay their leases in.",
-     * - "All members of Lpn are members of Payments.",
-     * - "All members of Lease are members of Payments.",
-     * - "Lpn and Lease groups do not intersect."
+     * - "Native defines the native currency for the Nolus AMM protocol.",
+     * - "Leases may be paid with any of the provided currencies.",
      *
      *  The current method returns a list of tickers by group.
      */
     public static getCurrenciesByGroup(group: string, currenciesData: any): string[] {
-        const currenciesByGroup: string[] = [];
-        Object.keys(currenciesData).forEach((key) => {
-            const currencyObj = currenciesData[key as keyof typeof currenciesData];
-            if (currencyObj.groups.indexOf(group) > -1 || (group === 'Payment' && (currencyObj.groups.indexOf('Lpn') > -1 || currencyObj.groups.indexOf('Lease') > -1))) currenciesByGroup.push(key);
-        });
+        let currenciesByGroup: string[] = [];
+        const subArr: string[][] = [];
+        const groupsData = currenciesData.lease;
+        const groups = Object.keys(groupsData);
+
+        if (group.toLowerCase() === 'native') {
+            currenciesByGroup.push(groupsData.Native.id);
+        } else if (group.toLowerCase() === 'payment') {
+            groups.forEach((group) => {
+                if (group.toLowerCase() === 'native') {
+                    subArr.push([groupsData.Native.id]);
+                } else {
+                    subArr.push(Object.keys(groupsData[group as keyof typeof groupsData]));
+                }
+            });
+            currenciesByGroup = subArr.flat();
+        } else if (groups.indexOf(group) > -1) {
+            const groupData = groupsData[group as keyof typeof groupsData];
+            currenciesByGroup = Object.keys(groupData);
+        }
         return currenciesByGroup;
     }
 
     public static getCurrenciesByGroupTestnet(group: string): string[] {
-        const currenciesData = CURRENCIES_TESTNET.currencies;
+        const currenciesData = CURRENCIES_TESTNET;
 
         return this.getCurrenciesByGroup(group, currenciesData);
     }
 
     public static getCurrenciesByGroupMainnet(group: string): string[] {
-        const currenciesData = CURRENCIES_MAINNET.currencies;
+        const currenciesData = CURRENCIES_MAINNET;
 
         return this.getCurrenciesByGroup(group, currenciesData);
     }
 
     public static getCurrenciesByGroupDevnet(group: string): string[] {
-        const currenciesData = CURRENCIES_DEVNET.currencies;
+        const currenciesData = CURRENCIES_DEVNET;
 
         return this.getCurrenciesByGroup(group, currenciesData);
     }
