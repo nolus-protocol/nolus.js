@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Buffer } from 'buffer';
 import { Hash } from '@keplr-wallet/crypto';
+import { Currency, GROUPS, Networks } from '../types/Networks';
+import { ChainConstants } from '../constants';
 
 // @ts-ignore
 import CURRENCIES_DEVNET from './currencies_devnet.json';
@@ -27,45 +29,32 @@ export class AssetUtils {
      *
      *  The current method returns a list of tickers by group.
      */
-    public static getCurrenciesByGroup(group: string, currenciesData: any): string[] {
-        let currenciesByGroup: string[] = [];
-        const subArr: string[][] = [];
-        const groupsData = currenciesData.lease;
-        const groups = Object.keys(groupsData);
-
-        if (group.toLowerCase() === 'native') {
-            currenciesByGroup.push(groupsData.Native.id);
-        } else if (group.toLowerCase() === 'payment') {
-            groups.forEach((group) => {
-                if (group.toLowerCase() === 'native') {
-                    subArr.push([groupsData.Native.id]);
-                } else {
-                    subArr.push(Object.keys(groupsData[group as keyof typeof groupsData]));
-                }
-            });
-            currenciesByGroup = subArr.flat();
-        } else if (groups.indexOf(group) > -1) {
-            const groupData = groupsData[group as keyof typeof groupsData];
-            currenciesByGroup = Object.keys(groupData);
+    public static getCurrenciesByGroup(group: GROUPS, currenciesData: Networks): string | string[] {
+        switch (group) {
+            case (GROUPS.Native): {
+                return AssetUtils.getNative(currenciesData).key;
+            }
+            case (GROUPS.Lease): {
+                return AssetUtils.getLease(currenciesData);
+            }
+            case (GROUPS.Lpn): {
+                return AssetUtils.getLpn(currenciesData).map((item) => item.key);
+            }
         }
-        return currenciesByGroup;
     }
 
-    public static getCurrenciesByGroupTestnet(group: string): string[] {
+    public static getCurrenciesByGroupTestnet(group: GROUPS): string[] | string {
         const currenciesData = CURRENCIES_TESTNET;
-
         return this.getCurrenciesByGroup(group, currenciesData);
     }
 
-    public static getCurrenciesByGroupMainnet(group: string): string[] {
+    public static getCurrenciesByGroupMainnet(group: GROUPS): string[] | string {
         const currenciesData = CURRENCIES_MAINNET;
-
         return this.getCurrenciesByGroup(group, currenciesData);
     }
 
-    public static getCurrenciesByGroupDevnet(group: string): string[] {
+    public static getCurrenciesByGroupDevnet(group: GROUPS): string[] | string {
         const currenciesData = CURRENCIES_DEVNET;
-
         return this.getCurrenciesByGroup(group, currenciesData);
     }
 
@@ -75,45 +64,157 @@ export class AssetUtils {
      * "The currency symbol at Nolus network is either equal to the currency 'symbol' if its 'ibc_route' == [], or ",
      * "'ibc/' + sha256('transfer' + '/' + ibc_route[0] + '/' + ... + 'transfer' + '/' + ibc_route[n-1] + '/' + symbol) otherwise."
      */
-    public static makeIBCMinimalDenom(ticker: string, currenciesData: any): string {
-        const currencyData = currenciesData[ticker as keyof typeof currenciesData];
-        if (currencyData === undefined) {
-            return 'Ticker was not found in the list.';
+    public static makeIBCMinimalDenom(ticker: string, currenciesData: Networks, network: string): string {
+        const currency = currenciesData.networks.list[network].currencies[ticker];
+
+        if (currency?.native) {
+            return currency?.native.symbol;
         }
-        const currencyIBCroutes = currencyData.ibc_route;
-        const currencySymbol = currencyData.symbol;
 
-        if (currencyIBCroutes.length === 0) return currencySymbol;
+        const channels = AssetUtils.getChannels(currenciesData, ticker, network, []);
+        const asset = AssetUtils.getAsset(currenciesData, ticker, network);
 
-        let stringToConvert = '';
-        currencyIBCroutes.forEach((IBCroute: string) => {
-            stringToConvert += 'transfer/' + IBCroute + '/';
-        });
-        stringToConvert += currencySymbol;
+        let path = channels.reduce((a, b) => {
+            a += `transfer/${b}/`;
+            return a;
+        }, "");
 
+        if(asset.asset.native?.symbol == null){
+            throw `IBC parse error ${ticker} ${network};`
+        }
+
+        path += `${asset.asset.native!.symbol}`;
         return (
-            'ibc/' +
-            Buffer.from(Hash.sha256(Buffer.from(stringToConvert)))
-                .toString('hex')
+            "ibc/" +
+            Buffer.from(Hash.sha256(Buffer.from(path)))
+                .toString("hex")
                 .toUpperCase()
         );
     }
 
-    public static makeIBCMinimalDenomDevnet(ticker: string): string {
-        const currenciesData = CURRENCIES_DEVNET.currencies;
-
-        return this.makeIBCMinimalDenom(ticker, currenciesData);
+    public static makeIBCMinimalDenomDevnet(ticker: string, network: string): string {
+        const currenciesData = CURRENCIES_DEVNET;
+        return this.makeIBCMinimalDenom(ticker, currenciesData, network);
     }
 
-    public static makeIBCMinimalDenomTestnet(ticker: string): string {
-        const currenciesData = CURRENCIES_TESTNET.currencies;
-
-        return this.makeIBCMinimalDenom(ticker, currenciesData);
+    public static makeIBCMinimalDenomTestnet(ticker: string, network: string): string {
+        const currenciesData = CURRENCIES_TESTNET;
+        return this.makeIBCMinimalDenom(ticker, currenciesData, network);
     }
 
-    public static makeIBCMinimalDenomMainnet(ticker: string): string {
-        const currenciesData = CURRENCIES_MAINNET.currencies;
-
-        return this.makeIBCMinimalDenom(ticker, currenciesData);
+    public static makeIBCMinimalDenomMainnet(ticker: string, network: string): string {
+        const currenciesData = CURRENCIES_MAINNET;
+        return this.makeIBCMinimalDenom(ticker, currenciesData, network);
     }
+
+    public static getChannel(
+        channels: {
+            a: {
+                network: string,
+                ch: string
+            },
+            b: {
+                network: string,
+                ch: string
+            }
+        }[], ibc: {
+            network: string;
+            currency: string;
+        }, network: string) {
+        const channel = channels.find(
+            (item) => {
+                return (item.a.network == network && item.b.network == ibc?.network) || (item.a.network == ibc?.network && item.b.network == network)
+            }
+        );
+
+        if (channel) {
+            const { a, b } = channel;
+            if (a.network == network) {
+                return a;
+            }
+
+            if (b.network == network) {
+                return b;
+            }
+        }
+
+        throw 'Channel not found';
+    }
+
+    public static getSourceChannel(
+        channels: {
+            a: {
+                network: string,
+                ch: string
+            },
+            b: {
+                network: string,
+                ch: string
+            }
+        }[], a: string, source: string) {
+
+        const channel = channels.find(
+            (item) => {
+                return (item.a.network == a && item.b.network == source) || (item.a.network == source && item.b.network == a)
+            }
+        );
+
+        if (channel) {
+            if (channel.a.network == source) {
+                return channel.a.ch;
+            }
+
+            if (channel.b.network == source) {
+                return channel.b.ch;
+            }
+        }
+
+        throw `Source channel ${source} ${a} not found`;
+    }
+
+    public static getChannels(ntwrks: Networks, key: string, network: string, routes: string[]): string[] {
+        const asset = ntwrks.networks.list[network].currencies[key];
+
+        if (asset.ibc) {
+
+            const channel = AssetUtils.getChannel(ntwrks.networks.channels, asset.ibc, network);
+            routes.push(channel?.ch as string);
+
+            return AssetUtils.getChannels(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string, routes);
+        }
+
+        return routes;
+    }
+
+    public static getAsset(ntwrks: Networks, key: string, network: string): { asset: Currency, key: string } {
+        const asset = ntwrks.networks.list[network].currencies[key];
+
+        if (asset.ibc) {
+            return AssetUtils.getAsset(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string)
+        }
+
+        return { asset, key };
+    }
+
+    public static getNative(ntwrks: Networks) {
+        const native = ntwrks.lease.Native.id;
+        return AssetUtils.getAsset(ntwrks, native as string, ChainConstants.CHAIN_KEY as string);
+    }
+
+    public static getLpn(networks: Networks) {
+        const lpns = [];
+        for (const key in networks.lease.Lpn) {
+            lpns.push(AssetUtils.getAsset(networks, key as string, ChainConstants.CHAIN_KEY));
+        }
+        return lpns;
+    }
+
+    public static getLease(ntwrks: Networks) {
+        const lease = Object.keys(ntwrks.lease.Lease);
+        return lease.map((c) => {
+            const asset = AssetUtils.getAsset(ntwrks, c as string, ChainConstants.CHAIN_KEY as string);
+            return asset.key;
+        });
+    }
+
 }

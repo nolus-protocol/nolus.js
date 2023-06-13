@@ -11,6 +11,8 @@
  */
 export class ChainConstants {
     /* Coin configurations */
+
+    public static readonly CHAIN_KEY: string = 'NOLUS';
     public static readonly CHAIN_NAME: string = 'Nolus';
     public static readonly COIN_DENOM: string = 'NLS';
     public static readonly COIN_MINIMAL_DENOM: string = 'unls';
