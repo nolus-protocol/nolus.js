@@ -92,17 +92,17 @@ export class AssetUtils {
         );
     }
 
-    public static makeIBCMinimalDenomDevnet(ticker: string, network: string): string {
+    public static makeIBCMinimalDenomDevnet(ticker: string, network: string = ChainConstants.CHAIN_KEY): string {
         const currenciesData = CURRENCIES_DEVNET;
         return this.makeIBCMinimalDenom(ticker, currenciesData, network);
     }
 
-    public static makeIBCMinimalDenomTestnet(ticker: string, network: string): string {
+    public static makeIBCMinimalDenomTestnet(ticker: string, network: string = ChainConstants.CHAIN_KEY): string {
         const currenciesData = CURRENCIES_TESTNET;
         return this.makeIBCMinimalDenom(ticker, currenciesData, network);
     }
 
-    public static makeIBCMinimalDenomMainnet(ticker: string, network: string): string {
+    public static makeIBCMinimalDenomMainnet(ticker: string, network: string = ChainConstants.CHAIN_KEY): string {
         const currenciesData = CURRENCIES_MAINNET;
         return this.makeIBCMinimalDenom(ticker, currenciesData, network);
     }
