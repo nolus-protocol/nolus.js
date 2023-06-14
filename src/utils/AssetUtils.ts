@@ -31,13 +31,13 @@ export class AssetUtils {
      */
     public static getCurrenciesByGroup(group: GROUPS, currenciesData: Networks): string | string[] {
         switch (group) {
-            case (GROUPS.Native): {
+            case GROUPS.Native: {
                 return AssetUtils.getNative(currenciesData).key;
             }
-            case (GROUPS.Lease): {
+            case GROUPS.Lease: {
                 return AssetUtils.getLease(currenciesData);
             }
-            case (GROUPS.Lpn): {
+            case GROUPS.Lpn: {
                 return AssetUtils.getLpn(currenciesData).map((item) => item.key);
             }
         }
@@ -77,17 +77,17 @@ export class AssetUtils {
         let path = channels.reduce((a, b) => {
             a += `transfer/${b}/`;
             return a;
-        }, "");
+        }, '');
 
-        if(asset.asset.native?.symbol == null){
-            throw `IBC parse error ${ticker} ${network};`
+        if (asset.asset.native?.symbol === null) {
+            throw `IBC parse error ${ticker} ${network};`;
         }
 
         path += `${asset.asset.native!.symbol}`;
         return (
-            "ibc/" +
+            'ibc/' +
             Buffer.from(Hash.sha256(Buffer.from(path)))
-                .toString("hex")
+                .toString('hex')
                 .toUpperCase()
         );
     }
@@ -110,30 +110,31 @@ export class AssetUtils {
     public static getChannel(
         channels: {
             a: {
-                network: string,
-                ch: string
-            },
+                network: string;
+                ch: string;
+            };
             b: {
-                network: string,
-                ch: string
-            }
-        }[], ibc: {
+                network: string;
+                ch: string;
+            };
+        }[],
+        ibc: {
             network: string;
             currency: string;
-        }, network: string) {
-        const channel = channels.find(
-            (item) => {
-                return (item.a.network == network && item.b.network == ibc?.network) || (item.a.network == ibc?.network && item.b.network == network)
-            }
-        );
+        },
+        network: string,
+    ) {
+        const channel = channels.find((item) => {
+            return (item.a.network === network && item.b.network === ibc?.network) || (item.a.network === ibc?.network && item.b.network === network);
+        });
 
         if (channel) {
             const { a, b } = channel;
-            if (a.network == network) {
+            if (a.network === network) {
                 return a;
             }
 
-            if (b.network == network) {
+            if (b.network === network) {
                 return b;
             }
         }
@@ -144,27 +145,27 @@ export class AssetUtils {
     public static getSourceChannel(
         channels: {
             a: {
-                network: string,
-                ch: string
-            },
+                network: string;
+                ch: string;
+            };
             b: {
-                network: string,
-                ch: string
-            }
-        }[], a: string, source: string) {
-
-        const channel = channels.find(
-            (item) => {
-                return (item.a.network == a && item.b.network == source) || (item.a.network == source && item.b.network == a)
-            }
-        );
+                network: string;
+                ch: string;
+            };
+        }[],
+        a: string,
+        source: string,
+    ) {
+        const channel = channels.find((item) => {
+            return (item.a.network === a && item.b.network === source) || (item.a.network === source && item.b.network === a);
+        });
 
         if (channel) {
-            if (channel.a.network == source) {
+            if (channel.a.network === source) {
                 return channel.a.ch;
             }
 
-            if (channel.b.network == source) {
+            if (channel.b.network === source) {
                 return channel.b.ch;
             }
         }
@@ -176,7 +177,6 @@ export class AssetUtils {
         const asset = ntwrks.networks.list[network].currencies[key];
 
         if (asset.ibc) {
-
             const channel = AssetUtils.getChannel(ntwrks.networks.channels, asset.ibc, network);
             routes.push(channel?.ch as string);
 
@@ -186,11 +186,11 @@ export class AssetUtils {
         return routes;
     }
 
-    public static getAsset(ntwrks: Networks, key: string, network: string): { asset: Currency, key: string } {
+    public static getAsset(ntwrks: Networks, key: string, network: string): { asset: Currency; key: string } {
         const asset = ntwrks.networks.list[network].currencies[key];
 
         if (asset.ibc) {
-            return AssetUtils.getAsset(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string)
+            return AssetUtils.getAsset(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string);
         }
 
         return { asset, key };
@@ -216,5 +216,4 @@ export class AssetUtils {
             return asset.key;
         });
     }
-
 }
