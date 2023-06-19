@@ -292,19 +292,23 @@ export class NolusWallet extends SigningCosmWasmClient {
             });
         }
 
-        const item = await this.queryContractSmart(lppContract, getLenderRewardsMsg(this.address as string));
+        try{
+            const item = await this.queryContractSmart(lppContract, getLenderRewardsMsg(this.address as string));
 
-        if (Number(item.rewards.amount) > 0) {
-            const msg = MsgExecuteContract.fromPartial({
-                sender: this.address,
-                contract: lppContract,
-                msg: toUtf8(JSON.stringify(claimRewardsMsg(this.address))),
-            });
-
-            msgs.push({
-                msg: msg,
-                msgTypeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
-            });
+            if (Number(item.rewards.amount) > 0) {
+                const msg = MsgExecuteContract.fromPartial({
+                    sender: this.address,
+                    contract: lppContract,
+                    msg: toUtf8(JSON.stringify(claimRewardsMsg(this.address))),
+                });
+    
+                msgs.push({
+                    msg: msg,
+                    msgTypeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
+                });
+            }
+        }catch(error){
+            console.log(error);
         }
 
         return await this.simulateMultiTx(msgs, '');
