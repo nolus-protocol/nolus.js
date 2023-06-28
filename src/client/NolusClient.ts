@@ -1,6 +1,7 @@
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
 import { Coin } from '@cosmjs/proto-signing';
+import { StargateClient } from '@cosmjs/stargate';
 
 /**
  * Nolus Client service class.
@@ -17,10 +18,12 @@ export class NolusClient {
     private static instance: NolusClient | null = null;
     protected cosmWasmClient: Promise<CosmWasmClient> | undefined;
     protected tmClient: Promise<Tendermint34Client> | undefined;
+    protected stargateClient: Promise<StargateClient> | undefined;
 
     private constructor(tendermintRpc: string) {
         this.cosmWasmClient = CosmWasmClient.connect(tendermintRpc);
         this.tmClient = Tendermint34Client.connect(tendermintRpc);
+        this.stargateClient = StargateClient.connect(tendermintRpc);
     }
 
     static getInstance() {
@@ -38,6 +41,14 @@ export class NolusClient {
         const client = await this.cosmWasmClient;
         if (!client) {
             throw new Error('Missing CosmWasm client');
+        }
+        return client;
+    }
+
+    public async getStargateClient(): Promise<StargateClient> {
+        const client = await this.stargateClient;
+        if (!client) {
+            throw new Error('Missing StargateClient client');
         }
         return client;
     }
