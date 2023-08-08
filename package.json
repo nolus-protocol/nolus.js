@@ -2,7 +2,7 @@
     "name": "@nolus/nolusjs",
     "author": "Nolabs",
     "license": "Apache-2.0",
-    "version": "0.0.109",
+    "version": "0.0.111",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -61,6 +61,6 @@
         "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^4.2.1",
         "prettier": "^2.8.4",
-        "typescript": "~5.0.4"
+        "typescript": "~5.1.6"
     }
 }

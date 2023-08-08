@@ -219,9 +219,10 @@ export class NolusWallet extends SigningCosmWasmClient {
             token: amount,
             timeoutHeight: undefined,
             timeoutTimestamp: longTimeOut,
+            memo
         });
 
-        return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', memo);
+        return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', "");
     }
 
     public async simulateDelegateTx(data: { validator: string; amount: Coin }[]) {
