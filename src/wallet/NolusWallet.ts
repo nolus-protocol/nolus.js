@@ -38,7 +38,7 @@ export class NolusWallet extends SigningCosmWasmClient {
 
     protected offlineSigner: OfflineSigner;
 
-    constructor(tmClient: TendermintClient | undefined, signer: OfflineSigner, options: SigningCosmWasmClientOptions) {
+    constructor(tmClient: TendermintClient | undefined | any, signer: OfflineSigner, options: SigningCosmWasmClientOptions) {
         super(tmClient, signer, options);
         this.offlineSigner = signer;
     }
