@@ -15,6 +15,7 @@ export * from './LeaseStatus';
 export * from './Liability';
 export * from './LoanInfo';
 export * from './LppBalance';
+export * from './DepositCapacity';
 export * from './LppConfig';
 export * from './Price';
 export * from './Repayment';

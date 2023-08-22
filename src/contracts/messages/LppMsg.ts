@@ -4,6 +4,12 @@ export const getLppBalanceMsg = () => {
     };
 };
 
+export const getDepositCapacityMsg = () => {
+    return {
+        deposit_capacity: [],
+    };
+};
+
 export const getLppConfigMsg = () => {
     return {
         config: [],

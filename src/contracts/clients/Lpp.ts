@@ -11,11 +11,12 @@ import {
     getLenderRewardsMsg,
     getLoanInformationMsg,
     getLppBalanceMsg,
+    getDepositCapacityMsg,
     getLppConfigMsg,
     getPriceMsg,
     depositMsg,
 } from '../messages';
-import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards } from '../types';
+import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapacity } from '../types';
 
 /**
  * The Lpp is a complex smart contract. We can consider three points of view:
@@ -49,6 +50,10 @@ export class Lpp {
 
     public async getLppBalance(): Promise<LppBalance> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLppBalanceMsg());
+    }
+
+    public async getDepositCapacity(): Promise<DepositCapacity | null> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getDepositCapacityMsg());
     }
 
     public async getLppConfig(): Promise<LppConfig> {
