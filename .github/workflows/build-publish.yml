@@ -39,7 +39,7 @@ jobs:
       - name: Download currencies data
         run: |
           sudo apt-get install curl -y
-          curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/devnet/vitosha-2/currencies.json" -o "$CURRENCIES_DEVNET_FILE_NAME"
+          curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/devnet/vitosha-3/currencies.json" -o "$CURRENCIES_DEVNET_FILE_NAME"
           curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/testnet/rila-1/currencies.json" -o "$CURRENCIES_TESTNET_FILE_NAME"
           curl "https://raw.githubusercontent.com/nolus-protocol/nolus-networks/main/mainnet/pirin-1/currencies.json" -o "$CURRENCIES_MAINNET_FILE_NAME"
 
