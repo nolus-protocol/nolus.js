@@ -8,11 +8,9 @@ export const getPriceForMsg = (denom: string) => {
     };
 };
 
-export const getPricesForMsg = (denoms: string[]) => {
+export const getPricesMsg = () => {
     return {
-        prices: {
-            currencies: denoms,
-        },
+        prices: {},
     };
 };
 
@@ -36,12 +34,6 @@ export const isFeederMsg = (feederWalletAddress: string) => {
     };
 };
 
-export const feedPricesMsg = (feedPrices: FeedPrices) => {
-    return {
-        feed_prices: feedPrices,
-    };
-};
-
 export const getConfigMsg = () => {
     return {
         config: {},
@@ -60,5 +52,11 @@ export const getSwapPathMsg = (fromCurrency: string, toCurrency: string) => {
 export const getSwapTreeMsg = () => {
     return {
         swap_tree: {},
+    };
+};
+
+export const feedPricesMsg = (feedPrices: FeedPrices) => {
+    return {
+        feed_prices: feedPrices,
     };
 };

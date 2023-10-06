@@ -68,16 +68,16 @@ export class Lpp {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderRewardsMsg(lenderAddress));
     }
 
+    public async getLenderDeposit(lenderAddress: string): Promise<Balance> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderDepositMsg(lenderAddress));
+    }
+
     public async claimRewards(nolusWallet: NolusWallet, recipientAddress: string | undefined, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
         return nolusWallet.executeContract(this._contractAddress, claimRewardsMsg(recipientAddress), fee, undefined, fundCoin);
     }
 
     public async simulateClaimRewardsTx(nolusWallet: NolusWallet, recipientAddress: string | undefined, fundCoin?: Coin[]) {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, claimRewardsMsg(recipientAddress), fundCoin);
-    }
-
-    public async getLenderDeposit(lenderAddress: string): Promise<Balance> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderDepositMsg(lenderAddress));
     }
 
     public async deposit(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {

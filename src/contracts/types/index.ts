@@ -25,3 +25,6 @@ export * from './SwapPath';
 export * from './ICAAccountOngoingStates';
 export * from './RepaymentOngoingState';
 export * from './LiquidationOngoingState';
+export * from './DEX';
+export * from './LeasePositionSpec';
+export * from './CloseOngoingState';

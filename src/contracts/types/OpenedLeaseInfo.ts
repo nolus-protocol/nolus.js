@@ -1,4 +1,5 @@
 import { Asset } from './Asset';
+import { CloseOngoingState } from './CloseOngoingState';
 import { LiquidationOngoingState } from './LiquidationOngoingState';
 import { RepaymentOngoingState } from './RepaymentOngoingState';
 
@@ -12,5 +13,5 @@ export interface OpenedLeaseInfo {
     current_margin_due: Asset;
     current_interest_due: Asset;
     validity: string;
-    in_progress?: RepaymentOngoingState | LiquidationOngoingState;
+    in_progress?: RepaymentOngoingState | LiquidationOngoingState | CloseOngoingState;
 }

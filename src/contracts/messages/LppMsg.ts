@@ -24,15 +24,6 @@ export const getLoanInformationMsg = (leaseAddress: string) => {
     };
 };
 
-export const getOutstandingInterestMsg = (leaseAddress: string, outstandingTime: string) => {
-    return {
-        loan_outstanding_interest: {
-            lease_addr: leaseAddress,
-            outstanding_time: outstandingTime,
-        },
-    };
-};
-
 export const getPriceMsg = () => {
     return {
         price: [],
@@ -47,18 +38,18 @@ export const getLenderRewardsMsg = (lenderAddress: string) => {
     };
 };
 
-export const claimRewardsMsg = (recipientAddress?: string) => {
-    return {
-        claim_rewards: {
-            other_recipient: recipientAddress,
-        },
-    };
-};
-
 export const getLenderDepositMsg = (lenderAddress: string) => {
     return {
         balance: {
             address: lenderAddress,
+        },
+    };
+};
+
+export const claimRewardsMsg = (recipientAddress?: string) => {
+    return {
+        claim_rewards: {
+            other_recipient: recipientAddress,
         },
     };
 };
