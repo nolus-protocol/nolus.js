@@ -3,46 +3,48 @@ export interface Networks {
         list: {
             [key: string]: {
                 currencies: {
-                    [key: string]: Currency
-                }
-            }
-        }
+                    [key: string]: Currency;
+                };
+            };
+        };
         channels: {
             a: {
-                network: string,
-                ch: string
-            },
+                network: string;
+                ch: string;
+            };
             b: {
-                network: string,
-                ch: string
-            }
-        }[]
-    }
+                network: string;
+                ch: string;
+            };
+        }[];
+    };
     lease: {
-        Lpn: {
-            [key: string]: {}
-        } | string[]
+        Lpn:
+            | {
+                  [key: string]: object;
+              }
+            | string[];
         Lease: {
             [key: string]: {
                 swap_routes: Array<
                     {
-                        pool_id: string,
-                        pool_token: string
+                        pool_id: string;
+                        pool_token: string;
                     }[]
-                >
-            }
-        },
+                >;
+            };
+        };
         Native: {
-            id: string,
+            id: string;
             swap_routes: Array<
                 {
-                    pool_id: string,
-                    pool_token: string
+                    pool_id: string;
+                    pool_token: string;
                 }[]
-            >
-        }
-    },
-    definitions: string[]
+            >;
+        };
+    };
+    definitions: string[];
 }
 
 export interface ExternalCurrencyType {
