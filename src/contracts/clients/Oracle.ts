@@ -1,5 +1,5 @@
 import { Price } from '../types';
-import { feedPricesMsg, getConfigMsg, getFeedersMsg, getPriceForMsg, getPricesForMsg, getCurrencyPairsMsg, getSwapPathMsg, isFeederMsg, getSwapTreeMsg } from '../messages';
+import { feedPricesMsg, getConfigMsg, getFeedersMsg, getPriceForMsg, getPricesMsg, getCurrencyPairsMsg, getSwapPathMsg, isFeederMsg, getSwapTreeMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -33,8 +33,8 @@ export class Oracle {
         this._contractAddress = contractAddress;
     }
 
-    public async getPricesFor(currencies: string[]): Promise<Price[]> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesForMsg(currencies));
+    public async getPrices(): Promise<Price[]> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesMsg());
     }
 
     public async getPriceFor(currency: string): Promise<Price> {
