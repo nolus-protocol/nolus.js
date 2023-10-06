@@ -1,10 +1,11 @@
-import { closeLeaseMsg, getLeaseStatusMsg, repayLeaseMsg } from '../messages';
+import { closeLeaseMsg, closePositionLeaseMsg, getLeaseStatusMsg, repayLeaseMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { LeaseStatus } from '../types/LeaseStatus';
+import { Asset } from '../types';
 
 /**
  * Each Lease instance tracks a new customer's lease.
@@ -47,5 +48,13 @@ export class Lease {
 
     public async simulateCloseLeaseTx(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, closeLeaseMsg(), fundCoin);
+    }
+
+    public async closePositionLease(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, amount?: Asset, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, closePositionLeaseMsg(amount), fee, undefined, fundCoin);
+    }
+
+    public async simulateClosePositionLeaseTx(nolusWallet: NolusWallet, amount?: Asset, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, closePositionLeaseMsg(amount), fundCoin);
     }
 }
