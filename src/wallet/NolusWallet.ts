@@ -14,7 +14,7 @@ import { sha256 } from '@cosmjs/crypto';
 import { MsgTransfer } from 'cosmjs-types/ibc/applications/transfer/v1/tx';
 import { MsgDelegate, MsgUndelegate } from 'cosmjs-types/cosmos/staking/v1beta1/tx';
 import { MsgWithdrawDelegatorReward } from 'cosmjs-types/cosmos/distribution/v1beta1/tx';
-import { QuerySmartContractStateRequest } from "cosmjs-types/cosmwasm/wasm/v1/query";
+import { QuerySmartContractStateRequest } from 'cosmjs-types/cosmwasm/wasm/v1/query';
 
 import Long from 'long';
 import { claimRewardsMsg, getLenderRewardsMsg } from '../contracts';
@@ -219,10 +219,10 @@ export class NolusWallet extends SigningCosmWasmClient {
             token: amount,
             timeoutHeight: undefined,
             timeoutTimestamp: longTimeOut,
-            memo
+            memo,
         });
 
-        return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', "");
+        return await this.simulateTx(msg, '/ibc.applications.transfer.v1.MsgTransfer', '');
     }
 
     public async simulateDelegateTx(data: { validator: string; amount: Coin }[]) {
@@ -313,7 +313,6 @@ export class NolusWallet extends SigningCosmWasmClient {
         }
 
         return await this.simulateMultiTx(msgs, '');
-
     }
 
     private async sequence() {
@@ -329,35 +328,34 @@ export class NolusWallet extends SigningCosmWasmClient {
         return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
     }
 
-    public async querySmartContract(contract: string, msg: Object, height?: number) {
+    public async querySmartContract(contract: string, msg: object, height?: number) {
         const data = QuerySmartContractStateRequest.encode({
             address: contract,
-            queryData: toUtf8(JSON.stringify(msg))
+            queryData: toUtf8(JSON.stringify(msg)),
         }).finish();
 
         const query: {
-            path: string,
-            data: Uint8Array,
-            prove: boolean,
-            height?: number
+            path: string;
+            data: Uint8Array;
+            prove: boolean;
+            height?: number;
         } = {
             path: '/cosmwasm.wasm.v1.Query/SmartContractState',
             data,
             prove: true,
-        }
+        };
 
-        if (height as number > 0) {
+        if ((height as number) > 0) {
             query.height = height;
         }
 
         const client = this.getTmClient();
 
         if (!client) {
-            throw 'Tendermint client not initialized'
+            throw 'Tendermint client not initialized';
         }
 
         const response = await client.abciQuery(query);
         return QuerySmartContractStateRequest.decode(response.value);
-
     }
 }

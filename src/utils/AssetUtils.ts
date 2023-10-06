@@ -38,7 +38,7 @@ export class AssetUtils {
                 return AssetUtils.getLease(currenciesData);
             }
             case GROUPS.Lpn: {
-                return AssetUtils.getLpn(currenciesData).key
+                return AssetUtils.getLpn(currenciesData).key;
             }
         }
     }
@@ -177,7 +177,6 @@ export class AssetUtils {
         const asset = ntwrks.networks.list[network].currencies[key];
 
         if (asset?.ibc) {
-
             const channel = AssetUtils.getChannel(ntwrks.networks.channels, asset.ibc, network);
             routes.push(channel?.ch as string);
 
@@ -187,11 +186,11 @@ export class AssetUtils {
         return routes;
     }
 
-    public static getAsset(ntwrks: Networks, key: string, network: string): { asset: Currency, key: string } {
+    public static getAsset(ntwrks: Networks, key: string, network: string): { asset: Currency; key: string } {
         const asset = ntwrks.networks.list[network].currencies[key];
 
         if (asset?.ibc) {
-            return AssetUtils.getAsset(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string)
+            return AssetUtils.getAsset(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string);
         }
 
         return { asset, key };
@@ -204,7 +203,7 @@ export class AssetUtils {
 
     public static getLpn(ntwrks: Networks) {
         switch (ntwrks.lease.Lpn.constructor) {
-            case (Array): {
+            case Array: {
                 const lpn = (ntwrks.lease.Lpn as Array<string>)[0];
                 return AssetUtils.getAsset(ntwrks, lpn as string, ChainConstants.CHAIN_KEY as string);
             }
