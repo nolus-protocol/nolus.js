@@ -8,7 +8,7 @@ import { AminoTypes } from '@cosmjs/stargate';
 import { createWasmAminoConverters } from '@cosmjs/cosmwasm-stargate';
 import { createIbcAminoConverters } from './aminomessages';
 
-const aminoTypes = {
+const aminoTypes: any = {
     ...createIbcAminoConverters(),
     ...createBankAminoConverters(),
     ...createStakingAminoConverters(),
@@ -16,7 +16,7 @@ const aminoTypes = {
     ...createWasmAminoConverters(),
 };
 
-const MsgTransferAmino = new AminoTypes(aminoTypes);
+const MsgTransferAmino = new AminoTypes(aminoTypes) as any;
 
 export const nolusOfflineSigner = async (offlineDirectSigner: OfflineDirectSigner): Promise<NolusWallet> => {
     const tendermintClient = await NolusClient.getInstance().getTendermintClient();
