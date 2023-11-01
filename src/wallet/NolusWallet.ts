@@ -43,6 +43,10 @@ export class NolusWallet extends SigningCosmWasmClient {
         this.offlineSigner = signer;
     }
 
+    getOfflineSigner(){
+        return this.offlineSigner;
+    }
+
     private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate, msgTypeUrl: string, memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const msgAny = {
