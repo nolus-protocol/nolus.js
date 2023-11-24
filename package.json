@@ -1,8 +1,8 @@
 {
     "name": "@nolus/nolusjs",
     "author": "Nolabs",
-    "license": "Apache-2.0",    
-    "version": "1.0.6",
+    "license": "Apache-2.0",
+    "version": "1.0.7",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
     "main": "build/index.js",
     "types": "build/index.d.ts",
