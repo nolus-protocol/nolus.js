@@ -18,14 +18,27 @@ export interface Networks {
             };
         }[];
     };
-    lease: {
-        Lpn:
-            | {
-                  [key: string]: object;
-              }
-            | string[];
-        Lease: {
-            [key: string]: {
+    protocols: {
+        [key: string]: {
+            DexNetwork: string,
+            Lpn: {
+                [key: string]: {
+                    "currency@dex": string;
+                }
+            }[];
+            Lease: {
+                [key: string]: {
+                    "currency@dex": string;
+                    swap_routes: Array<
+                        {
+                            pool_id: string;
+                            pool_token: string;
+                        }[]
+                    >;
+                };
+            };
+            Native: {
+                "currency@dex": string;
                 swap_routes: Array<
                     {
                         pool_id: string;
@@ -33,17 +46,8 @@ export interface Networks {
                     }[]
                 >;
             };
-        };
-        Native: {
-            id: string;
-            swap_routes: Array<
-                {
-                    pool_id: string;
-                    pool_token: string;
-                }[]
-            >;
-        };
-    };
+        }
+    }
     definitions: string[];
 }
 

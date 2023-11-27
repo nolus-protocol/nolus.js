@@ -29,33 +29,33 @@ export class AssetUtils {
      *
      *  The current method returns a list of tickers by group.
      */
-    public static getCurrenciesByGroup(group: GROUPS, currenciesData: Networks): string | string[] {
+    public static getCurrenciesByGroup(group: GROUPS, currenciesData: Networks, protocol: string): string | string[] {
         switch (group) {
             case GROUPS.Native: {
-                return AssetUtils.getNative(currenciesData).key;
+                return AssetUtils.getNative(currenciesData, protocol).key;
             }
             case GROUPS.Lease: {
-                return AssetUtils.getLease(currenciesData);
+                return AssetUtils.getLease(currenciesData, protocol);
             }
             case GROUPS.Lpn: {
-                return AssetUtils.getLpn(currenciesData).key;
+                return AssetUtils.getLpns(currenciesData, protocol);
             }
         }
     }
 
-    public static getCurrenciesByGroupTestnet(group: GROUPS): string[] | string {
+    public static getCurrenciesByGroupTestnet(group: GROUPS, protocol: string): string[] | string {
         const currenciesData = CURRENCIES_TESTNET;
-        return this.getCurrenciesByGroup(group, currenciesData);
+        return this.getCurrenciesByGroup(group, currenciesData, protocol);
     }
 
-    public static getCurrenciesByGroupMainnet(group: GROUPS): string[] | string {
+    public static getCurrenciesByGroupMainnet(group: GROUPS, protocol: string): string[] | string {
         const currenciesData = CURRENCIES_MAINNET;
-        return this.getCurrenciesByGroup(group, currenciesData);
+        return this.getCurrenciesByGroup(group, currenciesData, protocol);
     }
 
-    public static getCurrenciesByGroupDevnet(group: GROUPS): string[] | string {
+    public static getCurrenciesByGroupDevnet(group: GROUPS, protocol: string): string[] | string {
         const currenciesData = CURRENCIES_DEVNET;
-        return this.getCurrenciesByGroup(group, currenciesData);
+        return this.getCurrenciesByGroup(group, currenciesData, protocol);
     }
 
     /**
@@ -78,12 +78,13 @@ export class AssetUtils {
             a += `transfer/${b}/`;
             return a;
         }, '');
-
         if (asset.asset.native?.symbol === null) {
             throw `IBC parse error ${ticker} ${network};`;
         }
 
         path += `${asset.asset.native!.symbol}`;
+        console.log(path)
+
         return (
             'ibc/' +
             Buffer.from(Hash.sha256(Buffer.from(path)))
@@ -196,29 +197,39 @@ export class AssetUtils {
         return { asset, key };
     }
 
-    public static getNative(ntwrks: Networks) {
-        const native = ntwrks.lease.Native.id;
+    public static getNative(ntwrks: Networks, protocol: string) {
+        const pr = AssetUtils.getProtocol(ntwrks, protocol);
+        const native = pr.Native['currency@dex'];
         return AssetUtils.getAsset(ntwrks, native as string, ChainConstants.CHAIN_KEY as string);
     }
 
-    public static getLpn(ntwrks: Networks) {
-        switch (ntwrks.lease.Lpn.constructor) {
-            case Array: {
-                const lpn = (ntwrks.lease.Lpn as Array<string>)[0];
-                return AssetUtils.getAsset(ntwrks, lpn as string, ChainConstants.CHAIN_KEY as string);
-            }
-            default: {
-                const lpn = Object.keys(ntwrks.lease.Lpn)[0];
-                return AssetUtils.getAsset(ntwrks, lpn as string, ChainConstants.CHAIN_KEY as string);
+    public static getLpns(ntwrks: Networks, protocol: string) {
+        const pr = AssetUtils.getProtocol(ntwrks, protocol);
+        const lpn = pr.Lpn;
+        const lpns = [];
+        for(const item of lpn){
+            for(const key in item){
+                lpns.push(key)
             }
         }
+        return lpns;
     }
 
-    public static getLease(ntwrks: Networks) {
-        const lease = Object.keys(ntwrks.lease.Lease);
+    public static getLease(ntwrks: Networks, protocol: string) {
+        const pr = AssetUtils.getProtocol(ntwrks, protocol);
+        const lease = Object.keys(pr.Lease);
         return lease.map((c) => {
             const asset = AssetUtils.getAsset(ntwrks, c as string, ChainConstants.CHAIN_KEY as string);
             return asset.key;
         });
+    }
+
+    private static getProtocol(ntwrks: Networks, protocol: string) {
+        for(const key in ntwrks.protocols){
+            if(ntwrks.protocols[key].DexNetwork == protocol){
+                return ntwrks.protocols[key];
+            }
+        }
+        throw 'not supported protocol';
     }
 }
