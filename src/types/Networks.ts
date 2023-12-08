@@ -22,13 +22,11 @@ export interface Networks {
         [key: string]: {
             DexNetwork: string,
             Lpn: {
-                [key: string]: {
-                    "currency@dex": string;
-                }
-            }[];
+                "dex_currency": string;
+            };
             Lease: {
                 [key: string]: {
-                    "currency@dex": string;
+                    "dex_currency": string;
                     swap_routes: Array<
                         {
                             pool_id: string;
@@ -38,7 +36,7 @@ export interface Networks {
                 };
             };
             Native: {
-                "currency@dex": string;
+                "dex_currency": string;
                 swap_routes: Array<
                     {
                         pool_id: string;

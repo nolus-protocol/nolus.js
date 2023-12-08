@@ -38,7 +38,7 @@ export class AssetUtils {
                 return AssetUtils.getLease(currenciesData, protocol);
             }
             case GROUPS.Lpn: {
-                return AssetUtils.getLpns(currenciesData, protocol);
+                return AssetUtils.getLpn(currenciesData, protocol);
             }
         }
     }
@@ -199,20 +199,14 @@ export class AssetUtils {
 
     public static getNative(ntwrks: Networks, protocol: string) {
         const pr = AssetUtils.getProtocol(ntwrks, protocol);
-        const native = pr.Native['currency@dex'];
+        const native = pr.Native['dex_currency'];
         return AssetUtils.getAsset(ntwrks, native as string, ChainConstants.CHAIN_KEY as string);
     }
 
-    public static getLpns(ntwrks: Networks, protocol: string) {
+    public static getLpn(ntwrks: Networks, protocol: string) {
         const pr = AssetUtils.getProtocol(ntwrks, protocol);
         const lpn = pr.Lpn;
-        const lpns = [];
-        for(const item of lpn){
-            for(const key in item){
-                lpns.push(key)
-            }
-        }
-        return lpns;
+        return lpn.dex_currency;
     }
 
     public static getLease(ntwrks: Networks, protocol: string) {
