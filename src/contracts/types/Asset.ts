@@ -1,4 +1,4 @@
 export interface Asset {
     amount: string;
-    ticker: string;
+    ticker?: string;
 }
