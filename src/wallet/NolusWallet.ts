@@ -1,7 +1,7 @@
 import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee, calculateFee } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
 import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
-import { TendermintClient } from '@cosmjs/tendermint-rpc';
+import { CometClient } from '@cosmjs/tendermint-rpc';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { toUtf8, toHex } from '@cosmjs/encoding';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
@@ -15,8 +15,6 @@ import { MsgTransfer } from 'cosmjs-types/ibc/applications/transfer/v1/tx';
 import { MsgDelegate, MsgUndelegate } from 'cosmjs-types/cosmos/staking/v1beta1/tx';
 import { MsgWithdrawDelegatorReward } from 'cosmjs-types/cosmos/distribution/v1beta1/tx';
 import { QuerySmartContractStateRequest } from 'cosmjs-types/cosmwasm/wasm/v1/query';
-
-import Long from 'long';
 import { claimRewardsMsg, getLenderRewardsMsg } from '../contracts';
 
 /**
@@ -38,9 +36,13 @@ export class NolusWallet extends SigningCosmWasmClient {
 
     protected offlineSigner: OfflineSigner;
 
-    constructor(tmClient: TendermintClient | undefined | any, signer: OfflineSigner, options: SigningCosmWasmClientOptions) {
+    constructor(tmClient: CometClient | undefined | any, signer: OfflineSigner, options: SigningCosmWasmClientOptions) {
         super(tmClient, signer, options);
         this.offlineSigner = signer;
+    }
+
+    getOfflineSigner() {
+        return this.offlineSigner;
     }
 
     private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate, msgTypeUrl: string, memo = '') {
@@ -52,8 +54,7 @@ export class NolusWallet extends SigningCosmWasmClient {
 
         const sequence = await this.sequence();
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
-
-        const gas = Math.round((gasInfo?.gasUsed.toNumber() as number) * ChainConstants.GAS_MULTIPLIER);
+        const gas = Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER;
         const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
         const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
 
@@ -67,7 +68,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         };
     }
 
-    private async simulateMultiTx(messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate; msgTypeUrl: string }[], memo = '') {
+    private async simulateMultiTx(messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgWithdrawDelegatorReward; msgTypeUrl: string }[], memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const encodedMSGS = [];
         const msgs = [];
@@ -84,7 +85,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         const sequence = await this.sequence();
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate(encodedMSGS, memo, pubkey, sequence);
 
-        const gas = Math.round((gasInfo?.gasUsed.toNumber() as number) * ChainConstants.GAS_MULTIPLIER);
+        const gas = Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER;
         const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
         const txRaw = await this.sign(this.address as string, msgs, usedFee, memo);
 
@@ -168,7 +169,7 @@ export class NolusWallet extends SigningCosmWasmClient {
      * const item = await wallet.broadcastTx(txBytes);
      *```
      */
-    public async simulateBankTransferTx(toAddress: string, amount: Coin[], memo = '') {
+    public async simulateBankTransferTx(toAddress: string, amount: Coin[]) {
         const msg = MsgSend.fromPartial({
             fromAddress: this.address,
             toAddress,
@@ -196,7 +197,7 @@ export class NolusWallet extends SigningCosmWasmClient {
      * const item = await wallet.broadcastTx(txBytes);
      * ```
      */
-    public async simulateExecuteContractTx(contract: string, msgData: Record<string, any>, funds: Coin[] = [], memo = '') {
+    public async simulateExecuteContractTx(contract: string, msgData: Record<string, any>, funds: Coin[] = []) {
         const msg = MsgExecuteContract.fromPartial({
             sender: this.address,
             contract,
@@ -209,7 +210,7 @@ export class NolusWallet extends SigningCosmWasmClient {
 
     public async simulateSendIbcTokensTx({ toAddress, amount, sourcePort, sourceChannel, memo = '' }: { toAddress: string; amount: Coin; sourcePort: string; sourceChannel: string; memo?: string }) {
         const timeOut = Math.floor(Date.now() / 1000) + ChainConstants.IBC_TRANSFER_TIMEOUT;
-        const longTimeOut = Long.fromNumber(timeOut).multiply(1_000_000_000);
+        const longTimeOut = BigInt(timeOut) * BigInt(1_000_000_000);
 
         const msg = MsgTransfer.fromPartial({
             sourcePort,
@@ -349,7 +350,7 @@ export class NolusWallet extends SigningCosmWasmClient {
             query.height = height;
         }
 
-        const client = this.getTmClient();
+        const client = this.getCometClient();
 
         if (!client) {
             throw 'Tendermint client not initialized';
