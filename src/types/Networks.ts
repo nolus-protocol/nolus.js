@@ -84,3 +84,8 @@ export enum GROUPS {
     Lease = 'lease',
     Native = 'native',
 }
+
+export enum Protocols {
+    osmosis = 'OSMOSIS',
+    neutron = 'NEUTRON',
+}
