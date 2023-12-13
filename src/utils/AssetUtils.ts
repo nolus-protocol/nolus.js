@@ -83,7 +83,6 @@ export class AssetUtils {
         }
 
         path += `${asset.asset.native!.symbol}`;
-        console.log(path)
 
         return (
             'ibc/' +
