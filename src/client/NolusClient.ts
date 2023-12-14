@@ -1,5 +1,5 @@
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
+import { CometClient, connectComet } from '@cosmjs/tendermint-rpc';
 import { Coin } from '@cosmjs/proto-signing';
 import { StargateClient } from '@cosmjs/stargate';
 
@@ -17,12 +17,12 @@ import { StargateClient } from '@cosmjs/stargate';
 export class NolusClient {
     private static instance: NolusClient | null = null;
     protected cosmWasmClient: Promise<CosmWasmClient> | undefined;
-    protected tmClient: Promise<Tendermint34Client> | undefined;
+    protected tmClient: Promise<CometClient> | undefined;
     protected stargateClient: Promise<StargateClient> | undefined;
 
     private constructor(tendermintRpc: string) {
         this.cosmWasmClient = CosmWasmClient.connect(tendermintRpc);
-        this.tmClient = Tendermint34Client.connect(tendermintRpc);
+        this.tmClient = connectComet(tendermintRpc);
         this.stargateClient = StargateClient.connect(tendermintRpc);
     }
 
@@ -53,7 +53,7 @@ export class NolusClient {
         return client;
     }
 
-    public async getTendermintClient(): Promise<Tendermint34Client> {
+    public async getTendermintClient(): Promise<CometClient> {
         const client = await this.tmClient;
         if (!client) {
             throw new Error('Missing Tendermint client');

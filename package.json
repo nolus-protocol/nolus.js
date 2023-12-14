@@ -2,8 +2,11 @@
     "name": "@nolus/nolusjs",
     "author": "Nolabs",
     "license": "Apache-2.0",
-    "version": "1.0.9",
+    "version": "2.0.0",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
+    "engines": {
+        "node": ">=14.0.0"
+    },
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "files": [
@@ -33,15 +36,15 @@
     },
     "homepage": "https://github.com/N-Stealth/nolusjs#readme",
     "dependencies": {
-        "@cosmjs/cosmwasm-stargate": "0.31.3",
-        "@cosmjs/crypto": "0.31.3",
-        "@cosmjs/encoding": "0.31.3",
-        "@cosmjs/ledger-amino": "0.31.3",
-        "@cosmjs/proto-signing": "0.31.3",
-        "@cosmjs/stargate": "0.31.3",
-        "@cosmjs/tendermint-rpc": "0.31.3",
-        "@keplr-wallet/crypto": "0.12.12",
-        "@keplr-wallet/unit": "0.12.12",
+        "@cosmjs/cosmwasm-stargate": "0.32.1",
+        "@cosmjs/crypto": "0.32.1",
+        "@cosmjs/encoding": "0.32.1",
+        "@cosmjs/ledger-amino": "0.32.1",
+        "@cosmjs/proto-signing": "0.32.1",
+        "@cosmjs/stargate": "0.32.1",
+        "@cosmjs/tendermint-rpc": "0.32.1",
+        "@keplr-wallet/crypto": "0.12.46",
+        "@keplr-wallet/unit": "0.12.46",
         "@ledgerhq/hw-app-cosmos": "^6.28.5",
         "@ledgerhq/hw-transport-webhid": "^6.27.19",
         "@ledgerhq/hw-transport-webusb": "^6.27.19",
@@ -61,6 +64,6 @@
         "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^5.0.1",
         "prettier": "^3.0.3",
-        "typescript": "5.2.2"
+        "typescript": "5.3.2"
     }
 }

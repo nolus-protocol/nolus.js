@@ -73,11 +73,11 @@ export function createIbcAminoConverters(): AminoConverters {
                 receiver: receiver,
                 timeout_height: timeoutHeight
                     ? {
-                          revision_height: omitDefault(timeoutHeight.revisionHeight)?.toString(),
-                          revision_number: omitDefault(timeoutHeight.revisionNumber)?.toString(),
+                          revision_height: omitDefault(timeoutHeight.revisionHeight.toString())?.toString(),
+                          revision_number: omitDefault(timeoutHeight.revisionNumber.toString())?.toString(),
                       }
                     : {},
-                timeout_timestamp: omitDefault(timeoutTimestamp)?.toString(),
+                timeout_timestamp: omitDefault(timeoutTimestamp.toString())?.toString(),
                 memo: omitDefault(memo)?.toString(),
             }),
             fromAmino: ({ source_port, source_channel, token, sender, receiver, timeout_height, timeout_timestamp, memo }: AminoMsgTransfer['value']): MsgTransfer =>
@@ -89,11 +89,11 @@ export function createIbcAminoConverters(): AminoConverters {
                     receiver: receiver,
                     timeoutHeight: timeout_height
                         ? {
-                              revisionHeight: Long.fromString(timeout_height.revision_height || '0', true),
-                              revisionNumber: Long.fromString(timeout_height.revision_number || '0', true),
+                              revisionHeight: BigInt(timeout_height.revision_height || '0'),
+                              revisionNumber: BigInt(timeout_height.revision_number || '0'),
                           }
                         : undefined,
-                    timeoutTimestamp: Long.fromString(timeout_timestamp || '0', true),
+                    timeoutTimestamp: BigInt(timeout_timestamp || '0'),
                     memo,
                 }),
         },

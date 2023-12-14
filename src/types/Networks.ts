@@ -1,4 +1,4 @@
-export interface Networks {
+export interface NetworkData {
     networks: {
         list: {
             [key: string]: {
@@ -9,23 +9,34 @@ export interface Networks {
         };
         channels: {
             a: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
             b: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
         }[];
     };
-    lease: {
-        Lpn:
-            | {
-                  [key: string]: object;
-              }
-            | string[];
-        Lease: {
-            [key: string]: {
+    protocols: {
+        [key: string]: {
+            DexNetwork: string,
+            Lpn: {
+                "dex_currency": string;
+            };
+            Lease: {
+                [key: string]: {
+                    "dex_currency": string;
+                    swap_routes: Array<
+                        {
+                            pool_id: string;
+                            pool_token: string;
+                        }[]
+                    >;
+                };
+            };
+            Native: {
+                "dex_currency": string;
                 swap_routes: Array<
                     {
                         pool_id: string;
@@ -33,17 +44,8 @@ export interface Networks {
                     }[]
                 >;
             };
-        };
-        Native: {
-            id: string;
-            swap_routes: Array<
-                {
-                    pool_id: string;
-                    pool_token: string;
-                }[]
-            >;
-        };
-    };
+        }
+    }
     definitions: string[];
 }
 
@@ -81,4 +83,20 @@ export enum GROUPS {
     Lpn = 'lpn',
     Lease = 'lease',
     Native = 'native',
+}
+
+export enum Protocols {
+    osmosis = 'OSMOSIS',
+    neutron = 'NEUTRON',
+}
+
+export enum Networks {
+    NOLUS = 'NOLUS',
+    OSMOSIS = 'OSMOSIS',
+    AXELAR = 'AXELAR',
+    COSMOS_HUB = 'COSMOS_HUB',
+    AKASH = 'AKASH',
+    JUNO = 'JUNO',
+    NEUTRON = 'NEUTRON',
+    DYDX = 'DYDX'
 }
