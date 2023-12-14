@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Buffer } from 'buffer';
 import { Hash } from '@keplr-wallet/crypto';
-import { Currency, GROUPS, Networks, Protocols } from '../types/Networks';
+import { Currency, GROUPS, NetworkData, Networks, Protocols } from '../types/Networks';
 import { ChainConstants } from '../constants';
 
 // @ts-ignore
@@ -29,7 +29,7 @@ export class AssetUtils {
      *
      *  The current method returns a list of tickers by group.
      */
-    public static getCurrenciesByGroup(group: GROUPS, currenciesData: Networks, protocol: Protocols): string | string[] {
+    public static getCurrenciesByGroup(group: GROUPS, currenciesData: NetworkData, protocol: Protocols): string | string[] {
         switch (group) {
             case GROUPS.Native: {
                 return AssetUtils.getNative(currenciesData, protocol).key;
@@ -64,7 +64,7 @@ export class AssetUtils {
      * "The currency symbol at Nolus network is either equal to the currency 'symbol' if its 'ibc_route' == [], or ",
      * "'ibc/' + sha256('transfer' + '/' + ibc_route[0] + '/' + ... + 'transfer' + '/' + ibc_route[n-1] + '/' + symbol) otherwise."
      */
-    public static makeIBCMinimalDenom(ticker: string, currenciesData: Networks, network: string, protocol: Protocols): string {
+    public static makeIBCMinimalDenom(ticker: string, currenciesData: NetworkData, network: Networks, protocol: Protocols): string {
         let currency = currenciesData.networks.list[network].currencies[ticker];
 
         if (currency?.native) {
@@ -87,17 +87,17 @@ export class AssetUtils {
         );
     }
 
-    public static makeIBCMinimalDenomDevnet(ticker: string, network: string = ChainConstants.CHAIN_KEY, protocol: Protocols): string {
+    public static makeIBCMinimalDenomDevnet(ticker: string, network: Networks = Networks.NOLUS, protocol: Protocols): string {
         const currenciesData = CURRENCIES_DEVNET;
         return this.makeIBCMinimalDenom(ticker, currenciesData, network, protocol);
     }
 
-    public static makeIBCMinimalDenomTestnet(ticker: string, network: string = ChainConstants.CHAIN_KEY, protocol: Protocols): string {
+    public static makeIBCMinimalDenomTestnet(ticker: string, network: Networks = Networks.NOLUS, protocol: Protocols): string {
         const currenciesData = CURRENCIES_TESTNET;
         return this.makeIBCMinimalDenom(ticker, currenciesData, network, protocol);
     }
 
-    public static makeIBCMinimalDenomMainnet(ticker: string, network: string = ChainConstants.CHAIN_KEY, protocol: Protocols): string {
+    public static makeIBCMinimalDenomMainnet(ticker: string, network: Networks = Networks.NOLUS, protocol: Protocols): string {
         const currenciesData = CURRENCIES_MAINNET;
         return this.makeIBCMinimalDenom(ticker, currenciesData, network, protocol);
     }
@@ -105,19 +105,19 @@ export class AssetUtils {
     public static getChannel(
         channels: {
             a: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
             b: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
         }[],
         ibc: {
-            network: string;
+            network: Networks | string;
             currency: string;
         },
-        network: string
+        network: Networks
     ) {
         const channel = channels.find((item) => {
             return (item.a.network === network && item.b.network === ibc?.network) || (item.a.network === ibc?.network && item.b.network === network);
@@ -140,11 +140,11 @@ export class AssetUtils {
     public static getSourceChannel(
         channels: {
             a: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
             b: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
         }[],
@@ -168,7 +168,7 @@ export class AssetUtils {
         throw `Source channel ${source} ${a} not found`;
     }
 
-    public static getChannels(ntwrks: Networks, key: string, network: string, protocol: Protocols, routes: string[]): { routes: string[], symbol: string } {
+    public static getChannels(ntwrks: NetworkData, key: string, network: Networks, protocol: Protocols, routes: string[]): { routes: string[], symbol: string } {
         let asset = ntwrks.networks.list[network].currencies[key];
 
         if(asset == null){
@@ -184,13 +184,13 @@ export class AssetUtils {
             const channel = AssetUtils.getChannel(ntwrks.networks.channels, asset.ibc, network);
             routes.push(channel?.ch as string);
 
-            return AssetUtils.getChannels(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string, protocol, routes);
+            return AssetUtils.getChannels(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as Networks, protocol, routes);
         }
 
         return { routes, symbol: asset?.native?.symbol as string };
     }
 
-    public static getAsset(ntwrks: Networks, key: string, network: string, protocol: Protocols): { asset: Currency; key: string } {
+    public static getAsset(ntwrks: NetworkData, key: string, network: string, protocol: Protocols): { asset: Currency; key: string } {
         const asset = ntwrks.networks.list[network].currencies[key];
         if (asset?.ibc) {
             return AssetUtils.getAsset(ntwrks, asset.ibc?.currency as string, asset.ibc?.network as string, protocol);
@@ -199,19 +199,19 @@ export class AssetUtils {
         return { asset, key };
     }
 
-    public static getNative(ntwrks: Networks, protocol: Protocols) {
+    public static getNative(ntwrks: NetworkData, protocol: Protocols) {
         const pr = AssetUtils.getProtocol(ntwrks, protocol);
         const native = pr.Native['dex_currency'];
         return AssetUtils.getAsset(ntwrks, native as string, ChainConstants.CHAIN_KEY as string, protocol);
     }
 
-    public static getLpn(ntwrks: Networks, protocol: string) {
+    public static getLpn(ntwrks: NetworkData, protocol: string) {
         const pr = AssetUtils.getProtocol(ntwrks, protocol);
         const lpn = pr.Lpn;
         return lpn.dex_currency;
     }
 
-    public static getLease(ntwrks: Networks, protocol: Protocols) {
+    public static getLease(ntwrks: NetworkData, protocol: Protocols) {
         const pr = AssetUtils.getProtocol(ntwrks, protocol);
         const lease = Object.keys(pr.Lease);
         return lease.map((c) => {
@@ -220,7 +220,7 @@ export class AssetUtils {
         });
     }
 
-    private static getProtocol(ntwrks: Networks, protocol: string) {
+    private static getProtocol(ntwrks: NetworkData, protocol: string) {
         for (const key in ntwrks.protocols) {
             if (ntwrks.protocols[key].DexNetwork == protocol) {
                 return ntwrks.protocols[key];

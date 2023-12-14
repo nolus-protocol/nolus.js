@@ -1,4 +1,4 @@
-export interface Networks {
+export interface NetworkData {
     networks: {
         list: {
             [key: string]: {
@@ -9,11 +9,11 @@ export interface Networks {
         };
         channels: {
             a: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
             b: {
-                network: string;
+                network: Networks;
                 ch: string;
             };
         }[];
@@ -88,4 +88,15 @@ export enum GROUPS {
 export enum Protocols {
     osmosis = 'OSMOSIS',
     neutron = 'NEUTRON',
+}
+
+export enum Networks {
+    NOLUS = 'NOLUS',
+    OSMOSIS = 'OSMOSIS',
+    AXELAR = 'AXELAR',
+    COSMOS_HUB = 'COSMOS_HUB',
+    AKASH = 'AKASH',
+    JUNO = 'JUNO',
+    NEUTRON = 'NEUTRON',
+    DYDX = 'DYDX'
 }
