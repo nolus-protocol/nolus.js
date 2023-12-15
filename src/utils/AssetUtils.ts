@@ -228,4 +228,12 @@ export class AssetUtils {
         }
         throw 'not supported protocol';
     }
+
+    static getProtocols(ntwrks: NetworkData) {
+        const protocols = [];
+        for (const key in ntwrks.protocols) {
+            protocols.push(ntwrks.protocols[key].DexNetwork);
+        }
+        protocols;
+    }
 }
