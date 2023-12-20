@@ -54,9 +54,9 @@ export interface ExternalCurrencyType {
     shortName: string;
     symbol: string;
     decimal_digits: string;
-    ibc_route: string[];
     ticker: string;
     native: boolean;
+    key: string;
 }
 
 export interface NetworksInfo {

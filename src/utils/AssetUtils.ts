@@ -199,6 +199,10 @@ export class AssetUtils {
         return { asset, key };
     }
 
+    public static getNativeAsset(ntwrks: NetworkData) {
+        return ntwrks.networks.list[Networks.NOLUS].currencies.NLS.native!.ticker;
+    }
+
     public static getNative(ntwrks: NetworkData, protocol: Protocols) {
         const pr = AssetUtils.getProtocol(ntwrks, protocol);
         const native = pr.Native['dex_currency'];
@@ -234,6 +238,6 @@ export class AssetUtils {
         for (const key in ntwrks.protocols) {
             protocols.push(ntwrks.protocols[key].DexNetwork);
         }
-        protocols;
+        return protocols;
     }
 }
