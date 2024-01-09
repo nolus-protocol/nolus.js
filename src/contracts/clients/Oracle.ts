@@ -33,7 +33,7 @@ export class Oracle {
         this._contractAddress = contractAddress;
     }
 
-    public async getPrices(): Promise<Price[]> {
+    public async getPrices(): Promise<{ [key: string]: Price }> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesMsg());
     }
 
