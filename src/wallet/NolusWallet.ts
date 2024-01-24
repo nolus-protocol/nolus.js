@@ -280,7 +280,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         return await this.simulateMultiTx(msgs, '');
     }
 
-    public async simulateClaimRewards(data: { validator: string; delegator: string }[], lppContract: string) {
+    public async simulateClaimRewards(data: { validator: string; delegator: string }[], lppContracts: string[]) {
         const msgs = [];
 
         for (const item of data) {
@@ -296,18 +296,20 @@ export class NolusWallet extends SigningCosmWasmClient {
         }
 
         try {
-            const item = await this.queryContractSmart(lppContract, getLenderRewardsMsg(this.address as string));
-            if (Number(item.rewards.amount) > 0) {
-                const msg = MsgExecuteContract.fromPartial({
-                    sender: this.address,
-                    contract: lppContract,
-                    msg: toUtf8(JSON.stringify(claimRewardsMsg(this.address))),
-                });
-
-                msgs.push({
-                    msg: msg,
-                    msgTypeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
-                });
+            for(let lppContract of lppContracts){        
+                const item = await this.queryContractSmart(lppContract, getLenderRewardsMsg(this.address as string));
+                if (Number(item.rewards.amount) > 0) {
+                    const msg = MsgExecuteContract.fromPartial({
+                        sender: this.address,
+                        contract: lppContract,
+                        msg: toUtf8(JSON.stringify(claimRewardsMsg(this.address))),
+                    });
+    
+                    msgs.push({
+                        msg: msg,
+                        msgTypeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
+                    });
+                }
             }
         } catch (error) {
             console.log(error);
