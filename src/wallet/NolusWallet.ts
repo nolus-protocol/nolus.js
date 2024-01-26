@@ -16,6 +16,7 @@ import { MsgDelegate, MsgUndelegate } from 'cosmjs-types/cosmos/staking/v1beta1/
 import { MsgWithdrawDelegatorReward } from 'cosmjs-types/cosmos/distribution/v1beta1/tx';
 import { QuerySmartContractStateRequest } from 'cosmjs-types/cosmwasm/wasm/v1/query';
 import { claimRewardsMsg, getLenderRewardsMsg } from '../contracts';
+import { MsgVote } from 'cosmjs-types/cosmos/gov/v1beta1/tx';
 
 /**
  * Nolus Wallet service class.
@@ -45,7 +46,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         return this.offlineSigner;
     }
 
-    private async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate, msgTypeUrl: string, memo = '') {
+    async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote, msgTypeUrl: string, memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const msgAny = {
             typeUrl: msgTypeUrl,
