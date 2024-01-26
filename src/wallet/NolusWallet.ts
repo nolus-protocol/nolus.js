@@ -296,8 +296,8 @@ export class NolusWallet extends SigningCosmWasmClient {
             });
         }
 
-        try {
-            for(let lppContract of lppContracts){        
+        for (let lppContract of lppContracts) {
+            try {
                 const item = await this.queryContractSmart(lppContract, getLenderRewardsMsg(this.address as string));
                 if (Number(item.rewards.amount) > 0) {
                     const msg = MsgExecuteContract.fromPartial({
@@ -305,15 +305,15 @@ export class NolusWallet extends SigningCosmWasmClient {
                         contract: lppContract,
                         msg: toUtf8(JSON.stringify(claimRewardsMsg(this.address))),
                     });
-    
+
                     msgs.push({
                         msg: msg,
                         msgTypeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
                     });
                 }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
 
         return await this.simulateMultiTx(msgs, '');
