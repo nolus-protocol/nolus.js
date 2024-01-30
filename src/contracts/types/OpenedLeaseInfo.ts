@@ -13,5 +13,6 @@ export interface OpenedLeaseInfo {
     due_margin: Asset;
     due_interest: Asset;
     validity: string;
+    overdue_collect_in: bigint;
     in_progress?: RepaymentOngoingState | LiquidationOngoingState | CloseOngoingState;
 }
