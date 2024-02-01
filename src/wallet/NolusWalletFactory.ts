@@ -6,7 +6,6 @@ import { ChainConstants } from '../constants/';
 import { LedgerSigner } from '@cosmjs/ledger-amino';
 import { AminoTypes } from '@cosmjs/stargate';
 import { createWasmAminoConverters } from '@cosmjs/cosmwasm-stargate';
-// import { createIbcAminoConverters } from './_aminomessages';
 
 const aminoTypes: any = {
     ...createIbcAminoConverters(),

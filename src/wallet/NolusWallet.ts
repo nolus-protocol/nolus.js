@@ -55,7 +55,7 @@ export class NolusWallet extends SigningCosmWasmClient {
 
         const sequence = await this.sequence();
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
-        const gas = Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER;
+        const gas = Math.round(Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER);
         const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
         const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
 
@@ -86,7 +86,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         const sequence = await this.sequence();
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate(encodedMSGS, memo, pubkey, sequence);
 
-        const gas = Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER;
+        const gas = Math.round(Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER);
         const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
         const txRaw = await this.sign(this.address as string, msgs, usedFee, memo);
 
