@@ -6,8 +6,6 @@ export const getProtocolsMsg = () => {
 
 export const getProtocolMsg = (protocolName: string) => {
     return {
-        protocol: {
-            protocol: protocolName,
-        },
+        protocol: protocolName,
     };
 };
