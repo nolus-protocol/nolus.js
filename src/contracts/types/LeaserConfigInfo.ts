@@ -9,6 +9,6 @@ export interface LeaserConfigInfo {
     time_alarms?: string;
     market_price_oracle?: string;
     profit?: string;
-    lpp_addr?: string;
+    lpp?: string;
     dex?: DEX;
 }
