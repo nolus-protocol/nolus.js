@@ -85,9 +85,14 @@ export enum GROUPS {
     Native = 'native',
 }
 
-export enum Protocols {
-    osmosis = 'OSMOSIS',
-    neutron = 'NEUTRON',
+export enum ProtocolsPirin {
+    osmosis = 'OSMOSIS-OSMOSIS-USDC_AXELAR',
+    neutron = 'NEUTRON-ASTROPORT-USDC_AXELAR',
+}
+
+export enum ProtocolsRila {
+    osmosis = 'OSMOSIS-OSMOSIS-USDC-1',
+    neutron = 'NEUTRON-ASTROPORT-USDC_AXELAR',
 }
 
 export enum Networks {
