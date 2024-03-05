@@ -1,6 +1,7 @@
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { getProtocolsMsg, getProtocolMsg, getPlatformMsg } from '../messages';
 import { Protocol } from '../types';
+import { PlatformContracts } from '../types/PlatformContracts';
 
 /**
  * The Admin contract is a contract that governs the storing and migration process of all smart contracts on the blockchain.
@@ -32,7 +33,7 @@ export class Admin {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getProtocolMsg(protocol));
     }
 
-    public async getPlatform(): Promise<Protocol> {
+    public async getPlatform(): Promise<PlatformContracts> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPlatformMsg());
     }
 }

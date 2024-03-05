@@ -29,3 +29,4 @@ export * from './LeasePositionSpec';
 export * from './CloseOngoingState';
 export * from './Protocol';
 export * from './ProtocolContracts';
+export * from './PlatformContracts';
