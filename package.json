@@ -2,7 +2,7 @@
     "name": "@nolus/nolusjs",
     "author": "Nolabs",
     "license": "Apache-2.0",
-    "version": "2.1.5",
+    "version": "2.1.6",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
     "engines": {
         "node": ">=14.0.0"
