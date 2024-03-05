@@ -1,5 +1,5 @@
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { getProtocolsMsg, getProtocolMsg } from '../messages';
+import { getProtocolsMsg, getProtocolMsg, getPlatformMsg } from '../messages';
 import { Protocol } from '../types';
 
 /**
@@ -30,5 +30,9 @@ export class Admin {
 
     public async getProtocol(protocol: string): Promise<Protocol> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getProtocolMsg(protocol));
+    }
+
+    public async getPlatform(): Promise<Protocol> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPlatformMsg());
     }
 }
