@@ -88,11 +88,13 @@ export enum GROUPS {
 export enum ProtocolsPirin {
     osmosis = 'OSMOSIS-OSMOSIS-USDC_AXELAR',
     neutron = 'NEUTRON-ASTROPORT-USDC_AXELAR',
+    osmosis_noble = "OSMOSIS-OSMOSIS-USDC_NOBLE",
 }
 
 export enum ProtocolsRila {
     osmosis = 'OSMOSIS-OSMOSIS-USDC-1',
     neutron = 'NEUTRON-ASTROPORT-USDC_AXELAR',
+    osmosis_noble = "OSMOSIS-OSMOSIS-USDC_NOBLE",
 }
 
 export enum Networks {
