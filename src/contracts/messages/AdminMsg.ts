@@ -9,3 +9,9 @@ export const getProtocolMsg = (protocolName: string) => {
         protocol: protocolName,
     };
 };
+
+export const getPlatformMsg = () => {
+    return {
+        platform: {},
+    };
+};
