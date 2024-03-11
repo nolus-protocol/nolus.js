@@ -2,6 +2,7 @@ import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { CometClient, connectComet } from '@cosmjs/tendermint-rpc';
 import { Coin } from '@cosmjs/proto-signing';
 import { StargateClient } from '@cosmjs/stargate';
+import { QuerySpendableBalanceByDenomRequest, QuerySpendableBalanceByDenomResponse } from 'cosmjs-types/cosmos/bank/v1beta1/query';
 
 /**
  * Nolus Client service class.
@@ -77,6 +78,39 @@ export class NolusClient {
             throw new Error('Balance is missing!');
         }
         return await balance;
+    }
+
+    public async getSpendableBalance(address: string, denom: string): Promise<QuerySpendableBalanceByDenomResponse> {
+        const data = QuerySpendableBalanceByDenomRequest.encode({
+            address: address,
+            denom: denom,
+        }).finish();
+
+        const client = await this.tmClient;
+
+        const query: {
+            path: string;
+            data: Uint8Array;
+            prove: boolean;
+            height?: number;
+        } = {
+            path: '/cosmos.bank.v1beta1.Query/SpendableBalanceByDenom',
+            data,
+            prove: true,
+        };
+
+        if (!client) {
+            throw 'Tendermint client not initialized';
+        }
+
+        const response = await client.abciQuery(query);
+        return QuerySpendableBalanceByDenomResponse.decode(response.value);
+
+        // const balance = client?.getBalance(address, denom);
+        // if (!balance) {
+        //     throw new Error('Balance is missing!');
+        // }
+        // return await balance;
     }
 
     public async getBlockHeight(): Promise<number> {
