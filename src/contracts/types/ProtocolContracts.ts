@@ -3,4 +3,5 @@ export interface ProtocolContracts {
     lpp: string;
     oracle: string;
     profit: string;
+    reserve: string;
 }
