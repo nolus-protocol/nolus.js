@@ -60,6 +60,10 @@ export class Lpp {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLppConfigMsg());
     }
 
+    public async getLPN(): Promise<string> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLPNConfigMsg());
+    }
+
     public async getPrice(): Promise<Price> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceMsg());
     }

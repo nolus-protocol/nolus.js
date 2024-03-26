@@ -1,5 +1,4 @@
 export interface LppConfig {
-    lpn_ticker: string;
     lease_code: string;
     min_utilization: number;
     borrow_rate: {
