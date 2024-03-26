@@ -1,6 +1,6 @@
 export interface LppConfig {
     lpn_ticker: string;
-    lease_code: number;
+    lease_code: string;
     min_utilization: number;
     borrow_rate: {
         base_interest_rate: number;
