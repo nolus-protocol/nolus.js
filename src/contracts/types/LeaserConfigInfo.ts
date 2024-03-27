@@ -10,5 +10,6 @@ export interface LeaserConfigInfo {
     market_price_oracle?: string;
     profit?: string;
     lpp?: string;
+    reserve?: string;
     dex?: DEX;
 }
