@@ -30,3 +30,4 @@ export * from './CloseOngoingState';
 export * from './Protocol';
 export * from './ProtocolContracts';
 export * from './PlatformContracts';
+export * from './CurrencyInfo';

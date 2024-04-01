@@ -1,14 +1,15 @@
-import { Price } from '../types';
-import { feedPricesMsg, getConfigMsg, getFeedersMsg, getPriceForMsg, getPricesMsg, getCurrencyPairsMsg, getSwapPathMsg, isFeederMsg, getSwapTreeMsg } from '../messages';
-import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
+import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { Price } from '../types';
+import { feedPricesMsg, getConfigMsg, getFeedersMsg, getPriceForMsg, getPricesMsg, getCurrencyPairsMsg, getSwapPathMsg, isFeederMsg, getSwapTreeMsg, getCurrenciesMsg } from '../messages';
+import { NolusWallet } from '../../wallet';
 import { FeedPrices } from '../types/FeedPrices';
 import { OracleConfig } from '../types/OracleConfig';
-import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { SwapPath } from '../types/SwapPath';
 import { SwapTree } from '../types/SwapTree';
+import { CurrencyInfo } from '../types/CurrencyInfo';
 
 /**
  * An on-chain oracle providing market data prices to the rest of the system.
@@ -43,6 +44,10 @@ export class Oracle {
 
     public async getCurrencyPairs(): Promise<[string, [number, string]][]> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getCurrencyPairsMsg());
+    }
+
+    public async getCurrencies(): Promise<CurrencyInfo[]> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getCurrenciesMsg());
     }
 
     public async getSwapPath(fromCurrency: string, toCurrency: string): Promise<SwapPath[]> {
