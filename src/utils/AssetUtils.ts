@@ -10,6 +10,7 @@ import CURRENCIES_DEVNET from './currencies_devnet.json';
 import CURRENCIES_TESTNET from './currencies_testnet.json';
 // @ts-ignore
 import CURRENCIES_MAINNET from './currencies_mainnet.json';
+import { CurrencyInfo } from '../contracts/types/CurrencyInfo';
 
 /**
  * AssetUtils provides helpers for working with Nolus assets.
@@ -29,33 +30,28 @@ export class AssetUtils {
      *
      *  The current method returns a list of tickers by group.
      */
-    public static getCurrenciesByGroup(group: GROUPS, currenciesData: NetworkData, protocol: string): string | string[] {
-        switch (group) {
-            case GROUPS.Native: {
-                return AssetUtils.getNative(currenciesData, protocol).key;
+    public static findTickersByGroup(currenciesInfo: CurrencyInfo[], group: string): string[] {
+        const tickers: string[] = [];
+
+        currenciesInfo.forEach(currencyInfo => {
+            if (currencyInfo.group === group) {
+                tickers.push(currencyInfo.ticker);
             }
-            case GROUPS.Lease: {
-                return AssetUtils.getLease(currenciesData, protocol);
-            }
-            case GROUPS.Lpn: {
-                return AssetUtils.getLpn(currenciesData, protocol);
-            }
-        }
+        });
+
+        return tickers;
     }
 
-    public static getCurrenciesByGroupTestnet(group: GROUPS, protocol: string): string[] | string {
-        const currenciesData = CURRENCIES_TESTNET;
-        return this.getCurrenciesByGroup(group, currenciesData, protocol);
+    public static findDexSymbolByTicker(currenciesInfo: CurrencyInfo[], ticker: string): string | null {
+        const dexSymbol = currenciesInfo.find(currencyInfo => currencyInfo.ticker === ticker);
+
+        return dexSymbol ? dexSymbol.dexSymbol : null;
     }
 
-    public static getCurrenciesByGroupMainnet(group: GROUPS, protocol: string): string[] | string {
-        const currenciesData = CURRENCIES_MAINNET;
-        return this.getCurrenciesByGroup(group, currenciesData, protocol);
-    }
+    public static findBankSymbolByTicker(currenciesInfo: CurrencyInfo[], ticker: string): string | null {
+        const bankSymbol = currenciesInfo.find(currencyInfo => currencyInfo.ticker === ticker);
 
-    public static getCurrenciesByGroupDevnet(group: GROUPS, protocol: string): string[] | string {
-        const currenciesData = CURRENCIES_DEVNET;
-        return this.getCurrenciesByGroup(group, currenciesData, protocol);
+        return bankSymbol ? bankSymbol.dexSymbol : null;
     }
 
     /**
@@ -85,21 +81,6 @@ export class AssetUtils {
                 .toString('hex')
                 .toUpperCase()
         );
-    }
-
-    public static makeIBCMinimalDenomDevnet(ticker: string, network: Networks = Networks.NOLUS, protocol: string): string {
-        const currenciesData = CURRENCIES_DEVNET;
-        return this.makeIBCMinimalDenom(ticker, currenciesData, network, protocol);
-    }
-
-    public static makeIBCMinimalDenomTestnet(ticker: string, network: Networks = Networks.NOLUS, protocol: string): string {
-        const currenciesData = CURRENCIES_TESTNET;
-        return this.makeIBCMinimalDenom(ticker, currenciesData, network, protocol);
-    }
-
-    public static makeIBCMinimalDenomMainnet(ticker: string, network: Networks = Networks.NOLUS, protocol: string): string {
-        const currenciesData = CURRENCIES_MAINNET;
-        return this.makeIBCMinimalDenom(ticker, currenciesData, network, protocol);
     }
 
     public static getChannel(
@@ -207,21 +188,6 @@ export class AssetUtils {
         const pr = AssetUtils.getProtocol(ntwrks, protocol);
         const native = pr.Native['dex_currency'];
         return AssetUtils.getAsset(ntwrks, native as string, ChainConstants.CHAIN_KEY as string, protocol);
-    }
-
-    public static getLpn(ntwrks: NetworkData, protocol: string) {
-        const pr = AssetUtils.getProtocol(ntwrks, protocol);
-        const lpn = pr.Lpn;
-        return lpn.dex_currency;
-    }
-
-    public static getLease(ntwrks: NetworkData, protocol: string) {
-        const pr = AssetUtils.getProtocol(ntwrks, protocol);
-        const lease = Object.keys(pr.Lease);
-        return lease.map((c) => {
-            const asset = AssetUtils.getAsset(ntwrks, c as string, ChainConstants.CHAIN_KEY as string, protocol);
-            return asset.key;
-        });
     }
 
     private static getProtocol(ntwrks: NetworkData, protocol: string) {
