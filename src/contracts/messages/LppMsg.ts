@@ -16,6 +16,12 @@ export const getLppConfigMsg = () => {
     };
 };
 
+export const getLPNMsg = () => {
+    return {
+        lpn: [],
+    };
+};
+
 export const getLoanInformationMsg = (leaseAddress: string) => {
     return {
         loan: {

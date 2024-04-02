@@ -15,6 +15,7 @@ import {
     getLppConfigMsg,
     getPriceMsg,
     depositMsg,
+    getLPNMsg,
 } from '../messages';
 import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapacity } from '../types';
 
@@ -58,6 +59,10 @@ export class Lpp {
 
     public async getLppConfig(): Promise<LppConfig> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLppConfigMsg());
+    }
+
+    public async getLPN(): Promise<string> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLPNMsg());
     }
 
     public async getPrice(): Promise<Price> {
