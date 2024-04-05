@@ -33,7 +33,7 @@ export class AssetUtils {
     public static findTickersByGroup(currenciesInfo: CurrencyInfo[], group: string): string[] {
         const tickers: string[] = [];
 
-        currenciesInfo.forEach(currencyInfo => {
+        currenciesInfo.forEach((currencyInfo) => {
             if (currencyInfo.group === group) {
                 tickers.push(currencyInfo.ticker);
             }
@@ -43,15 +43,15 @@ export class AssetUtils {
     }
 
     public static findDexSymbolByTicker(currenciesInfo: CurrencyInfo[], ticker: string): string | null {
-        const dexSymbol = currenciesInfo.find(currencyInfo => currencyInfo.ticker === ticker);
+        const currencyInfo = currenciesInfo.find((currencyInfo) => currencyInfo.ticker === ticker);
 
-        return dexSymbol ? dexSymbol.dexSymbol : null;
+        return currencyInfo ? currencyInfo.dexSymbol : null;
     }
 
     public static findBankSymbolByTicker(currenciesInfo: CurrencyInfo[], ticker: string): string | null {
-        const bankSymbol = currenciesInfo.find(currencyInfo => currencyInfo.ticker === ticker);
+        const currencyInfo = currenciesInfo.find((currencyInfo) => currencyInfo.ticker === ticker);
 
-        return bankSymbol ? bankSymbol.dexSymbol : null;
+        return currencyInfo ? currencyInfo.bankSymbol : null;
     }
 
     /**
@@ -61,7 +61,7 @@ export class AssetUtils {
      * "'ibc/' + sha256('transfer' + '/' + ibc_route[0] + '/' + ... + 'transfer' + '/' + ibc_route[n-1] + '/' + symbol) otherwise."
      */
     public static makeIBCMinimalDenom(ticker: string, currenciesData: NetworkData, network: Networks, protocol: string): string {
-        let currency = currenciesData.networks.list[network].currencies[ticker];
+        const currency = currenciesData.networks.list[network].currencies[ticker];
 
         if (currency?.native) {
             return currency?.native.symbol;
