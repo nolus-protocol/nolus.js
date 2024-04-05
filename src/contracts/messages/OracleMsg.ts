@@ -20,6 +20,12 @@ export const getCurrencyPairsMsg = () => {
     };
 };
 
+export const getCurrenciesMsg = () => {
+    return {
+        currencies: {},
+    };
+};
+
 export const getFeedersMsg = () => {
     return {
         feeders: {},
