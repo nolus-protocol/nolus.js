@@ -45,13 +45,13 @@ export class AssetUtils {
     public static findDexSymbolByTicker(currenciesInfo: CurrencyInfo[], ticker: string): string | null {
         const currencyInfo = currenciesInfo.find((currencyInfo) => currencyInfo.ticker === ticker);
 
-        return currencyInfo ? currencyInfo.dexSymbol : null;
+        return currencyInfo ? currencyInfo.dex_symbol : null;
     }
 
     public static findBankSymbolByTicker(currenciesInfo: CurrencyInfo[], ticker: string): string | null {
         const currencyInfo = currenciesInfo.find((currencyInfo) => currencyInfo.ticker === ticker);
 
-        return currencyInfo ? currencyInfo.bankSymbol : null;
+        return currencyInfo ? currencyInfo.bank_symbol : null;
     }
 
     /**
