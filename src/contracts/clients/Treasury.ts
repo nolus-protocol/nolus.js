@@ -2,7 +2,7 @@ import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { calculateRewardsMsg } from '../messages';
 
 /**
- * The role of this single instance smart contract is to calculate rewards in uNLS depending on the TVL of all LPPs,
+ * The most important role of this single instance smart contract is to calculate rewards in uNLS depending on the TVL of all LPPs,
  * and to distribute it to each LPP.
  *
  * Usage:
@@ -11,12 +11,12 @@ import { calculateRewardsMsg } from '../messages';
  * import { NolusClient, NolusContracts } from '@nolus/nolusjs';
  *
  * const cosm = await NolusClient.getInstance().getCosmWasmClient();
- * dispatcherInstance = new NolusContracts.Dispatcher(cosm, dispatcherContractAddress);
+ * treasuryInstance = new NolusContracts.Treasury(cosm, treasuryContractAddress);
  * ```
  *
  */
 
-export class Disparcher {
+export class Treasury {
     private cosmWasmClient!: CosmWasmClient;
     private _contractAddress: string;
 

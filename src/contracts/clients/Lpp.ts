@@ -23,7 +23,7 @@ import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapaci
  * The Lpp is a complex smart contract. We can consider three points of view:
  * - There is an Lpp instance per currency that serves all borrow requests and repayments in that same currency;
  * - There is an Lpp instance per currency, serving all lenders that provide liquidity in that same currency;
- * - There is an Lpp instance per currency which regularly receives rewards from the Rewards Dispatcher contract.
+ * - There is an Lpp instance per currency which regularly receives rewards from the Treasury contract.
  *
  * Usage:
  *
