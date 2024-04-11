@@ -1,5 +1,17 @@
 import { FeedPrices } from '../types/FeedPrices';
 
+export const getBaseCurrencyMsg = () => {
+    return {
+        base_currency: {},
+    };
+};
+
+export const getStableCurrencyMsg = () => {
+    return {
+        stable_currency: {},
+    };
+};
+
 export const getBasePriceMsg = (denom: string) => {
     return {
         base_price: {
