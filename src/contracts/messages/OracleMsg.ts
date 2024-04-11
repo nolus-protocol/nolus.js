@@ -1,8 +1,8 @@
 import { FeedPrices } from '../types/FeedPrices';
 
-export const getPriceForMsg = (denom: string) => {
+export const getBasePriceMsg = (denom: string) => {
     return {
-        price: {
+        base_price: {
             currency: denom,
         },
     };

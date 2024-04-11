@@ -3,7 +3,7 @@ import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { Price } from '../types';
-import { feedPricesMsg, getConfigMsg, getFeedersMsg, getPriceForMsg, getPricesMsg, getCurrencyPairsMsg, getSwapPathMsg, isFeederMsg, getSwapTreeMsg, getCurrenciesMsg } from '../messages';
+import { feedPricesMsg, getConfigMsg, getFeedersMsg, getBasePriceMsg, getPricesMsg, getCurrencyPairsMsg, getSwapPathMsg, isFeederMsg, getSwapTreeMsg, getCurrenciesMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { FeedPrices } from '../types/FeedPrices';
 import { OracleConfig } from '../types/OracleConfig';
@@ -38,8 +38,8 @@ export class Oracle {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPricesMsg());
     }
 
-    public async getPriceFor(currency: string): Promise<Price> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getPriceForMsg(currency));
+    public async getBasePrice(currency: string): Promise<Price> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getBasePriceMsg(currency));
     }
 
     public async getCurrencyPairs(): Promise<[string, [number, string]][]> {
