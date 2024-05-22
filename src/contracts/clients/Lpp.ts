@@ -16,6 +16,7 @@ import {
     getPriceMsg,
     depositMsg,
     getLPNMsg,
+    getStableBalanceMsg,
 } from '../messages';
 import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapacity } from '../types';
 
@@ -51,6 +52,10 @@ export class Lpp {
 
     public async getLppBalance(): Promise<LppBalance> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLppBalanceMsg());
+    }
+
+    public async getStableBalance(oracleAddress: string): Promise<number> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getStableBalanceMsg(oracleAddress));
     }
 
     public async getDepositCapacity(): Promise<DepositCapacity | null> {
