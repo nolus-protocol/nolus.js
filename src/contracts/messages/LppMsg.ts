@@ -4,6 +4,14 @@ export const getLppBalanceMsg = () => {
     };
 };
 
+export const getStableBalanceMsg = (oracleAddress: string) => {
+    return {
+        stable_balance: {
+            oracle_addr: oracleAddress,
+        },
+    };
+};
+
 export const getDepositCapacityMsg = () => {
     return {
         deposit_capacity: [],

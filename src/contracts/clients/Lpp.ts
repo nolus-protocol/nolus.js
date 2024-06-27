@@ -16,6 +16,7 @@ import {
     getPriceMsg,
     depositMsg,
     getLPNMsg,
+    getStableBalanceMsg,
 } from '../messages';
 import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapacity } from '../types';
 
@@ -23,7 +24,7 @@ import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapaci
  * The Lpp is a complex smart contract. We can consider three points of view:
  * - There is an Lpp instance per currency that serves all borrow requests and repayments in that same currency;
  * - There is an Lpp instance per currency, serving all lenders that provide liquidity in that same currency;
- * - There is an Lpp instance per currency which regularly receives rewards from the Rewards Dispatcher contract.
+ * - There is an Lpp instance per currency which regularly receives rewards from the Treasury contract.
  *
  * Usage:
  *
@@ -51,6 +52,10 @@ export class Lpp {
 
     public async getLppBalance(): Promise<LppBalance> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLppBalanceMsg());
+    }
+
+    public async getStableBalance(oracleAddress: string): Promise<number> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getStableBalanceMsg(oracleAddress));
     }
 
     public async getDepositCapacity(): Promise<DepositCapacity | null> {
