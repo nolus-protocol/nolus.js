@@ -12,4 +12,5 @@ export interface LeaserConfigInfo {
     lpp?: string;
     reserve?: string;
     dex?: DEX;
+    protocols_registry?: string;
 }
