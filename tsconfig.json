@@ -3,7 +3,7 @@
         "rootDir": "src",
         "outDir": "build/build",
         "resolveJsonModule": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
         "declaration": true,
@@ -11,17 +11,18 @@
         "isolatedModules": true,
         "forceConsistentCasingInFileNames": true,
         "lib": [
-            "es2018"
+            "es2020"
         ],
-        "module": "commonjs",
+        "module": "ESNext",
         "noEmitOnError": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
         "pretty": true,
         "sourceMap": true,
         "strict": true,
-        "target": "es2018",
-        "experimentalDecorators": true
+        "target": "ESNext",
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
     },
     "include": [
         "src/**/*.ts",
