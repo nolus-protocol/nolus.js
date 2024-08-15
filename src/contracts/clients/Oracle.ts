@@ -16,6 +16,7 @@ import {
     getCurrenciesMsg,
     getBaseCurrencyMsg,
     getStableCurrencyMsg,
+    getStablePriceMsg,
 } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { FeedPrices } from '../types/FeedPrices';
@@ -61,6 +62,10 @@ export class Oracle {
 
     public async getBasePrice(currency: string): Promise<Price> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getBasePriceMsg(currency));
+    }
+
+    public async getStablePrice(currency: string): Promise<Price> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getStablePriceMsg(currency));
     }
 
     public async getCurrencyPairs(): Promise<[string, [number, string]][]> {

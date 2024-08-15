@@ -12,10 +12,18 @@ export const getStableCurrencyMsg = () => {
     };
 };
 
-export const getBasePriceMsg = (denom: string) => {
+export const getBasePriceMsg = (ticker: string) => {
     return {
         base_price: {
-            currency: denom,
+            currency: ticker,
+        },
+    };
+};
+
+export const getStablePriceMsg = (ticker: string) => {
+    return {
+        stable_price: {
+            currency: ticker,
         },
     };
 };
@@ -58,11 +66,11 @@ export const getConfigMsg = () => {
     };
 };
 
-export const getSwapPathMsg = (fromCurrency: string, toCurrency: string) => {
+export const getSwapPathMsg = (fromCurrencyTicker: string, toCurrencyTicker: string) => {
     return {
         swap_path: {
-            from: fromCurrency,
-            to: toCurrency,
+            from: fromCurrencyTicker,
+            to: toCurrencyTicker,
         },
     };
 };
