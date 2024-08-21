@@ -93,17 +93,27 @@ export enum ProtocolsPirin {
 }
 
 export enum ProtocolsRila {
-    osmosis = 'OSMOSIS-OSMOSIS-OSMO',
+    osmosis = 'OSMOSIS-OSMOSIS-USDC_AXELAR',
     neutron = 'NEUTRON-ASTROPORT-USDC_AXL'
 }
 
 export enum Networks {
-    NOLUS = 'NOLUS',
-    OSMOSIS = 'OSMOSIS',
-    AXELAR = 'AXELAR',
-    COSMOS_HUB = 'COSMOS_HUB',
-    AKASH = 'AKASH',
-    JUNO = 'JUNO',
-    NEUTRON = 'NEUTRON',
-    DYDX = 'DYDX'
+    NOLUS = "NOLUS" ,
+    OSMOSIS = "OSMOSIS",
+    AXELAR = "AXELAR",
+    STRIDE = "STRIDE",
+    JUNO = "JUNO",
+    EVMOS = "EVMOS",
+    PERSISTENCE = "PERSISTENCE",
+    SECRET = "SECRET",
+    CELESTIA = "CELESTIA",
+    STARGAZE = "STARGAZE",
+    QUICKSILVER = "QUICKSILVER",
+    NEUTRON = "NEUTRON",
+    DYMENSION = "DYMENSION",
+    JACKAL = "JACKAL",
+    INJECTIVE = "INJECTIVE",
+    COMPOSABLE = "COMPOSABLE",
+    NOBLE = "NOBLE",
+    CUDOS = "CUDOS",
 }
