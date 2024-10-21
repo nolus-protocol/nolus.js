@@ -91,6 +91,10 @@ export enum ProtocolsPirin {
     osmosis_noble = "OSMOSIS-OSMOSIS-USDC_NOBLE",
     neutron_noble = 'NEUTRON-ASTROPORT-USDC_NOBLE',
     osmosis_osmosis_st_atom = "OSMOSIS-OSMOSIS-ST_ATOM",
+    osmosis_osmosis_all_btc = "OSMOSIS-OSMOSIS-ALL_BTC",
+    osmosis_osmosis_all_sol = "OSMOSIS-OSMOSIS-ALL_SOL",
+    osmosis_osmosis_akt = "OSMOSIS-OSMOSIS-AKT",
+
 }
 
 export enum ProtocolsRila {
