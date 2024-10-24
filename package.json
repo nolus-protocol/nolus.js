@@ -2,7 +2,7 @@
     "name": "@nolus/nolusjs",
     "author": "Nolabs",
     "license": "Apache-2.0",
-    "version": "2.4.16",
+    "version": "2.4.17",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
     "engines": {
         "node": ">=14.0.0"
@@ -43,8 +43,8 @@
         "@cosmjs/proto-signing": "0.32.4",
         "@cosmjs/stargate": "0.32.4",
         "@cosmjs/tendermint-rpc": "0.32.4",
-        "@keplr-wallet/crypto": "0.12.108",
-        "@keplr-wallet/unit": "0.12.108",
+        "@keplr-wallet/crypto": "0.12.144",
+        "@keplr-wallet/unit": "0.12.144",
         "@ledgerhq/hw-app-cosmos": "^6.30.0",
         "@ledgerhq/hw-transport-webhid": "^6.29.0",
         "@ledgerhq/hw-transport-webusb": "^6.29.0",
