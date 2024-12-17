@@ -44,7 +44,7 @@ export class ChainConstants {
      */
     public static readonly BECH32_PREFIX_CONS_PUB: string = this.BECH32_PREFIX_ACC_ADDR + 'valconspub';
     public static readonly GAS_PRICE: string = '0.0025unls';
-    public static readonly GAS_MULTIPLIER: number = 2.5;
+    public static readonly GAS_MULTIPLIER: number = 3.5;
 
     /* Wallet configurations */
     public static readonly BIP44_PATH: string = "44'/118'/0'/0/0";
