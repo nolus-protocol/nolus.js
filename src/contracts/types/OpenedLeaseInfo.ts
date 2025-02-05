@@ -2,6 +2,7 @@ import { Asset } from './Asset';
 import { CloseOngoingState } from './CloseOngoingState';
 import { LiquidationOngoingState } from './LiquidationOngoingState';
 import { RepaymentOngoingState } from './RepaymentOngoingState';
+import { ClosePolicyState } from './ClosePolicyState';
 
 export interface OpenedLeaseInfo {
     amount: Asset;
@@ -14,5 +15,6 @@ export interface OpenedLeaseInfo {
     due_interest: Asset;
     validity: string;
     overdue_collect_in: bigint;
+    close_policy: ClosePolicyState;
     in_progress?: RepaymentOngoingState | LiquidationOngoingState | CloseOngoingState;
 }

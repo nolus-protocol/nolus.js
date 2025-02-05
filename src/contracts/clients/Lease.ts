@@ -1,4 +1,4 @@
-import { closeLeaseMsg, closePositionLeaseMsg, getLeaseStatusMsg, repayLeaseMsg } from '../messages';
+import { closeLeaseMsg, closePositionLeaseMsg, getLeaseStatusMsg, repayLeaseMsg, changeClosePolicyMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -30,8 +30,8 @@ export class Lease {
         this._contractAddress = contractAddress;
     }
 
-    public async getLeaseStatus(): Promise<LeaseStatus> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLeaseStatusMsg());
+    public async getLeaseStatus(dueProjectionSecs?: number): Promise<LeaseStatus> {
+        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLeaseStatusMsg(dueProjectionSecs));
     }
 
     public async repayLease(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
@@ -56,5 +56,13 @@ export class Lease {
 
     public async simulateClosePositionLeaseTx(nolusWallet: NolusWallet, amount?: Asset, fundCoin?: Coin[]) {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, closePositionLeaseMsg(amount), fundCoin);
+    }
+
+    public async changeClosePolicy(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, stopLoss?: number | null, takeProfit?: number | null, fundCoin?: Coin[]): Promise<ExecuteResult> {
+        return nolusWallet.executeContract(this._contractAddress, changeClosePolicyMsg(stopLoss, takeProfit), fee, undefined, fundCoin);
+    }
+
+    public async simulateChangeClosePolicyTx(nolusWallet: NolusWallet, stopLoss?: number | null, takeProfit?: number | null, fundCoin?: Coin[]) {
+        return nolusWallet.simulateExecuteContractTx(this._contractAddress, changeClosePolicyMsg(stopLoss, takeProfit), fundCoin);
     }
 }
