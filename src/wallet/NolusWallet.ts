@@ -1,4 +1,4 @@
-import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee, calculateFee } from '@cosmjs/stargate';
+import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
 import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
 import { CometClient } from '@cosmjs/tendermint-rpc';
@@ -17,7 +17,7 @@ import { MsgWithdrawDelegatorReward } from 'cosmjs-types/cosmos/distribution/v1b
 import { QuerySmartContractStateRequest } from 'cosmjs-types/cosmwasm/wasm/v1/query';
 import { claimRewardsMsg, getLenderRewardsMsg } from '../contracts';
 import { MsgVote } from 'cosmjs-types/cosmos/gov/v1beta1/tx';
-
+import { QueryParamsRequest, QueryParamsResponse } from '../messages';
 /**
  * Nolus Wallet service class.
  *
@@ -56,7 +56,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         const sequence = await this.sequence();
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
         const gas = Math.round(Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER);
-        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
+        const usedFee = await this.selectDynamicFee(gas);
         const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
 
         const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
@@ -87,7 +87,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate(encodedMSGS, memo, pubkey, sequence);
 
         const gas = Math.round(Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER);
-        const usedFee = calculateFee(gas, ChainConstants.GAS_PRICE);
+        const usedFee = await this.selectDynamicFee(gas);
         const txRaw = await this.sign(this.address as string, msgs, usedFee, memo);
 
         const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
@@ -361,5 +361,83 @@ export class NolusWallet extends SigningCosmWasmClient {
 
         const response = await client.abciQuery(query);
         return QuerySmartContractStateRequest.decode(response.value);
+    }
+
+    public async getBalance(address: string, denom: string): Promise<Coin> {
+        const client = this.forceGetQueryClient();
+        return await client.bank.balance(address, denom);
+    }
+
+    async selectDynamicFee(gasEstimate: number): Promise<StdFee> {
+        const gasPrices = await this.gasPrices();
+        const feeCandidates: { fee: StdFee; denom: string }[] = [];
+        for (const denom in gasPrices) {
+            const feeAmount = Math.ceil(gasEstimate * gasPrices[denom]).toString();
+            feeCandidates.push({
+                fee: {
+                    amount: [{ amount: feeAmount, denom }],
+                    gas: gasEstimate.toString(),
+                },
+                denom,
+            });
+        }
+
+        const accountAddress = this.address;
+        if (!accountAddress) {
+            throw new Error('Account address is not set. Call useAccount() first.');
+        }
+
+        for (const candidate of feeCandidates) {
+            try {
+                const balance = await this.getBalance(accountAddress, candidate.denom);
+
+                if (BigInt(balance.amount) >= BigInt(candidate.fee.amount[0].amount)) {
+                    return candidate.fee;
+                }
+            } catch (error) {
+                console.error(`Error fetching balance for ${candidate.denom}:`, error);
+            }
+        }
+
+        throw new Error('Insufficient funds in any available fee currency.');
+    }
+
+    async gasPrices() {
+        const taxParams = await this.queryTaxParams();
+
+        const gasPrices: { [denom: string]: number } = {
+
+        };
+
+        for (const item of taxParams.params?.dexFeeParams ?? []) {
+            for (const amount of item.acceptedDenomsMinPrices) {
+                gasPrices[amount.denom as string] = Number(amount.minPrice);
+            }
+        }
+
+        gasPrices[ChainConstants.COIN_MINIMAL_DENOM] = Number(ChainConstants.GAS_PRICE_NUMBER);
+
+        return gasPrices;
+    }
+
+    async queryTaxParams(): Promise<QueryParamsResponse> {
+        const client = this.getCometClient();
+
+        if (!client) {
+            throw 'Tendermint client not initialized';
+        }
+
+        const requestData = QueryParamsRequest.encode({}).finish();
+
+        const query = {
+            path: '/nolus.tax.v2.Query/Params',
+            data: requestData,
+            prove: true,
+        };
+
+        const response = await client.abciQuery(query);
+
+        const paramsResponse = QueryParamsResponse.decode(response.value);
+        return paramsResponse;
     }
 }

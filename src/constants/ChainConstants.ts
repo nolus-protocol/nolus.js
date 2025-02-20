@@ -43,7 +43,8 @@ export class ChainConstants {
      * value = BECH32_PREFIX_ACC_ADDR + 'valconspub'
      */
     public static readonly BECH32_PREFIX_CONS_PUB: string = this.BECH32_PREFIX_ACC_ADDR + 'valconspub';
-    public static readonly GAS_PRICE: string = '0.0025unls';
+    public static readonly GAS_PRICE_NUMBER: number = 0.0025;
+    public static readonly GAS_PRICE: string = `${ChainConstants.GAS_PRICE_NUMBER}unls`;
     public static readonly GAS_MULTIPLIER: number = 3.5;
 
     /* Wallet configurations */

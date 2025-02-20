@@ -36,6 +36,7 @@
     },
     "homepage": "https://github.com/N-Stealth/nolusjs#readme",
     "dependencies": {
+        "@bufbuild/protobuf": "^2.2.3",
         "@cosmjs/cosmwasm-stargate": "0.33.0",
         "@cosmjs/crypto": "0.33.0",
         "@cosmjs/encoding": "0.33.0",
