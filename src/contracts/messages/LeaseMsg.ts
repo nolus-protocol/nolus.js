@@ -2,10 +2,12 @@ import { Asset } from '../types';
 
 export const getLeaseStatusMsg = (due_projection_secs?: number) => {
     if (typeof due_projection_secs === 'undefined') {
-        return {};
+        return { state: {} };
     }
     return {
-        due_projection_secs: due_projection_secs,
+        state: {
+            due_projection_secs: due_projection_secs,
+        },
     };
 };
 
