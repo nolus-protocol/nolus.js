@@ -46,7 +46,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         return this.offlineSigner;
     }
 
-    async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote, msgTypeUrl: string, memo = '') {
+    async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward, msgTypeUrl: string, memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const msgAny = {
             typeUrl: msgTypeUrl,
@@ -56,7 +56,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         const sequence = await this.sequence();
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate([this.registry.encodeAsAny(msgAny)], memo, pubkey, sequence);
         const gas = Math.round(Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER);
-        const usedFee = await this.selectDynamicFee(gas);
+        const usedFee = await this.selectDynamicFee(gas, [{ msg: msg, msgTypeUrl: msgTypeUrl }]);
         const txRaw = await this.sign(this.address as string, [msgAny], usedFee, memo);
 
         const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
@@ -69,7 +69,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         };
     }
 
-    private async simulateMultiTx(messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgWithdrawDelegatorReward; msgTypeUrl: string }[], memo = '') {
+    private async simulateMultiTx(messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[], memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const encodedMSGS = [];
         const msgs = [];
@@ -87,7 +87,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         const { gasInfo } = await this.forceGetQueryClient().tx.simulate(encodedMSGS, memo, pubkey, sequence);
 
         const gas = Math.round(Number(gasInfo?.gasUsed ?? 0) * ChainConstants.GAS_MULTIPLIER);
-        const usedFee = await this.selectDynamicFee(gas);
+        const usedFee = await this.selectDynamicFee(gas, messages);
         const txRaw = await this.sign(this.address as string, msgs, usedFee, memo);
 
         const txBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
@@ -98,6 +98,38 @@ export class NolusWallet extends SigningCosmWasmClient {
             txBytes,
             usedFee,
         };
+    }
+
+    private getBalanceOut(msgs: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[]) {
+        const coins: { [key: string]: bigint } = {};
+        for (const message of msgs) {
+            switch (message.msgTypeUrl) {
+                case MsgSend.typeUrl: {
+                    this.parseCoins(coins, (message.msg as MsgSend).amount);
+                    break;
+                }
+                case MsgExecuteContract.typeUrl: {
+                    this.parseCoins(coins, (message.msg as MsgExecuteContract).funds);
+                    break;
+                }
+                case MsgTransfer.typeUrl: {
+                    this.parseCoins(coins, [(message.msg as MsgTransfer).token]);
+                    break;
+                }
+            }
+        }
+
+        return coins;
+    }
+
+    private parseCoins(data: { [key: string]: bigint }, coins: Coin[]) {
+        for (const coin of coins) {
+            if (!data[coin.denom]) {
+                data[coin.denom] = BigInt(coin.amount);
+            } else {
+                data[coin.denom] += BigInt(coin.amount);
+            }
+        }
     }
 
     public async useAccount(): Promise<boolean> {
@@ -368,9 +400,14 @@ export class NolusWallet extends SigningCosmWasmClient {
         return await client.bank.balance(address, denom);
     }
 
-    async selectDynamicFee(gasEstimate: number): Promise<StdFee> {
+    async selectDynamicFee(
+        gasEstimate: number,
+        msgs: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[],
+    ): Promise<StdFee> {
         const gasPrices = await this.gasPrices();
         const feeCandidates: { fee: StdFee; denom: string }[] = [];
+        const out = this.getBalanceOut(msgs);
+
         for (const denom in gasPrices) {
             const feeAmount = Math.ceil(gasEstimate * gasPrices[denom]).toString();
             feeCandidates.push({
@@ -391,7 +428,7 @@ export class NolusWallet extends SigningCosmWasmClient {
             try {
                 const balance = await this.getBalance(accountAddress, candidate.denom);
 
-                if (BigInt(balance.amount) >= BigInt(candidate.fee.amount[0].amount)) {
+                if ((BigInt(balance.amount) - (out[balance.denom] ?? 0n)) >= BigInt(candidate.fee.amount[0].amount)) {
                     return candidate.fee;
                 }
             } catch (error) {
@@ -405,9 +442,7 @@ export class NolusWallet extends SigningCosmWasmClient {
     async gasPrices() {
         const taxParams = await this.queryTaxParams();
 
-        const gasPrices: { [denom: string]: number } = {
-
-        };
+        const gasPrices: { [denom: string]: number } = {};
 
         for (const item of taxParams.params?.dexFeeParams ?? []) {
             for (const amount of item.acceptedDenomsMinPrices) {
