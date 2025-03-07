@@ -8,4 +8,10 @@ export interface LeaseStatus {
     paid?: PaidLeaseInfo;
     closed?: object;
     liquidated?: object;
+    additional_data: AdditionalData | null;
+}
+
+export interface AdditionalData {
+    type: string;
+    cause?: string;
 }

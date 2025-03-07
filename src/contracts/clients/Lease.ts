@@ -4,8 +4,9 @@ import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
 import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { LeaseStatus } from '../types/LeaseStatus';
+import { AdditionalData, LeaseStatus } from '../types/LeaseStatus';
 import { Asset } from '../types';
+import { fromUtf8, toUtf8 } from '@cosmjs/encoding';
 
 /**
  * Each Lease instance tracks a new customer's lease.
@@ -30,8 +31,50 @@ export class Lease {
         this._contractAddress = contractAddress;
     }
 
+    // ******************************* internal ************************** //
+
+    // Helper function to fetch raw lease state and extract necessary data
+    private async getAdditionalDataFromRawState(leaseRawState: Uint8Array | null, type: 'Close' | 'Liquidation'): Promise<AdditionalData | null> {
+        if (!leaseRawState) return null;
+
+        const parsedRawState = JSON.parse(fromUtf8(leaseRawState));
+
+        const operationType = Object.keys(parsedRawState)[0];
+        if (!operationType) return null;
+
+        if (type === 'Close') {
+            return { type: operationType };
+        } else if (type === 'Liquidation') {
+            const dynamicSubstateKey = Object.keys(parsedRawState[operationType] || {})[0];
+            if (!dynamicSubstateKey) return null;
+
+            const causeObj = parsedRawState[operationType]?.[dynamicSubstateKey]?.spec?.repayable?.cause;
+            if (!causeObj) return null;
+
+            const liqCause = Object.keys(causeObj)[0];
+
+            return { type: operationType, cause: liqCause };
+        }
+        return null;
+    }
+
+    // ******************************************************************* //
+
     public async getLeaseStatus(dueProjectionSecs?: number): Promise<LeaseStatus> {
-        return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLeaseStatusMsg(dueProjectionSecs));
+        const [leaseState, leaseRawState] = await Promise.all([
+            this.cosmWasmClient.queryContractSmart(this._contractAddress, getLeaseStatusMsg(dueProjectionSecs)),
+            this.cosmWasmClient.queryContractRaw(this._contractAddress, toUtf8('state')),
+        ]);
+
+        let additional_data: AdditionalData | null = null;
+        const inProgress = leaseState.opened?.in_progress;
+
+        if (inProgress && typeof inProgress === 'object' && 'close' in inProgress && 'in_progress' in inProgress.close) {
+            additional_data = await this.getAdditionalDataFromRawState(leaseRawState, 'Close');
+        } else if (inProgress && typeof inProgress === 'object' && 'liquidation' in inProgress && 'in_progress' in inProgress.liquidation) {
+            additional_data = await this.getAdditionalDataFromRawState(leaseRawState, 'Liquidation');
+        }
+        return { ...leaseState, additional_data };
     }
 
     public async repayLease(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
