@@ -2,7 +2,8 @@ import { Asset } from './Asset';
 
 export interface LiquidationOngoingState {
     liquidation: {
-        amount_out: Asset;
+        liquidation: Asset;
+        cause: string;
         in_progress: string;
     };
 }
