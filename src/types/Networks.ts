@@ -94,6 +94,7 @@ export enum ProtocolsPirin {
     osmosis_osmosis_all_btc = "OSMOSIS-OSMOSIS-ALL_BTC",
     osmosis_osmosis_all_sol = "OSMOSIS-OSMOSIS-ALL_SOL",
     osmosis_osmosis_akt = "OSMOSIS-OSMOSIS-AKT",
+    osmosis_osmosis_atom = "OSMOSIS-OSMOSIS-ATOM",
 
 }
 
