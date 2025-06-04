@@ -33,12 +33,12 @@ export class Lease {
     // ******************************* internal ************************** //
 
     private async findOperationType(leaseState: LeaseStatus): Promise<LeaseStatus> {
-        if (!leaseState?.opened?.amount?.amount || !leaseState?.opened?.in_progress) {
+        if (!leaseState?.opened?.amount?.amount || typeof leaseState?.opened?.status === 'string' || !leaseState?.opened?.status?.in_progress) {
             return leaseState;
         }
 
         const amount = leaseState.opened.amount.amount;
-        const in_progress = leaseState.opened.in_progress;
+        const in_progress = leaseState.opened.status.in_progress;
 
         if ('close' in in_progress && in_progress.close) {
             const additional_data = { type: amount === String(in_progress.close.close.amount) ? 'Full' : 'Partial' };
