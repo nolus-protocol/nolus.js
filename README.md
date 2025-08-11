@@ -1,10 +1,10 @@
-# Nolus.js
+# nolus.js
 
 <br /><p align="center"><img alt="Nolus.js" src="nolusjs-logo.svg" width="100" margin-top="px"/></p><br />
 
 ## Overview
 
-nolus.js is a TypeScript SDK for interacting with the Nolus Protocol - a novel DeFi primitive offering capital-efficient spot margin trading with fixed interest rates and a predictable leverage model. The SDK abstracts complex CosmWasm contract interactions and IBC logic, enabling developers to quote, open, monitor, and repay leveraged positions across supported Cosmos chains.
+**nolus.js** is a TypeScript SDK for interacting with the Nolus Protocol - a novel DeFi primitive offering capital-efficient spot margin trading with fixed interest rates and a predictable leverage model. The SDK abstracts complex CosmWasm contract interactions and IBC logic, enabling developers to quote, open, monitor, and repay leveraged positions across supported Cosmos chains.
 
 ## Modules
 
@@ -35,7 +35,7 @@ npm install @nolus/nolusjs
 * Contract addresses for Leaser, Lease, Oracle, LPP, and Treasury
 * Basic familiarity with [CosmJS](https://github.com/cosmos/cosmjs) and the [Cosmos SDK](https://github.com/cosmos/cosmos-sdk)
 
-### Usage
+### 3. Usage
 
 💡 Note: For direct usage of the SDK and examples below, ensure your environment supports ES Modules and TypeScript via tools like tsx, Vite, or Babel.
 
@@ -80,6 +80,7 @@ const cosm = await NolusClient.getInstance().getCosmWasmClient();
     leaseInstance = new NolusContracts.Lease(cosm, leaseContractAddress); // Isolated contract instance representing an individual margin position
     lppInstance = new NolusContracts.Lpp(cosm, lppContractAddress); // Single-sided lending pool contract
     treasuryInstance = new NolusContracts.Treasury(cosm, treasuryContractAddress); // Manages protocol revenue in the form of NLS tokens
+```
 
 Nolus Protocol interacting:
 
@@ -115,7 +116,7 @@ await leaserInstance.openLease(
         borrowerWallet,
         'OSMO', // wantedLeaseCurrency
         fee,
-        [{ denom: bankSymbol, amount: '1000' }]
+        [{ denom: bankSymbol, amount: '1000' }] // downpayment
       );
 ```
 
@@ -150,10 +151,6 @@ Usage notes for each contract method
 ➡️ [View the auto-generated API documentation](https://nolus-protocol.github.io/nolus.js/)
 
 These docs are generated directly from the TypeScript source and are the most up-to-date reference for working with the SDK.
-
-## Development
-
-See [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## Collaboration
 

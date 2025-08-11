@@ -42,5 +42,4 @@ export class AssetUtils {
 
         return currencyInfo ? currencyInfo.bank_symbol : null;
     }
-
 }
