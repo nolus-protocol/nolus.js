@@ -25,6 +25,15 @@ export class Treasury {
         this._contractAddress = contractAddress;
     }
 
+    /**
+     * Gets the calculated the amount of uNLS rewards to be distributed across all active LPPs.
+     *
+     * The value is determined based on the current total value locked (TVL) in each pool.
+     * This function returns the total reward amount but does not perform the distribution itself.
+     *
+     *  @returns A `Promise` resolving to:
+     * - The total reward amount (as a number) in micro-NLS (`uNLS`) to be distributed.
+     */
     public async calculateRewards(): Promise<number> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, calculateRewardsMsg());
     }
