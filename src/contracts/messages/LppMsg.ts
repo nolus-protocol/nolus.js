@@ -83,7 +83,7 @@ export const distributeRewardsMsg = () => {
 export const burnMsg = (burnAmount: string) => {
     return {
         burn: {
-            amount: burnAmount,
+            amount: { amount: burnAmount },
         },
     };
 };

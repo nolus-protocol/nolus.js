@@ -1,4 +1,4 @@
-import { closeLeaseMsg, closePositionLeaseMsg, getLeaseStatusMsg, repayLeaseMsg, changeClosePolicyMsg } from '../messages';
+import { closePositionLeaseMsg, getLeaseStatusMsg, repayLeaseMsg, changeClosePolicyMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
@@ -101,35 +101,6 @@ export class Lease {
      */
     public async simulateRepayLeaseTx(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
         return nolusWallet.simulateExecuteContractTx(this._contractAddress, repayLeaseMsg(), fundCoin);
-    }
-
-    /**
-     * Finalizes the closure of a fully repaid margin position.
-     *
-     * This step is required to collect any remaining assets (excess funds)
-     * after the debt has been fully settled.
-     *
-     * @param nolusWallet - The wallet initiating the closure.
-     * @param fee - The gas fee for the transaction.
-     * @param fundCoin - Optional. Additional tokens to fund the transaction.
-     *
-     * @returns A `Promise` resolving to the transaction result, including:
-     * - Transaction hash, gas used, and emitted events for the closing.
-     */
-    public async closeLease(nolusWallet: NolusWallet, fee: StdFee | 'auto' | number, fundCoin?: Coin[]): Promise<ExecuteResult> {
-        return nolusWallet.executeContract(this._contractAddress, closeLeaseMsg(), fee, undefined, fundCoin);
-    }
-
-    /**
-     * Simulates the final closure of a fully repaid lease without executing it.
-     *
-     * @param nolusWallet - The wallet used for simulation.
-     * @param fundCoin - Optional. Simulated funding tokens.
-     *
-     * @returns A `Promise` resolving to the simulated gas and fee estimate.
-     */
-    public async simulateCloseLeaseTx(nolusWallet: NolusWallet, fundCoin?: Coin[]) {
-        return nolusWallet.simulateExecuteContractTx(this._contractAddress, closeLeaseMsg(), fundCoin);
     }
 
     /**

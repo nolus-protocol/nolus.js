@@ -17,12 +17,6 @@ export const repayLeaseMsg = () => {
     };
 };
 
-export const closeLeaseMsg = () => {
-    return {
-        close: [],
-    };
-};
-
 export const closePositionLeaseMsg = (amount?: Asset) => {
     if (typeof amount === 'undefined') {
         return {
