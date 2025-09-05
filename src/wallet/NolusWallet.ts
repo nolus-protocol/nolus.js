@@ -436,7 +436,7 @@ export class NolusWallet extends SigningCosmWasmClient {
             }
         }
 
-        throw new Error('Insufficient funds in any available fee currency.');
+        throw new Error('Insufficient funds to cover the network fee. You need USDC, NLS, ATOM, OSMO, or NTRN to pay for gas');
     }
 
     async gasPrices() {
