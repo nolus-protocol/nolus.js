@@ -40,10 +40,7 @@ export class Lease {
         const amount = leaseState.opened.amount.amount;
         const in_progress = leaseState.opened.status.in_progress;
 
-        if ('close' in in_progress && in_progress.close) {
-            const additional_data = { type: amount === String(in_progress.close.close.amount) ? 'Full' : 'Partial' };
-            in_progress.close = { ...in_progress.close, ...additional_data };
-        } else if ('liquidation' in in_progress && in_progress.liquidation) {
+        if ('liquidation' in in_progress && in_progress.liquidation) {
             const additional_data = { type: amount === String(in_progress.liquidation.liquidation.amount) ? 'Full' : 'Partial' };
             in_progress.liquidation = { ...in_progress.liquidation, ...additional_data };
         }
