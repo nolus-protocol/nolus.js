@@ -12,7 +12,7 @@ import { encodeSecp256k1Pubkey } from '@cosmjs/amino';
 import { ChainConstants } from '../constants';
 import { sha256 } from '@cosmjs/crypto';
 import { MsgTransfer } from 'cosmjs-types/ibc/applications/transfer/v1/tx';
-import { MsgDelegate, MsgUndelegate } from 'cosmjs-types/cosmos/staking/v1beta1/tx';
+import { MsgDelegate, MsgUndelegate, MsgBeginRedelegate } from 'cosmjs-types/cosmos/staking/v1beta1/tx';
 import { MsgWithdrawDelegatorReward } from 'cosmjs-types/cosmos/distribution/v1beta1/tx';
 import { QuerySmartContractStateRequest } from 'cosmjs-types/cosmwasm/wasm/v1/query';
 import { claimRewardsMsg, getLenderRewardsMsg } from '../contracts';
@@ -46,7 +46,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         return this.offlineSigner;
     }
 
-    async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward, msgTypeUrl: string, memo = '') {
+    async simulateTx(msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgBeginRedelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward, msgTypeUrl: string, memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const msgAny = {
             typeUrl: msgTypeUrl,
@@ -69,7 +69,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         };
     }
 
-    private async simulateMultiTx(messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[], memo = '') {
+    private async simulateMultiTx(messages: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgBeginRedelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[], memo = '') {
         const pubkey = encodeSecp256k1Pubkey(this.pubKey as Uint8Array);
         const encodedMSGS = [];
         const msgs = [];
@@ -100,7 +100,7 @@ export class NolusWallet extends SigningCosmWasmClient {
         };
     }
 
-    private getBalanceOut(msgs: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[]) {
+    private getBalanceOut(msgs: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgBeginRedelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[]) {
         const coins: { [key: string]: bigint } = {};
         for (const message of msgs) {
             switch (message.msgTypeUrl) {
@@ -277,6 +277,26 @@ export class NolusWallet extends SigningCosmWasmClient {
         return await this.simulateMultiTx(msgs, '');
     }
 
+
+public async simulateRedelegateTx(data: { srcValidator: string; dstValidator: string; amount: Coin }[]) {
+    const msgs = [];
+
+    for (const item of data) {
+        const msg = MsgBeginRedelegate.fromPartial({
+            delegatorAddress: this.address,
+            validatorSrcAddress: item.srcValidator,
+            validatorDstAddress: item.dstValidator,
+            amount: item.amount,
+        });
+        msgs.push({
+            msg,
+            msgTypeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
+        });
+    }
+
+    return await this.simulateMultiTx(msgs, "");
+}
+
     public async simulateUndelegateTx(data: { validator: string; amount: Coin }[]) {
         const msgs = [];
 
@@ -402,7 +422,7 @@ export class NolusWallet extends SigningCosmWasmClient {
 
     async selectDynamicFee(
         gasEstimate: number,
-        msgs: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[],
+        msgs: { msg: MsgSend | MsgExecuteContract | MsgTransfer | MsgDelegate | MsgBeginRedelegate | MsgUndelegate | MsgVote | MsgWithdrawDelegatorReward; msgTypeUrl: string }[],
     ): Promise<StdFee> {
         const gasPrices = await this.gasPrices();
         const feeCandidates: { fee: StdFee; denom: string }[] = [];
