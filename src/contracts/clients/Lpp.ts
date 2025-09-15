@@ -18,7 +18,7 @@ import {
     getLPNMsg,
     getStableBalanceMsg,
 } from '../messages';
-import { Balance, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapacity } from '../types';
+import { Asset, LoanInfo, LppBalance, LppConfig, Price, Rewards, DepositCapacity } from '../types';
 
 /**
  * The Liquidity Provider Pool (LPP) is a smart contract responsible for managing lending and borrowing activity within a specific currency on the Nolus Protocol.
@@ -152,7 +152,7 @@ export class Lpp {
      * @returns A `Promise` resolving to:
      * - The lender’s deposit amount in `nLPN` (as a string in micro-units).
      */
-    public async getLenderDeposit(lenderAddress: string): Promise<Balance> {
+    public async getLenderDeposit(lenderAddress: string): Promise<Asset> {
         return await this.cosmWasmClient.queryContractSmart(this._contractAddress, getLenderDepositMsg(lenderAddress));
     }
 

@@ -1,6 +1,6 @@
 import { Asset } from './Asset';
 
-export interface PaidLeaseInfo {
+export interface ClosingLeaseInfo {
     amount: Asset;
     in_progress?: string;
 }

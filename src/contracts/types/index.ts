@@ -1,5 +1,4 @@
 export * from './Asset';
-export * from './Balance';
 export * from './OracleConfig';
 export * from './OraclePriceConfig';
 export * from './ContractData';
@@ -10,7 +9,7 @@ export * from './LeaserConfig';
 export * from './LeaserConfigInfo';
 export * from './OpenedLeaseInfo';
 export * from './OpeningLeaseInfo';
-export * from './PaidLeaseInfo';
+export * from './ClosingLeaseInfo';
 export * from './LeaseStatus';
 export * from './Liability';
 export * from './LoanInfo';
