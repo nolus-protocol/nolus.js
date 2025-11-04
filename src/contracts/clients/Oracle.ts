@@ -1,7 +1,6 @@
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
-import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
-import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { CosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
 import { Price } from '../types';
 import {
     feedPricesMsg,

@@ -1,8 +1,7 @@
 import stargate, { DeliverTxResponse, isDeliverTxFailure, StdFee } from '@cosmjs/stargate';
-import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from '@cosmjs/cosmwasm-stargate';
+import { SigningCosmWasmClient, SigningCosmWasmClientOptions, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
 import { Coin, EncodeObject, OfflineSigner } from '@cosmjs/proto-signing';
 import { CometClient } from '@cosmjs/tendermint-rpc';
-import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 import { toUtf8, toHex } from '@cosmjs/encoding';
 import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
 import { MsgSend } from 'cosmjs-types/cosmos/bank/v1beta1/tx';

@@ -1,10 +1,9 @@
-import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { CosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
 import { LeaseApply, LeaserConfig } from '../types';
 import { getCurrentOpenLeasesByOwnerMsg, getLeaserConfigMsg, leaseQuoteMsg, openLeaseMsg } from '../messages';
 import { NolusWallet } from '../../wallet';
 import { StdFee } from '@cosmjs/stargate';
 import { Coin } from '@cosmjs/proto-signing';
-import { ExecuteResult } from '@cosmjs/cosmwasm-stargate/build/signingcosmwasmclient';
 
 /**
  * A customer-facing smart contract keeping a register of customer's Lease instances.
