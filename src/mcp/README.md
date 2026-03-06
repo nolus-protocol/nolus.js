@@ -44,17 +44,33 @@ These tools return the transaction message and a ready-to-use CLI command:
 
 ## Running the Server
 
-### Environment Variables
+### Network configuration
 
-| Variable | Description | Default |
+By default, the MCP server has **built‑in configs** for:
+
+- **Mainnet (Pirin)** – `network: "pirin"` (default)
+- **Testnet (Rila)** – `network: "rila"`
+
+You can optionally override the defaults with environment variables:
+
+| Variable | Description | Applies to |
 | --- | --- | --- |
-| `NOLUS_RPC_URL` | RPC endpoint to connect to | (required) |
-| `NOLUS_ADMIN_ADDRESS` | Admin contract address | (required) |
-| `NOLUS_CHAIN_ID` | Chain ID used in generated CLI commands | (required) |
+| `NOLUS_PIRIN_RPC_URL` | Pirin RPC endpoint | mainnet |
+| `NOLUS_PIRIN_ADMIN_ADDRESS` | Pirin Admin contract address | mainnet |
+| `NOLUS_PIRIN_CHAIN_ID` | Pirin chain ID used in generated CLI commands | mainnet |
+| `NOLUS_RILA_RPC_URL` | Rila RPC endpoint | testnet |
+| `NOLUS_RILA_ADMIN_ADDRESS` | Rila Admin contract address | testnet |
+| `NOLUS_RILA_CHAIN_ID` | Rila chain ID used in generated CLI commands | testnet |
+
+Most tools accept an optional `network` parameter so you can query **per request**:
+
+- Omit `network` → uses **Pirin** by default.
+- Set `network: "rila"` → query against **Rila**.
 
 ### Connecting
 
 Create or edit `~/.cursor/mcp.json`;
+
 Create or edit the Claude Desktop config file:
 
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
@@ -67,11 +83,7 @@ Create or edit the Claude Desktop config file:
         "nolus": {
             "command": "npx",
             "args": ["tsx", "/absolute/path/to/nolus.js/src/mcp/server.ts"],
-            "env": {
-                "NOLUS_RPC_URL": "https://rpc.nolus.network/",
-                "NOLUS_CHAIN_ID": "pirin-1",
-                "NOLUS_ADMIN_ADDRESS": "nolus1gurgpv8savnfw66lckwzn4zk7fp394lpe667dhu7aw48u40lj6jsqxf8nd"
-            }
+            "env": {}
         }
     }
 }
@@ -82,8 +94,16 @@ Restart after saving the file. The MCP server will appear under **Settings → M
 ### Run Manually
 
 ```sh
-NOLUS_RPC_URL="https://pirin-cl.nolus.network:26657" \
-NOLUS_ADMIN_ADDRESS="nolus1gurgpv8savnfw66lckwzn4zk7fp394lpe667dhu7aw48u40lj6jsqxf8nd" \
-NOLUS_CHAIN_ID="pirin-1" \
+npm run mcp
+```
+
+To override the built‑in network settings, export the corresponding env vars before running, for example:
+
+```sh
+export NOLUS_PIRIN_RPC_URL=
+export NOLUS_PIRIN_ADMIN_ADDRESS=
+export NOLUS_PIRIN_CHAIN_ID=
+export NOLUS_RILA_RPC_URL=
+...
 npm run mcp
 ```
