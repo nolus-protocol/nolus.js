@@ -138,6 +138,143 @@ ChainConstants.COIN_TYPE;
 const privateKey = await KeyUtils.getPrivateKeyFromMnemonic(mnemonic, path);
 ```
 
+## MCP Server
+
+The Nolus MCP server exposes the `@nolus/nolusjs` library as tools that AI assistants can use to interact with the Nolus Protocol.
+
+### Features
+
+#### Query tools (read-only)
+
+- **`get_protocols`**: List all registered protocols.
+- **`get_protocol`**: Get protocol details and contract addresses.
+- **`get_platform`**: Get platform-level contracts (treasury, timealarms).
+- **`get_lease_quote`**: Calculate a quote for opening a leveraged position.
+- **`get_open_leases`**: Get all active leases for a wallet.
+- **`get_leaser_config`**: Get leaser configuration.
+- **`get_lease_status`**: Get status of a specific lease.
+- **`get_lpp_balance`**: Get liquidity pool balance.
+- **`get_lpp_config`**: Get pool configuration.
+- **`get_lpp_price`**: Get nLPN receipt token price.
+- **`get_lender_deposit`**: Get lender's deposit balance.
+- **`get_lender_rewards`**: Get lender's pending rewards.
+- **`get_deposit_capacity`**: Get remaining deposit capacity.
+- **`get_lpn`**: Get pool's native asset ticker.
+- **`get_oracle_prices`**: Get all asset prices.
+- **`get_asset_price`**: Get price of a specific asset.
+- **`get_currencies`**: Get all supported currencies.
+- **`get_oracle_config`**: Get oracle configuration.
+- **`calculate_rewards`**: Calculate NLS rewards distribution.
+- **`get_wallet_balance`**: Get token balance for an address.
+- **`get_block_height`**: Get current block height.
+- **`get_chain_id`**: Get chain ID.
+
+#### Prepare tools (generate unsigned transactions)
+
+These tools return the transaction message and a ready-to-use CLI command:
+
+- **`prepare_open_lease`**: Prepare a lease opening transaction.
+- **`prepare_repay_lease`**: Prepare a lease repayment transaction.
+- **`prepare_close_lease`**: Prepare a lease close transaction (full or partial).
+- **`prepare_change_close_policy`**: Prepare stop-loss/take-profit update.
+- **`prepare_deposit_lpp`**: Prepare a deposit into liquidity pool.
+- **`prepare_withdraw_lpp`**: Prepare a withdrawal from liquidity pool.
+- **`prepare_claim_lpp_rewards`**: Prepare NLS rewards claim.
+- **`prepare_transfer_tokens`**: Prepare a bank send transaction.
+
+### Running the MCP server
+
+#### Network configuration
+
+By default, the MCP server has **built‑in configs** for:
+
+- **Mainnet (Pirin)** – `network: "pirin"` (default)
+- **Testnet (Rila)** – `network: "rila"`
+
+You can optionally override the defaults with environment variables:
+
+| Variable | Description | Applies to |
+| --- | --- | --- |
+| `NOLUS_PIRIN_RPC_URL` | Pirin RPC endpoint | mainnet |
+| `NOLUS_PIRIN_ADMIN_ADDRESS` | Pirin Admin contract address | mainnet |
+| `NOLUS_PIRIN_CHAIN_ID` | Pirin chain ID used in generated CLI commands | mainnet |
+| `NOLUS_RILA_RPC_URL` | Rila RPC endpoint | testnet |
+| `NOLUS_RILA_ADMIN_ADDRESS` | Rila Admin contract address | testnet |
+| `NOLUS_RILA_CHAIN_ID` | Rila chain ID used in generated CLI commands | testnet |
+
+Most tools accept an optional `network` parameter so you can query **per request**:
+
+- Omit `network` → uses **Pirin** by default.
+- Set `network: "rila"` → query against **Rila**.
+
+#### Connecting from Cursor / Claude Desktop
+
+Configure MCP as follows (adjust the absolute path to this repo):
+
+```json
+{
+  "mcpServers": {
+    "nolus": {
+      "command": "npx",
+      "args": ["tsx", "/absolute/path/to/nolus.js/src/mcp/server.ts"],
+      "env": {} // Optionally, override the default settings with environment variables
+    }
+  }
+}
+```
+
+After saving, restart your editor/Claude Desktop; the server will appear under MCP settings.
+
+#### Run manually
+
+```sh
+npm run mcp
+```
+
+To override the built‑in network settings, export the corresponding env vars before running, for example:
+
+```sh
+export NOLUS_PIRIN_RPC_URL=
+export NOLUS_PIRIN_ADMIN_ADDRESS=
+export NOLUS_PIRIN_CHAIN_ID=
+export NOLUS_RILA_RPC_URL=
+...
+npm run mcp
+```
+
+### Reference prompt for AI agents
+
+You can use the following prompt as a reference for correctly interacting with `@nolus/nolusjs` and the Nolus MCP server:
+
+```text
+You are a Nolus Protocol agent. Before doing anything else, ensure the environment is ready:
+
+## Step 1: Set up the Nolus MCP server
+- Clone the nolusjs library: `git clone https://github.com/nolus-protocol/nolus.js`
+- Install dependencies: `cd nolus.js && npm install`
+- Register the following MCP server in your client's configuration:
+  - Command: `npx tsx <absolute-path-to-nolus.js>/src/mcp/server.ts`
+  - Environment variables:
+    - NOLUS_PIRIN_RPC_URL=https://rpc.nolus.network
+    - NOLUS_PIRIN_ADMIN_ADDRESS= nolus1gurgpv8savnfw66lckwzn4zk7fp394lpe667dhu7aw48u40lj6jsqxf8nd
+    - NOLUS_PIRIN_CHAIN_ID=pirin-1
+- Reload your MCP tools so the server is available
+
+## Step 2: Install nolusd if not already available
+- Detect OS and architecture
+- Download the appropriate binary from the latest release at
+  https://github.com/nolus-protocol/nolus-core/releases/latest
+- Install it to a directory on your PATH and make it executable
+- Verify with `nolusd version`
+
+## Step 3: Configure nolusd
+- `nolusd config set client chain-id pirin-1`
+- `nolusd config set client node https://rpc.nolus.network:443`
+
+Confirm setup is complete and list any existing keys with `nolusd keys list`.
+You are now ready to interact with Nolus Protocol.
+```
+
 ## API Documentation
 
 For detailed, developer-oriented information on all core business functions, including:

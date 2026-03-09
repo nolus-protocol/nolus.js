@@ -207,7 +207,8 @@ function generateCosmJsExecuteMsg(
 server.registerTool(
     "get_protocols",
     {
-        description: "Get all registered protocol identifiers from the Nolus Admin contract",
+        description:
+            "Nolus blockchain: Retrieve all registered protocol identifiers from the Admin smart contract. Use this tool when the user asks which Nolus leveraged trading protocols or markets are available.",
         inputSchema: {
             network: NetworkSchema.optional(),
             adminAddress: z.string().optional().describe("Admin contract address (uses server default if not provided)"),
@@ -224,7 +225,8 @@ server.registerTool(
 server.registerTool(
     "get_protocol",
     {
-        description: "Get detailed configuration for a specific Nolus protocol including contract addresses",
+        description:
+            "Nolus blockchain: Retrieve full configuration and contract addresses for a specific protocol. Use this tool when the user mentions a protocol ID and needs its leaser, LPP, oracle or other contract addresses.",
         inputSchema: {
             protocol: z.string().describe("Protocol identifier e.g. 'OSMOSIS-OSMOSIS-USDC_AXELAR'"),
             network: NetworkSchema.optional(),
@@ -242,7 +244,8 @@ server.registerTool(
 server.registerTool(
     "get_platform",
     {
-        description: "Get platform-level contract addresses (treasury, timealarms)",
+        description:
+            "Nolus blockchain: Retrieve global platform-level contract addresses such as treasury and timealarms. Use this tool when the user asks about core system contracts shared across all Nolus protocols.",
         inputSchema: {
             network: NetworkSchema.optional(),
             adminAddress: z.string().optional().describe("Admin contract address"),
@@ -261,7 +264,8 @@ server.registerTool(
 server.registerTool(
     "get_lease_quote",
     {
-        description: "Calculate a quote for opening a leveraged position on Nolus",
+        description:
+            "Nolus blockchain: Simulate opening a leveraged lease position and calculate a detailed quote. Use this tool when the user wants to preview leverage, borrow amounts or interest before opening a position.",
         inputSchema: {
             leaserAddress: z.string().describe("Leaser contract address"),
             downpaymentAmount: z.string().describe("Downpayment amount in micro-units e.g. '15000000' for 15 tokens"),
@@ -285,7 +289,8 @@ server.registerTool(
 server.registerTool(
     "get_open_leases",
     {
-        description: "Get all currently active margin positions (leases) for a wallet address",
+        description:
+            "Nolus blockchain: List all currently active lease contracts (margin positions) for a wallet address. Use this tool when the user asks what open positions they currently have on Nolus.",
         inputSchema: {
             leaserAddress: z.string().describe("Leaser contract address"),
             ownerAddress: z.string().describe("Wallet address to query e.g. 'nolus1...'"),
@@ -303,7 +308,8 @@ server.registerTool(
 server.registerTool(
     "get_leaser_config",
     {
-        description: "Get the global configuration parameters from the leaser contract",
+        description:
+            "Nolus blockchain: Retrieve the global configuration parameters of a Leaser smart contract. Use this tool when the user asks about lease system settings, risk thresholds or protocol parameters.",
         inputSchema: {
             leaserAddress: z.string().describe("Leaser contract address"),
             network: NetworkSchema.optional(),
@@ -322,7 +328,8 @@ server.registerTool(
 server.registerTool(
     "get_lease_status",
     {
-        description: "Get the current status of a margin position (lease) including LTV, debt, and close policy",
+        description:
+            "Nolus blockchain: Retrieve the full status of a lease (margin position), including LTV, debt and close policy. Use this tool when the user asks for detailed health metrics of a specific position.",
         inputSchema: {
             leaseAddress: z.string().describe("Lease contract address"),
             dueProjectionSecs: z.number().optional().describe("Future projection time in seconds for interest calculation"),
@@ -342,7 +349,8 @@ server.registerTool(
 server.registerTool(
     "get_lpp_balance",
     {
-        description: "Get the current liquidity and debt statistics of a Liquidity Provider Pool",
+        description:
+            "Nolus blockchain: Retrieve current liquidity, debt and pool statistics for a Liquidity Provider Pool (LPP). Use this tool when the user asks about pool utilization or lending capacity.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             network: NetworkSchema.optional(),
@@ -359,7 +367,8 @@ server.registerTool(
 server.registerTool(
     "get_lpp_config",
     {
-        description: "Get the configuration parameters of a Liquidity Provider Pool including interest rate model",
+        description:
+            "Nolus blockchain: Retrieve configuration parameters of a Liquidity Provider Pool, including its interest rate model. Use this tool when the user asks how lender or protocol rates are determined.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             network: NetworkSchema.optional(),
@@ -376,7 +385,8 @@ server.registerTool(
 server.registerTool(
     "get_lpp_price",
     {
-        description: "Get the current price of the receipt token (nLPN) relative to the pool's native asset",
+        description:
+            "Nolus blockchain: Retrieve the current price of the nLPN receipt token relative to the pool's native asset. Use this tool when the user asks how much their nLPN shares are worth.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             network: NetworkSchema.optional(),
@@ -393,7 +403,8 @@ server.registerTool(
 server.registerTool(
     "get_lender_deposit",
     {
-        description: "Get the current deposit balance for a lender in receipt tokens (nLPN)",
+        description:
+            "Nolus blockchain: Retrieve the current deposit balance for a lender in nLPN receipt tokens. Use this tool when the user asks how much they have lent into a specific Nolus pool.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             lenderAddress: z.string().describe("Lender wallet address"),
@@ -411,7 +422,8 @@ server.registerTool(
 server.registerTool(
     "get_lender_rewards",
     {
-        description: "Get the accumulated NLS incentive rewards for a lender",
+        description:
+            "Nolus blockchain: Retrieve accumulated NLS incentive rewards for a lender address. Use this tool when the user wants to know how many staking or incentive rewards they can claim from a pool.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             lenderAddress: z.string().describe("Lender wallet address"),
@@ -429,7 +441,8 @@ server.registerTool(
 server.registerTool(
     "get_deposit_capacity",
     {
-        description: "Get the remaining deposit capacity for a Liquidity Provider Pool",
+        description:
+            "Nolus blockchain: Retrieve the remaining deposit capacity of a Liquidity Provider Pool. Use this tool when the user asks whether more liquidity can be added to a given pool.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             network: NetworkSchema.optional(),
@@ -446,7 +459,8 @@ server.registerTool(
 server.registerTool(
     "get_lpn",
     {
-        description: "Get the native asset ticker used by a Liquidity Provider Pool",
+        description:
+            "Nolus blockchain: Retrieve the LPN (liquidity provider native) asset ticker used by a Liquidity Provider Pool. Use this tool when the user asks which base asset backs a specific LPP.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             network: NetworkSchema.optional(),
@@ -465,7 +479,8 @@ server.registerTool(
 server.registerTool(
     "get_oracle_prices",
     {
-        description: "Get all current asset prices from a Nolus oracle contract",
+        description:
+            "Nolus blockchain: Retrieve all current asset prices from a Nolus oracle contract. Use this tool when the user asks for a broad view of on-chain prices for many assets at once.",
         inputSchema: {
             oracleAddress: z.string().describe("Oracle contract address"),
             network: NetworkSchema.optional(),
@@ -482,7 +497,8 @@ server.registerTool(
 server.registerTool(
     "get_asset_price",
     {
-        description: "Get the current price of a specific asset relative to the base currency",
+        description:
+            "Nolus blockchain: Retrieve the current price of a specific asset relative to the oracle base currency. Use this tool when the user asks for the on-chain price of a single token like ATOM or NLS.",
         inputSchema: {
             oracleAddress: z.string().describe("Oracle contract address"),
             currency: z.string().describe("Asset ticker e.g. 'OSMO', 'ATOM', 'NLS'"),
@@ -500,7 +516,8 @@ server.registerTool(
 server.registerTool(
     "get_currencies",
     {
-        description: "Get all supported currencies and their metadata from the oracle",
+        description:
+            "Nolus blockchain: Retrieve all supported currencies and their metadata from the oracle. Use this tool when the user asks which assets are supported on Nolus or needs decimal and symbol information.",
         inputSchema: {
             oracleAddress: z.string().describe("Oracle contract address"),
             network: NetworkSchema.optional(),
@@ -517,7 +534,8 @@ server.registerTool(
 server.registerTool(
     "get_oracle_config",
     {
-        description: "Get the oracle configuration parameters",
+        description:
+            "Nolus blockchain: Retrieve configuration parameters of the oracle contract. Use this tool when the user asks how price feeds are aggregated or how often prices are updated on-chain.",
         inputSchema: {
             oracleAddress: z.string().describe("Oracle contract address"),
             network: NetworkSchema.optional(),
@@ -536,7 +554,8 @@ server.registerTool(
 server.registerTool(
     "calculate_rewards",
     {
-        description: "Calculate the amount of NLS rewards to be distributed across all LPPs",
+        description:
+            "Nolus blockchain: Calculate the total amount of NLS rewards to be distributed across all Liquidity Provider Pools. Use this tool when the user asks about global incentive emissions or reward schedules.",
         inputSchema: {
             treasuryAddress: z.string().describe("Treasury contract address"),
             network: NetworkSchema.optional(),
@@ -555,7 +574,8 @@ server.registerTool(
 server.registerTool(
     "get_wallet_balance",
     {
-        description: "Get the balance of a specific token for a wallet address",
+        description:
+            "Nolus blockchain: Retrieve the on-chain balance of a specific token for a wallet address. Use this tool when the user asks how many NLS or IBC tokens they currently hold.",
         inputSchema: {
             address: z.string().describe("Wallet address"),
             denom: z.string().describe("Token denomination (IBC denom or 'unls' for NLS)"),
@@ -572,7 +592,8 @@ server.registerTool(
 server.registerTool(
     "get_block_height",
     {
-        description: "Get the current block height of the Nolus chain",
+        description:
+            "Nolus blockchain: Retrieve the current block height of the Nolus chain. Use this tool when the user asks about network progress, recent blocks or wants to confirm chain liveness.",
         inputSchema: {
             network: NetworkSchema.optional(),
         },
@@ -588,7 +609,8 @@ server.registerTool(
 server.registerTool(
     "get_chain_id",
     {
-        description: "Get the chain ID of the connected Nolus network",
+        description:
+            "Nolus blockchain: Retrieve the chain ID of the connected Nolus network (e.g. pirin-1 or rila-3). Use this tool when the user asks which Nolus network is being used for requests.",
         inputSchema: {
             network: NetworkSchema.optional(),
         },
@@ -609,7 +631,8 @@ server.registerTool(
 server.registerTool(
     "prepare_open_lease",
     {
-        description: "Prepare an unsigned transaction to open a leveraged position. Returns the message and CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned transaction to open a leveraged lease position. Use this tool when the user wants to open a new position and needs a ready-to-sign Nolus CLI or CosmJS message.",
         inputSchema: {
             leaserAddress: z.string().describe("Leaser contract address"),
             leaseCurrency: z.string().describe("Asset to leverage e.g. 'OSMO', 'ATOM'"),
@@ -645,7 +668,8 @@ server.registerTool(
 server.registerTool(
     "prepare_repay_lease",
     {
-        description: "Prepare an unsigned transaction to repay a lease. Returns the message and CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned transaction to repay debt on an existing lease. Use this tool when the user wants to reduce or fully repay the borrowed amount on a specific position.",
         inputSchema: {
             leaseAddress: z.string().describe("Lease contract address"),
             amount: z.string().describe("Repayment amount in micro-units"),
@@ -677,7 +701,8 @@ server.registerTool(
 server.registerTool(
     "prepare_close_lease",
     {
-        description: "Prepare an unsigned transaction to close a lease (full or partial). Returns the message and CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned transaction to fully or partially close a lease position. Use this tool when the user wants to exit a position and needs a transaction skeleton.",
         inputSchema: {
             leaseAddress: z.string().describe("Lease contract address"),
             amount: z.string().optional().describe("Amount to close in micro-units (omit for full close)"),
@@ -709,7 +734,8 @@ server.registerTool(
 server.registerTool(
     "prepare_change_close_policy",
     {
-        description: "Prepare an unsigned transaction to set stop-loss and/or take-profit on a lease. Returns the message and CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned transaction to update stop-loss and/or take-profit settings on a lease. Use this tool when the user wants to manage risk parameters on an existing position.",
         inputSchema: {
             leaseAddress: z.string().describe("Lease contract address"),
             stopLoss: z.number().nullable().optional().describe("Stop-loss LTV in permilles (null to remove)"),
@@ -742,7 +768,8 @@ server.registerTool(
 server.registerTool(
     "prepare_deposit_lpp",
     {
-        description: "Prepare an unsigned transaction to deposit into a Liquidity Provider Pool. Returns the message and CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned transaction to deposit liquidity into a Nolus Liquidity Provider Pool. Use this tool when the user wants to start or increase lending in a pool.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             amount: z.string().describe("Deposit amount in micro-units"),
@@ -774,7 +801,8 @@ server.registerTool(
 server.registerTool(
     "prepare_withdraw_lpp",
     {
-        description: "Prepare an unsigned transaction to withdraw from a Liquidity Provider Pool by burning nLPN. Returns the message and CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned transaction to withdraw liquidity from a pool by burning nLPN. Use this tool when the user wants to redeem their pool shares back into the underlying asset.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             burnAmount: z.string().describe("Amount of nLPN to burn in micro-units"),
@@ -804,7 +832,8 @@ server.registerTool(
 server.registerTool(
     "prepare_claim_lpp_rewards",
     {
-        description: "Prepare an unsigned transaction to claim NLS rewards from a Liquidity Provider Pool. Returns the message and CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned transaction to claim accumulated NLS rewards from a Liquidity Provider Pool. Use this tool when the user wants to collect incentive rewards without changing their deposit.",
         inputSchema: {
             lppAddress: z.string().describe("LPP contract address"),
             recipientAddress: z.string().optional().describe("Recipient address (defaults to sender)"),
@@ -836,7 +865,8 @@ server.registerTool(
 server.registerTool(
     "prepare_transfer_tokens",
     {
-        description: "Prepare an unsigned bank send transaction. Returns the CLI command for manual signing.",
+        description:
+            "Nolus blockchain: Prepare an unsigned bank send transaction for transferring tokens between addresses. Use this tool when the user wants to send NLS or other tokens on the Nolus chain and needs a CLI command.",
         inputSchema: {
             toAddress: z.string().describe("Recipient address"),
             amount: z.string().describe("Amount in micro-units"),

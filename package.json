@@ -19,7 +19,8 @@
         "lint": "eslint '**/*.{ts,js}'",
         "bump": "npm version",
         "generate-docs": "npx typedoc src/index.ts",
-        "mcp": "npx tsx src/mcp/server.ts"
+        "mcp": "npx tsx src/mcp/server.ts",
+        "mcp:inspect": "npx @modelcontextprotocol/inspector tsx src/mcp/server.ts"
     },
     "repository": {
         "type": "git",
