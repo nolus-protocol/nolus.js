@@ -2,10 +2,10 @@
     "name": "@nolus/nolusjs",
     "author": "Nolabs",
     "license": "Apache-2.0",
-    "version": "3.7.6",
+    "version": "3.7.7",
     "description": "JS library for NodeJS and Web browsers to interact with the Nolus Protocol",
     "engines": {
-        "node": ">=14.0.0"
+        "node": ">=22.0.0"
     },
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -39,13 +39,13 @@
     "homepage": "https://github.com/N-Stealth/nolusjs#readme",
     "dependencies": {
         "@bufbuild/protobuf": "^2.10.0",
-        "@cosmjs/cosmwasm-stargate": "0.38.1",
-        "@cosmjs/crypto": "0.38.1",
-        "@cosmjs/encoding": "0.38.1",
-        "@cosmjs/ledger-amino": "0.38.1",
-        "@cosmjs/proto-signing": "0.38.1",
-        "@cosmjs/stargate": "0.38.1",
-        "@cosmjs/tendermint-rpc": "0.38.1",
+        "@cosmjs/cosmwasm-stargate": "0.39.0",
+        "@cosmjs/crypto": "0.39.0",
+        "@cosmjs/encoding": "0.39.0",
+        "@cosmjs/ledger-amino": "0.39.0",
+        "@cosmjs/proto-signing": "0.39.0",
+        "@cosmjs/stargate": "0.39.0",
+        "@cosmjs/tendermint-rpc": "0.39.0",
         "@keplr-wallet/crypto": "0.12.312",
         "@keplr-wallet/unit": "0.12.312",
         "@ledgerhq/hw-app-cosmos": "^6.32.12",
@@ -59,6 +59,12 @@
         "crypto-js": "^4.2.0",
         "typedoc": "^0.28.10",
         "zod": "^4.3.6"
+    },
+    "resolutions": {
+        "@cosmjs/cosmwasm": "0.39.0",
+        "@cosmjs/amino": "0.39.0",
+        "@cosmjs/math": "0.39.0",
+        "@cosmjs/utils": "0.39.0"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^8.46.2",
