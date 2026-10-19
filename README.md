@@ -1,5 +1,8 @@
 # nolus.js
 
+> [!WARNING]
+> **Deprecated.** This library and its MCP server are no longer maintained. For agents, use the `nolusd` CLI (`nolusd contract-help`, releases at https://github.com/nolus-protocol/nolus-core/releases) or WebMCP in the Nolus app. See https://docs.nolus.io/docs/agentic-workflows.
+
 <br /><p align="center"><img alt="Nolus.js" src="nolusjs-logo.svg" width="100" margin-top="px"/></p><br />
 
 ## Overview
@@ -139,6 +142,8 @@ const privateKey = await KeyUtils.getPrivateKeyFromMnemonic(mnemonic, path);
 ```
 
 ## MCP Server
+
+> **Deprecated:** the MCP server is no longer maintained; use `nolusd` or WebMCP in the Nolus app (https://docs.nolus.io/docs/agentic-workflows).
 
 The Nolus MCP server exposes the `@nolus/nolusjs` library as tools that AI assistants can use to interact with the Nolus Protocol.
 
